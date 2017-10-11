@@ -18,7 +18,7 @@ Start openocd with `openocd -f util/stm32f334discovery.cfg`
 
 ### Uploading binary with GDB
 
-Go to `sources/build` directory. And start gdb with command `arm-none-eabi-gdb dmn-edc32.elf --eval-command="target remote localhost:3333"`
+Go to `sources/build` directory aAnd start gdb with command `arm-none-eabi-gdb dmn-edc32.elf --eval-command="target remote localhost:3333"`
 
 * Type `load` to load binary to stm32 board
 * Type `c` to start the program
@@ -26,7 +26,7 @@ Go to `sources/build` directory. And start gdb with command `arm-none-eabi-gdb d
 
 ### Serial communucation
 
-While program is running you can connect with serial port. Port name will vary depending your operating system (/dev/ttyUSBx, COMx, etc..). In my system (macOS), it appears at `/dev/tty.usbmodem1413`.
+While program is running on board, you can connect it with serial port. Port name will vary depending your operating system (/dev/ttyUSBx, COMx, etc..). In my system (macOS), it appears at `/dev/tty.usbmodem1413`.
 
 * Type `screen /dev/tty.usbmodem1413 115200` to open connection.
 * Type `ctrl-k` and `y` to exit from screen.
