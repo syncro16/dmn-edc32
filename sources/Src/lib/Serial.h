@@ -2,7 +2,8 @@
 #include <stdarg.h>
 class Serial {
 	private:
-	char buf[160];
+//	char buf[160];
+	char *buf;
 		
 	bool dmaRxMode;
     public:

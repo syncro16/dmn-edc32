@@ -2,19 +2,18 @@
 
 #pin		Type			Function
 ----------- --------------- ----------------
-*PWM outputs
-PA9			TIM1_CH1		Quantity Adjuster PWM  (TIM1 - fast base freq)
-PA10		TIM1_CH2        Aux PWM
+*PWM outputs 5
+PA10		TIM1_CH3		Quantity Adjuster PWM  (TIM1 - fast base freq)
 PA15		TIM2_CH1		Timing Solenoid PWM	(TIM2 - slow base freq)
 PA1			TIM2_CH2        Boost Solenoid PWM
 PB10		TIM2_CH3		Aux PWM
 
-*DAC outputs
+*DAC outputs (3)
 PA4			DAC1_OUT1		DAC ch1 Out (ref wave)
-PA5			DAC1_OUT2		DAC ch2 Out (custom wave)
+PA5			DAC1_OUT2		DAC ch2 Out (custom wave) (remove LED2 from board)
 PA6			DAC2_OUT1		DAC ref voltage for injection trigger voltage comparator 
 
-*Analog in
+*Analog in 9 (check: SB57 (VDDA/VREF+)
 PC0			ADC_IN6			Battery voltage
 PC1			ADC_IN7			Manifold Pressure
 PC2			ADC_IN8			TPS							
@@ -25,10 +24,7 @@ PB13		ADC_IN13		Aux Analog IN #1
 PC5			ADC2_IN11		Quantity Adjuster Position (diff-)
 PB2			ADC2_IN12		Quantity Adjuster Position (diff+)								
 
-*Inputs
-PB11		COMP6			Injection trigger
-
-*Outputs
+*Outputs 6
 PA8							aux
 PC9							fuel solenoid
 PC8							engine glow plugs
@@ -36,16 +32,27 @@ PC7							fan intake
 PC6							main power relay
 PA7			TIM17_CH1		Engine Speed signal
 
-*Inputs					
+*Inputs 7
+PB11		COMP6			Injection trigger					
+PB14		TIM15_CH1		RPM Signal
 PB9							TPS Wot
 PB8							TPS Idle
-PB7							Brake/Clutch/Cruise reset
+PB4							Brake/Clutch/Cruise reset
 PB6							Cruise Set
 PB5							Cruise Decel
-PB4							Aux
+PC12						Aux
 							
 *Optional
 PB6			I2C1_SCL		i2c **
 PB7			I2C1_SDA		i2c **
 PA11		CAN_RX			can **
 PA12		CAN_TX			can **
+
+- GND
+- GND
+- +12V 
+- 5V
+- 15
+- signal ground
+
+

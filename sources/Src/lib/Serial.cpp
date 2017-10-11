@@ -19,7 +19,9 @@ Serial::Serial() {
 	receiveOverflowError=0;
 //	setvbuf(stdout, NULL, _IONBF, 160);	
 //    HAL_UART_Receive_IT(&huart2, buz,1);
+	buf=(char*)malloc(160);
 }
+
 void Serial::enableDmaRx() {
 	dmaRxMode=1;
 	HAL_UART_Receive_DMA(&huart2,(uint8_t*)dmaBuf,2);
