@@ -1,5 +1,5 @@
 # dmn-edc32
-DMN-EDC diesel engine control for STM32 
+DMN-EDC diesel engine control (Bosch VE and inline pumps) for STM32. Current status: porting from avr (Arduino) in progress. For more information, contact syncro16@outlook.com.
 
 ## Tools needed
 * stm32f334 board (nucleo or discovery version)
