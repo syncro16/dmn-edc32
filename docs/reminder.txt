@@ -1,0 +1,101 @@
+http://www.st.com/en/microcontrollers/stm32f334r8.html
+
+LM1815 pois? mittaus komparaattorilta + ac coupling + suojadiodit
+
+LeD2 pitää poistaa (PA5 dac1 out#2) (d13)
+
+QA POS mittaus differential, ref huippu / input point
+
+void DMA1_Channel3_IRQHandler(void)
+{
+  /* USER CODE BEGIN DMA1_Channel3_IRQn 0 */
+  
+  /*
+  Called when buffer is "played" again
+
+  fatalLog("flag_it %d",hdma_dac1_ch1.DmaBaseAddress->ISR);
+  fatalLog("source_it %d",hdma_dac1_ch1.Instance->CCR);
+
+  if ((RESET != (hdma_dac1_ch1.DmaBaseAddress->ISR & (DMA_FLAG_HT1 << hdma_dac1_ch1.ChannelIndex)))) {
+    fatalLog("half!");
+  }
+
+--
+SB57 (VDDA/VREF+)
+ON
+VDDA/VREF+ on STM32 is connected to VDD.
+OFF
+VDDA/VREF+ on STM32 is not connected to VDD and can be provided from pin 8 of CN5 (Used for external VREF+ provided by Arduino shield)
+
+-> Lisää ferriittirengas (mitattu 3.3v särö 0.1v 0,2us) 
+	--> https://electronics.stackexchange.com/questions/155725/stm32f411-nucleo-board-what-the-ferrite-bead-is-used-for
+
+http://www.st.com/content/ccc/resource/technical/document/user_manual/98/2e/fa/4b/e0/82/43/b7/DM00105823.pdf/files/DM00105823.pdf/jcr:content/translations/en.DM00105823.pdf
+
+
+--
+HDK opamp customwave (sisäinen, ref ulkoinen?)? 
+
+--
+QA mittaus tyhjäkäynnillä synkroitu needle lift sensoriin = mitataan aina suunnilleen samassa kohtaa position, tarkempi
+--
+
+
+
+ arm-none-eabi-gdb koekoe.elf --eval-command="target remote localhost:3333"
+ openocd -f /usr/local/share/openocd/scripts/board/stm32f334discovery.cfg  
+
+ load koekoe.elf
+
+ADC 1
+in1 - QA pos 
+in3 - QA *reserved*
+in6 - QA *reserved*
+
+ADC 2
+IN4 - TPS
+IN5 - MAP
+IN6 - Coolant temp
+IN7 - Fuel temp
+IN8 - Intake Temp
+IN9 - Aux Temp
+IN10 - EGT
+IN11 - LAMBDA
+IN12 - Servo pos.
+
+Inputs
+PIN_INPUT_POWER_ON
+
+Outputs relay
+PIN_RELAY_POWER
+PIN_RELAY_COOLANT
+PIN_RELAY_ENGINE
+PIN_RELAY_AUX
+
+Outputs general
+PIN_TACHO_OUT
+PIN_GLOW_LIGHT
+PIN_FUEL_SHUTOFF_SOLENOID
+
+Input general
+
+
+
+NTC mittaus: https://learn.adafruit.com/thermistor/using-a-thermistor
+
+
+pinouts:
+
+PWM Output Fast
+a
+b
+c
+d
+
+PWM Output Slow
+a
+b
+c
+d
+
+
