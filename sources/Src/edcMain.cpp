@@ -3,11 +3,12 @@
 #include "RPMBase.h"
 #include "edcMain.h"
 #include "Dac.h"
-
 #include "ConfEditor.h"
-
+#include "IO.h"
 #include "Serial.h"
 #include "main.h"
+#include "RPMDefaultCPSInterrupt.h"
+
 #include "stm32f3xx_hal.h"
 #include "string.h"
 #include "utils.h"
@@ -18,6 +19,9 @@
 #include "RPMDefaultCPS.h"
 #include "QuantityAdjuster.h"
 #include "stm32f3xx_hal.h"
+#include "stm32f3xx_hal_tim.h"
+
+
 
 /* phew! finally the main program rather than HAL crap */
 
@@ -600,12 +604,48 @@ void doRelayControl() {
 }
 	
 
+void __probe() {
+	static char loop;
+	serial.ansiGotoXy(1,1);
+	loop++;
+	bool out = (loop/64)%2;
+
+//						-		-		-		-		-	
+//()	-		-		-
+	serial.printf("OUT: aux:%d  fuel:%d  glow:%d  fan:%d   relay:%d\r\n",out,out,out,out,out);
+	serial.printf("IN:  aux:%d  wot:%d   idle:%d  brake:%d cCet:%d   cDecel:%d\r\n",
+		io.inputAux(),io.inputTPSWot(),io.inputTPSIdle(),io.inputBrake(),io.inputCruiseSet(),io.inputCruiseDecel());
+	
+}
+
+
+
 void edcMain() {
 
 	setup();
 
 	// main loop
+	int z,zz,s,e;
+	z=__HAL_TIM_GET_COUNTER(&htim15);
+	zz=__HAL_TIM_GET_COUNTER(&htim15);
+	rpm_overflow=0;
+	int joo;
 	while (true) {
+		joo++;
+		serial.printf("%d %d %d raw:%d rpm:%d timing:%d\r\n",rpm_duration,rpm_overflow,rpm_injection_trigger,rpm.getLatestRawValue(),rpm.getLatestMeasure(),rpm.getInjectionTiming());
+		io.outputAux(joo%2);
+		//__probe();
+//		__HAL_TIM_SET_COUNTER(&htim15,0);
+//		z=__HAL_TIM_GET_COUNTER(&htim15);
+//		if (z<zz) {
+//			serial.printf("ms:%d\r\n",(e-s));
+//			s=HAL_GetTick();
+//7			
+//		}
+//		e=HAL_GetTick();
+//		zz=z;
+//		void HAL_TIM_IRQHandler (TIM_HandleTypeDef * htim)
+		/*
 		refreshFastSensors();
         refreshSlowSensors();
         doBoostControl();
@@ -614,10 +654,10 @@ void edcMain() {
         doIdlePidControl();
 
 		handleUserInterface();
+		*/
+//		dtc.save();
 
-		dtc.save();
-
-		HAL_Delay(1000/60);		
+		HAL_Delay(1000/40);		
 	}
 		
 /*

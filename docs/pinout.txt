@@ -3,8 +3,8 @@
 #pin		Type			Function
 ----------- --------------- ----------------
 *PWM outputs 5
-PA10		TIM1_CH3		Quantity Adjuster PWM  (TIM1 - fast base freq)
-PA15		TIM2_CH1		Timing Solenoid PWM	(TIM2 - slow base freq)
+PA11		TIM1_CH4		Quantity Adjuster PWM  (TIM1 - fast base freq) (500Hz)
+PA15		TIM2_CH1		Timing Solenoid PWM	(TIM2 - slow base freq) (130Hz)
 PA1			TIM2_CH2        Boost Solenoid PWM
 PB10		TIM2_CH3		Aux PWM
 
@@ -34,7 +34,7 @@ PA7			TIM17_CH1		Engine Speed signal
 
 *Inputs 7
 PB11		COMP6			Injection trigger					
-PB14		TIM15_CH1		RPM Signal
+PB14		TIM15_CH1		RPM Signal			(1Hz base freq)
 PB9							TPS Wot
 PB8							TPS Idle
 PB4							Brake/Clutch/Cruise reset

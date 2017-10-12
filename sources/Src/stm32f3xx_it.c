@@ -49,9 +49,12 @@ extern DAC_HandleTypeDef hdac1;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
+extern COMP_HandleTypeDef hcomp6;
 extern DMA_HandleTypeDef hdma_dac1_ch1;
 extern DMA_HandleTypeDef hdma_dac1_ch2;
 extern DAC_HandleTypeDef hdac2;
+extern TIM_HandleTypeDef htim1;
+extern TIM_HandleTypeDef htim15;
 extern DMA_HandleTypeDef hdma_usart2_rx;
 extern UART_HandleTypeDef huart2;
 
@@ -173,6 +176,26 @@ void DMA1_Channel6_IRQHandler(void)
 }
 
 /**
+* @brief This function handles TIM1 break and TIM15 interrupts.
+*/
+void TIM1_BRK_TIM15_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM1_BRK_TIM15_IRQn 0 */
+
+  /* USER CODE END TIM1_BRK_TIM15_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim1);
+  HAL_TIM_IRQHandler(&htim15);
+  /* USER CODE BEGIN TIM1_BRK_TIM15_IRQn 1 */
+
+	printf("IRQ");
+	static int counter=0;
+	counter++;
+
+
+  /* USER CODE END TIM1_BRK_TIM15_IRQn 1 */
+}
+
+/**
 * @brief This function handles USART2 global interrupt / USART2 wake-up interrupt through EXT line 26.
 */
 void USART2_IRQHandler(void)
@@ -199,6 +222,20 @@ void TIM7_DAC2_IRQHandler(void)
   /* USER CODE BEGIN TIM7_DAC2_IRQn 1 */
 
   /* USER CODE END TIM7_DAC2_IRQn 1 */
+}
+
+/**
+* @brief This function handles COMP4 and COMP6 interrupts through EXTI lines 30 and 32.
+*/
+void COMP4_6_IRQHandler(void)
+{
+  /* USER CODE BEGIN COMP4_6_IRQn 0 */
+
+  /* USER CODE END COMP4_6_IRQn 0 */
+  HAL_COMP_IRQHandler(&hcomp6);
+  /* USER CODE BEGIN COMP4_6_IRQn 1 */
+
+  /* USER CODE END COMP4_6_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */

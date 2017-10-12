@@ -22,7 +22,6 @@ void RPMBase::measure() {
 	core.controls[Core::valueEngineRPMFiltered] = getLatestMeasure();
 	core.controls[Core::valueEngineRPM] = getLatestMeasure();
 	core.controls[Core::valueEngineRPMRaw] = getLatestRawValue();
-
 }
 
 

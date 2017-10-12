@@ -1,113 +1,35 @@
 #include "RPMDefaultCPS.h"
+#include "RPMDefaultCPSInterrupt.h"
+#include "stm32f3xx_hal.h"
 
-/* 
- *  Some low level functions for RPM counting (and also for injection timing measurement) 
- *  
- *  Timer 1 frequency (250KHz) is optimized for 4 ... 6 marks on flywheel (same as number of cylinders, usually) 
- *  Minimum rotating speed detected is about 57RPM (4cyl engine)
- *  
- *  Timer 1 is set to 0 when RPM interrupt happens and old Timer 1 value is stored. 
- *  This value can be directly converted for revolutions per minute. 
- *  If timer reaches 65535, overflow interrupt handler is activated and it engine is 
- *  declared as stopped.
- *  
- *  Injection timing is also recorded. Because the mark on the flywheel is on a known position, the
- *  counter value can be converted to actual degree of advance/retard
- *  
- *  
-*/
-
-volatile unsigned int rpmDuration;
-
-
-static inline void rpmTimerSetup() __attribute__((always_inline));
-static inline void rpmTimerEnable() __attribute__((always_inline));
-static inline void rpmTimerDisable() __attribute__((always_inline));
-void rpmTrigger();
-
-static inline void rpmTimerSetup()  {
-/*	cli();
-	TCCR1A = 0; 
-	TCCR1B = 0; 
-	TCNT1 = 0;
-	OCR1A = 0xffff;
-
- 	TIMSK1 |= (1 << OCIE1A); // enable timer compare interrupt
- 	sei();
-	attachInterrupt(0, rpmTrigger, RISING);  // Interrupt 0 -- PIN2 -- LM1815 gated output 
-*/
- }
-
- static inline void rpmTimerEnable() {
- /*	cli();
- 	TCNT1 = 0;
- 	TCCR1B = 11; // WGM12 = 8 +CS11 = 2+CS10 = 1
-	 sei();
-	 */
- }
-
- static void rpmTimerDisable() {
- 	/*cli();
- 	TCCR1A = 0;
- 	TCCR1B = 0;
- 	sei();
-	 rpmDuration = 0;
-	 */
- }
- 
-/*ISR(TIMER1_COMPA_vect) 
-{	
-	// Timer has waited rotation for too long, declare engine as stopped
-	/*rpmTimerDisable();
-	core.controls[Core::valueEngineRPM] = 0;
-	core.node[Core::nodeEngineRPM].value = 0;
-	core.controls[Core::valueEngineRPMFiltered] = 0;   	
-}
+/*
+- TIM15 base frequency is set to 4Hz. (presclaler = 244)
+- Timer is 16bit, so there are 4*65536 steps in a second.
 */
 
 
-
-
-void rpmTrigger() { 
-	/*
-	cli();
-	rpmDuration = TCNT1;
-	injectionBegin = 0;
-	sei();
-	rpmTimerEnable();
-	*/
-}
-
-// Class methods
 
 void RPMDefaultCps::init() {
- 	rpmDuration = 0;
-	rpmTimerSetup(); 
-	rpmTimerEnable();		
+	rpm_duration=0;
+	rpm_overflow=1;	
 }
 
 unsigned int RPMDefaultCps::getLatestMeasure() {
-	if (rpmDuration==0)
+	if (rpm_overflow)
 		return 0;
 	// 64 = timer divider
 
 	// return ((unsigned long)(60*F_CPU/64/NUMBER_OF_CYLINDERS)/((unsigned long)rpmDuration)); 
-	return 750;
+	return (60*4*65536)/rpm_duration/NUMBER_OF_CYLINDERS;
 
 }
 unsigned int RPMDefaultCps::getLatestRawValue() {
-	return rpmDuration;
+	return rpm_duration;
 }
 
 int RPMDefaultCps::getInjectionTiming() {
-	if (injectionBegin) {
-			unsigned int timerTicksPerDegree = rpmDuration / (360/NUMBER_OF_CYLINDERS);
-			// Calculate relative position, using *10 fixed point for internal presentation 
-			unsigned int advanceRelative = ((unsigned long)core.controls[Core::valueEngineTimingDiff]*(unsigned long)10)/(unsigned long)timerTicksPerDegree;
-			// Apply BTDC Mark correction
-			return BTDC_MARK-advanceRelative;		
-	} else {
-		return 0;
-	}
+	if (HAL_GetTick() - trigger_last_hit < 500)
+		return rpm_injection_trigger;
+	return 0;
 }
 

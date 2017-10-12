@@ -41,6 +41,7 @@
 
 /* USER CODE BEGIN Includes */
 #include "edcMain.h"
+#include "RPMDefaultCPSInterrupt.h"
 
 /* USER CODE END Includes */
 
@@ -66,6 +67,12 @@ DMA_HandleTypeDef hdma_usart2_rx;
 
 /* USER CODE BEGIN PV */
 /* Private variables ---------------------------------------------------------*/
+
+volatile uint16_t rpm_duration;
+volatile uint8_t rpm_overflow;
+volatile uint16_t rpm_injection_trigger;
+volatile uint8_t trigger_calls=0;
+volatile uint32_t trigger_last_hit=0;
 
 static void FIXED_DAC1_Init(void);
 
@@ -97,6 +104,32 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef *htim);
 /* USER CODE END PFP */
 
 /* USER CODE BEGIN 0 */
+
+/* called when RPM interrupt happens */ 
+void HAL_TIM_IC_CaptureCallback(TIM_HandleTypeDef *htim) {
+	if (htim->Instance == TIM15) {
+		rpm_duration = __HAL_TIM_GET_COUNTER(&htim15);	
+		__HAL_TIM_SET_COUNTER(&htim15,0);	
+		rpm_overflow = 0;
+		trigger_calls = 0;
+		HAL_COMP_Start_IT(&hcomp6);
+		
+	}
+}
+
+void HAL_COMP_TriggerCallback(COMP_HandleTypeDef *hcomp) {
+//	if (hcomp->Instance == COMP6) {
+	// skip first call
+	if (trigger_calls==2) {
+		rpm_injection_trigger = __HAL_TIM_GET_COUNTER(&htim15);	
+		trigger_last_hit = HAL_GetTick();		
+		HAL_COMP_Stop_IT(&hcomp6);
+	} else {
+		trigger_calls++;
+	}
+
+		//	}
+}
 
 void dma_callback(DMA_HandleTypeDef *hdma) {
 //  fatalLog("half");
@@ -152,7 +185,14 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   FIXED_DAC1_Init();
+  HAL_TIM_Base_Start(&htim1); // not used here, see QuantityAdjuster routine
+  HAL_TIM_Base_Start(&htim2);
+  HAL_TIM_Base_Start_IT(&htim15);  // RPM Overflow interrupt 
+  HAL_TIM_OC_Start_IT(&htim15,TIM_CHANNEL_1); // RPM capture interrupt 
+  HAL_TIM_Base_Start(&htim17);
 
+  HAL_COMP_Start_IT(&hcomp6);
+//  HAL_COMP_Start()
   // timer on itse käynnistettävä https://electronics.stackexchange.com/questions/179546/getting-pwm-to-work-on-stm32f4-using-sts-hal-libraries
 
   // timer =  __HAL_TIM_GetCounter(&htim2);  
@@ -166,7 +206,7 @@ int main(void)
 //  HAL_DAC_Start(&hdac1, DAC_CHANNEL_1); 
 
 //  HAL_TIM_Base_Start(&htim6);
-   HAL_TIM_Base_Start(&htim2);
+//   HAL_TIM_Base_Start(&htim2);
   
 //  HAL_DMA_CallbackIDTypeDef
   //  HAL_DMA_RegisterCallback(&hdma_dac1_ch1,HAL_DMA_XFER_CPLT_CB_ID,dma_callback);
@@ -357,12 +397,12 @@ static void MX_COMP6_Init(void)
 {
 
   hcomp6.Instance = COMP6;
-  hcomp6.Init.InvertingInput = COMP_INVERTINGINPUT_DAC2_CH1;
+  hcomp6.Init.InvertingInput = COMP_INVERTINGINPUT_1_4VREFINT;
   hcomp6.Init.NonInvertingInput = COMP_NONINVERTINGINPUT_IO1;
   hcomp6.Init.Output = COMP_OUTPUT_NONE;
   hcomp6.Init.OutputPol = COMP_OUTPUTPOL_NONINVERTED;
   hcomp6.Init.BlankingSrce = COMP_BLANKINGSRCE_NONE;
-  hcomp6.Init.TriggerMode = COMP_TRIGGERMODE_NONE;
+  hcomp6.Init.TriggerMode = COMP_TRIGGERMODE_IT_RISING;
   if (HAL_COMP_Init(&hcomp6) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -438,9 +478,9 @@ static void MX_TIM1_Init(void)
   TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig;
 
   htim1.Instance = TIM1;
-  htim1.Init.Prescaler = 0;
+  htim1.Init.Prescaler = 31;
   htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim1.Init.Period = 65535;
+  htim1.Init.Period = 4095;
   htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim1.Init.RepetitionCounter = 0;
   htim1.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_ENABLE;
@@ -471,11 +511,10 @@ static void MX_TIM1_Init(void)
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
   sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
-  sConfigOC.OCNPolarity = TIM_OCNPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   sConfigOC.OCIdleState = TIM_OCIDLESTATE_RESET;
   sConfigOC.OCNIdleState = TIM_OCNIDLESTATE_RESET;
-  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_3) != HAL_OK)
+  if (HAL_TIM_PWM_ConfigChannel(&htim1, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
   }
@@ -509,7 +548,7 @@ static void MX_TIM2_Init(void)
   TIM_OC_InitTypeDef sConfigOC;
 
   htim2.Instance = TIM2;
-  htim2.Init.Prescaler = 0;
+  htim2.Init.Prescaler = 1920;
   htim2.Init.CounterMode = TIM_COUNTERMODE_UP;
   htim2.Init.Period = 0;
   htim2.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
@@ -602,9 +641,9 @@ static void MX_TIM15_Init(void)
   TIM_IC_InitTypeDef sConfigIC;
 
   htim15.Instance = TIM15;
-  htim15.Init.Prescaler = 0;
+  htim15.Init.Prescaler = 244;
   htim15.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim15.Init.Period = 0;
+  htim15.Init.Period = 65535;
   htim15.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim15.Init.RepetitionCounter = 0;
   htim15.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -634,7 +673,7 @@ static void MX_TIM15_Init(void)
   sConfigIC.ICPolarity = TIM_INPUTCHANNELPOLARITY_RISING;
   sConfigIC.ICSelection = TIM_ICSELECTION_DIRECTTI;
   sConfigIC.ICPrescaler = TIM_ICPSC_DIV1;
-  sConfigIC.ICFilter = 0;
+  sConfigIC.ICFilter = 15;
   if (HAL_TIM_IC_ConfigChannel(&htim15, &sConfigIC, TIM_CHANNEL_1) != HAL_OK)
   {
     _Error_Handler(__FILE__, __LINE__);
@@ -650,9 +689,9 @@ static void MX_TIM17_Init(void)
   TIM_BreakDeadTimeConfigTypeDef sBreakDeadTimeConfig;
 
   htim17.Instance = TIM17;
-  htim17.Init.Prescaler = 0;
+  htim17.Init.Prescaler = 9765;
   htim17.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim17.Init.Period = 0;
+  htim17.Init.Period = 65535;
   htim17.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim17.Init.RepetitionCounter = 0;
   htim17.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
@@ -852,7 +891,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     HAL_IncTick();
   }
 /* USER CODE BEGIN Callback 1 */
-
+	if (htim->Instance == TIM15) {
+		rpm_overflow = 1;
+		rpm_duration = 0;
+	}	
 /* USER CODE END Callback 1 */
 }
 
