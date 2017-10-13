@@ -32,13 +32,20 @@ static RPMDefaultCps rpm;
 static QuantityAdjuster adjuster;
 
 extern ADC_HandleTypeDef hadc1;
+extern ADC_HandleTypeDef hadc2;
+
 extern DMA_HandleTypeDef hdma_adc1;
 extern volatile int QApos1;
 extern volatile int QApos2;
 extern volatile int QAref;
 extern volatile int QAcustom;
 extern volatile int freq;
- 
+extern volatile uint16_t adc1buf[16];
+extern volatile uint16_t adc2buf[1];
+
+extern ADC_HandleTypeDef hadc1;
+extern uint32_t uwTick;
+
 //uint16_t buf[1024];
 
 void setup() {
@@ -606,35 +613,71 @@ void doRelayControl() {
 
 void __probe() {
 	static char loop;
+	if (loop) 
+		serial.ansiClearScreen();
 	serial.ansiGotoXy(1,1);
 	loop++;
 	bool out = (loop/64)%2;
 
-//						-		-		-		-		-	
-//()	-		-		-
+	serial.printf("RPM:%d Timing:%d.  \r\n",rpm.getLatestMeasure(),rpm.getInjectionTiming());
 	serial.printf("OUT: aux:%d  fuel:%d  glow:%d  fan:%d   relay:%d\r\n",out,out,out,out,out);
-	serial.printf("IN:  aux:%d  wot:%d   idle:%d  brake:%d cCet:%d   cDecel:%d\r\n",
+	io.outputAux(out);
+	io.outputFuelSolenoid(out);
+	io.outputGlowPlugs(out);
+	io.outputFanIntake(out);
+	io.outputMainPowerRelay(out);
+	
+	if (out) {
+		serial.printf("PWM: QA:50%% tim:50%% bst:50%% aux:50%% speed_pulse:0\r\n");	
+		io.pwmOutQuantityAdjuster_12b(2048);
+		io.pwmOutBoostSolenoid_8b(128);
+		io.pwmOutTiming_8b(128);
+		io.pwmOutAux_8(128);
+		io.pulseOutEngineSpeedSignal(0);		
+	} else {
+		serial.printf("PWM: QA:0%%  tim:0%%  bst:0%%  aux:0%%  speed_pulse:1000rpm\r\n");			
+		io.pwmOutQuantityAdjuster_12b(0);
+		io.pwmOutBoostSolenoid_8b(0);
+		io.pwmOutTiming_8b(0);
+		io.pwmOutAux_8(0);
+		io.pulseOutEngineSpeedSignal(1000);
+	}
+	serial.printf("IN:  aux:%d  wot:%d   idle:%d  brake:%d cSet:%d   cDecel:%d          \r\n",
 		io.inputAux(),io.inputTPSWot(),io.inputTPSIdle(),io.inputBrake(),io.inputCruiseSet(),io.inputCruiseDecel());
 	
+	serial.printf("ADC: batv:%4d press:%4d tps:%4d   ftmp:%4d  ctmp:%4d   atmp:%4d  aux:%4d  itmp:%4d \r\n     qaPos:%4d                      \r\n",
+		io.analogInBatteryVoltage(),io.analogInManifoldPressre(),io.analogInTPS(),io.analogInFuelTemp(),io.analogInCoolantTemp(),
+		io.analogInAuxTemp(),io.analogInAuxIn1(),io.analogInIntTemp(),io.analogQAPosition());
+		
+	//HAL_ADC_Start_DMA(&hadc1,(uint32_t*)adc1buf,8);
+		
 }
 
-
+/* Called @ 1000hz */ 
+volatile char edcRunning=0;
+void edcScheluder() {
+	if (!edcRunning)
+		return;
+	if (uwTick%2 == 0) {
+		// 500hz
+	}
+	if (uwTick%20 == 0) {
+		// 50hz
+	}
+	HAL_ADC_Start_DMA(&hadc1,(uint32_t*)adc1buf,8);
+	HAL_ADC_Start_DMA(&hadc2,(uint32_t*)adc2buf,1);
+	
+}
 
 void edcMain() {
 
 	setup();
 
+	edcRunning = 1;
 	// main loop
-	int z,zz,s,e;
-	z=__HAL_TIM_GET_COUNTER(&htim15);
-	zz=__HAL_TIM_GET_COUNTER(&htim15);
-	rpm_overflow=0;
-	int joo;
 	while (true) {
-		joo++;
-		serial.printf("%d %d %d raw:%d rpm:%d timing:%d\r\n",rpm_duration,rpm_overflow,rpm_injection_trigger,rpm.getLatestRawValue(),rpm.getLatestMeasure(),rpm.getInjectionTiming());
-		io.outputAux(joo%2);
-		//__probe();
+
+		__probe();
 //		__HAL_TIM_SET_COUNTER(&htim15,0);
 //		z=__HAL_TIM_GET_COUNTER(&htim15);
 //		if (z<zz) {

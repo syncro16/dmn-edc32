@@ -21,7 +21,6 @@ public:
 	void pwmOutTiming_8b(uint8_t a);
 	void pwmOutBoostSolenoid_8b(uint8_t a);
 	void pwmOutAux_8(uint8_t a);
-	
 	bool inputTPSWot();
 	bool inputTPSIdle();
 	bool inputBrake();
@@ -35,10 +34,7 @@ public:
 	uint16_t analogInCoolantTemp();
 	uint16_t analogInAuxTemp();
 	uint16_t analogInAuxIn1();
-	// QA handled by own routine
-	// DAC out handled by own routine	
-	
-	
-	
+	uint16_t analogInIntTemp();
+	uint16_t analogQAPosition();
 };
 extern IO io;	
