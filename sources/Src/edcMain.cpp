@@ -688,7 +688,6 @@ void edcMain() {
 //		e=HAL_GetTick();
 //		zz=z;
 //		void HAL_TIM_IRQHandler (TIM_HandleTypeDef * htim)
-		/*
 		refreshFastSensors();
         refreshSlowSensors();
         doBoostControl();
@@ -696,8 +695,7 @@ void edcMain() {
         doRelayControl();
         doIdlePidControl();
 
-		handleUserInterface();
-		*/
+//		handleUserInterface();
 //		dtc.save();
 
 		HAL_Delay(1000/40);		
