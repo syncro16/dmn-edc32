@@ -613,13 +613,13 @@ void doRelayControl() {
 
 void __probe() {
 	static char loop;
-	if (loop) 
+	if (!loop) 
 		serial.ansiClearScreen();
 	serial.ansiGotoXy(1,1);
 	loop++;
 	bool out = (loop/64)%2;
 
-	serial.printf("RPM:%d Timing:%d.  \r\n",rpm.getLatestMeasure(),rpm.getInjectionTiming());
+	serial.printf("RPM:%4d    Timing:%5d  \r\n",rpm.getLatestMeasure(),rpm.getInjectionTiming());
 	serial.printf("OUT: aux:%d  fuel:%d  glow:%d  fan:%d   relay:%d\r\n",out,out,out,out,out);
 	io.outputAux(out);
 	io.outputFuelSolenoid(out);
@@ -645,7 +645,7 @@ void __probe() {
 	serial.printf("IN:  aux:%d  wot:%d   idle:%d  brake:%d cSet:%d   cDecel:%d          \r\n",
 		io.inputAux(),io.inputTPSWot(),io.inputTPSIdle(),io.inputBrake(),io.inputCruiseSet(),io.inputCruiseDecel());
 	
-	serial.printf("ADC: batv:%4d press:%4d tps:%4d   ftmp:%4d  ctmp:%4d   atmp:%4d  aux:%4d  itmp:%4d \r\n     qaPos:%4d                      \r\n",
+	serial.printf("ADC: batv:%4d press:%4d tps:%4d   ftmp:%4d  ctmp:%4d   atmp:%4d  aux:%4d \r\n     itmp:%4d qaPos:%4d                      \r\n",
 		io.analogInBatteryVoltage(),io.analogInManifoldPressre(),io.analogInTPS(),io.analogInFuelTemp(),io.analogInCoolantTemp(),
 		io.analogInAuxTemp(),io.analogInAuxIn1(),io.analogInIntTemp(),io.analogQAPosition());
 		
