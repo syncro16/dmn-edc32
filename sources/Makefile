@@ -84,7 +84,7 @@ PERIFLIB_SOURCES =
 #######################################
 # binaries
 #######################################
-BINPATH = /Users/dmn/bin/gcc-arm-none-eabi-6_2-2016q4/bin
+BINPATH = /Users/dmn/bin/gcc-arm/bin
 PREFIX = arm-none-eabi-
 CC = $(BINPATH)/$(PREFIX)gcc
 CPP = $(BINPATH)/$(PREFIX)g++

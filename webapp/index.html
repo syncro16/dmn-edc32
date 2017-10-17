@@ -13,35 +13,37 @@
 </head>
 <body>
 	<div class="header">
-		<div>
-			DMN-EDC32 v.20171022
+		<div class="version">
+			DMN-EDC32<br>
+			<span>v.20171022</span>
 		</div>
-		<div>
-			<span class="usbSerial"></span>/dev/tty.usbmodem143
+		<div class="connection">
+			<span class="usbSerial">/dev/tty.usbmodem143</span>
+			<br>
 			<button>Connect</button>
 		</div>
+		<hr>
 	</div>
-	<div class="componentSection" id='gauges'>
-		<div class="componentSectionHeader">
-			Gauges <button>+</button> <button>-</button> <button>Small</button> <button>Large</button> 
+	<div class="container">
+		<div class="componentSection" id='gauges'>
+		<!--Meters-->
+		<!--
+			<div class="componentSmall">
+					<canvas id="canvas-id"></canvas>
+			</div>	-->	
 		</div>
-	<!--Meters-->
-	<!--
-		<div class="componentSmall">
-				<canvas id="canvas-id"></canvas>
-		</div>	-->	
-	</div>
-	<div class="componentSection">
-		Editor
-	</div>
-	<div class="componentSection">
-		Logger
-	</div>
-	<div class="componentSectionHalf">
-		Console
-	</div>
-	<div class="componentSectionHalf">
-		Test Panel
+		<div class="componentSection">
+			Editor
+		</div>
+		<div class="componentSection">
+			Logger
+		</div>
+		<div class="componentSectionHalf">
+			Console
+		</div>
+		<div class="componentSectionHalf">
+			Test Panel
+		</div>
 	</div>
 			
 </body>
