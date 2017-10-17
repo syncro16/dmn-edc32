@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DMN-EDC32 Configurator</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/zepto.min.js"></script>  
+  <script src="js/plotly.min.js"></script>  
+  <script src="js/gauge.min.js"></script>  
+  <script src="js/configurator.js"></script>  
+  <script src="settings/gauges.js"></script>  
+  
+</head>
+<body>
+	<div class="header">
+		<div>
+			DMN-EDC32 v.20171022
+		</div>
+		<div>
+			<span class="usbSerial"></span>/dev/tty.usbmodem143
+			<button>Connect</button>
+		</div>
+	</div>
+	<div class="componentSection" id='gauges'>
+		<div class="componentSectionHeader">
+			Gauges <button>+</button> <button>-</button> <button>Small</button> <button>Large</button> 
+		</div>
+	<!--Meters-->
+	<!--
+		<div class="componentSmall">
+				<canvas id="canvas-id"></canvas>
+		</div>	-->	
+	</div>
+	<div class="componentSection">
+		Editor
+	</div>
+	<div class="componentSection">
+		Logger
+	</div>
+	<div class="componentSectionHalf">
+		Console
+	</div>
+	<div class="componentSectionHalf">
+		Test Panel
+	</div>
+			
+</body>
+</html>
