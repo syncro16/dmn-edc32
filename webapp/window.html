@@ -1,0 +1,76 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>DMN-EDC32 Configurator</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/lib/zepto.min.js"></script>  
+<!--  <script src="js/plotly.min.js"></script>  -->
+  <script src="js/lib/gauge.min.js"></script>  
+  <script src="js/configurator.js"></script>  
+  <script src="js/views/GaugeView.js"></script>  
+ 
+  <script src="settings/gauges.js"></script>  
+  
+</head>
+<body>
+	<div class="header">
+		<div class="version">
+			DMN-EDC32<br>
+			<span>v.20171022</span>
+		</div>
+		<div class="connection">
+			<span class="usbSerial">
+				<select><option>/dev/tty.usbmodem143</option></select>
+
+			</span>
+			<br>
+			<div class="buttonGroup">				
+				<button>Connect</button>
+			</div>
+		</div>
+		<hr>
+		<div class="buttonGroupHeader">Data visualization</div>
+		<div class="buttonGroup">
+			<button active>Gauges</button><br>
+			<button>Logger</button><br>		
+		</div>
+		<hr>
+		<div class="buttonGroupHeader">Parameter configuration</div>		
+		<div class="buttonGroup">				
+			<button>Maps</button><br>
+			<button>PID Controls</button><br>
+			<button>Input Calibration</button><br>
+			<button>Temp Sensor Calibration</button><br>
+		</div>
+		<hr>
+		<div class="buttonGroupHeader">Error memory</div>		
+		<div class="buttonGroup">								
+			<button>DTC Log</button><br>		
+		</div>
+		<hr>
+		<div class="buttonGroupHeader">Test everything</div>				
+		<div class="buttonGroup">				
+			<button>Output Tests</button><br>
+		</div>
+		<br>		
+	</div>
+	<div id="viewActive">
+	</div>
+	<div id="viewInactive" style='display:none'>
+	</div>
+	<div id="templates" style='display:none'>
+		<div id="GaugeView">
+			<div class="large">		
+			</div>
+			<div class="medium">				
+			</div>
+			<div class="small">				
+			</div>
+			<div class="IO">				
+				Inputs / Outputs
+			</div>									
+		</div>
+	</div>
+</body>
+</html>
