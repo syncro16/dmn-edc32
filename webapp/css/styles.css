@@ -55,6 +55,13 @@ body {
 	color:#bbb;
 	width:100%;	
 }
+.header button.connect[error] {
+	background:#833;
+}
+.header button.connect[connected] {
+	background:#383;
+	
+}
 
 .header button:hover {
 	background:none;

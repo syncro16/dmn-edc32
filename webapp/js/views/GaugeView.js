@@ -16,8 +16,9 @@ class GaugeView {
 		for (var sz in this.sizes) {
 			if (this.sizes[sz]>0) {
 				for (var i in gaugeTypes) {
+					Object.assign(gaugeTypes[i].init,gaugeDefaults);
 					if (gaugeTypes[i].size == sz) {
-						gaugeTypes[i].instance = this.addGauge($('#GaugeView .'+sz),i,gaugeTypes[i].init);
+						gaugeTypes[i].instance = this.addGauge($('#GaugeView .'+sz),i,gaugeTypes[i]);
 					}
 				}		
 			}	
@@ -42,18 +43,21 @@ class GaugeView {
 		}		
 	}
 	addGauge(container,gaugeName,settings) {
-		console.log(gaugeName);
 		var e = $("<div class='componentGauge'><canvas></canvas></div>");
 		e.find('canvas').attr('id','gauge-'+gaugeName);
 		$(container).append(e);
 
-		settings.renderTo = 'gauge-'+gaugeName;
-		settings.value = '0';
-		var gauge = new RadialGauge(settings);;	
+		settings.init.renderTo = 'gauge-'+gaugeName;
+		settings.init.value = '0';
+		var gauge = new RadialGauge(settings.init);;	
 		settings.instance = gauge;
 		gauge.update({ "width": 42,"height": 42 });
 		gauge.draw();
-		$(document).on('0x4242',(e) => {gauge.update({"value":e.detail.value})} );			
+		$(document).on('0x4242',(e) => {
+			if (typeof conf == "undefined") return;
+			if (conf.getTick() % settings.priority == 0)
+				gauge.update({"value":e.detail.value})
+		} );			
 		return gauge;		
 	}
 	getDom() {

@@ -1,14 +1,30 @@
+var gaugeDefaults = {
+	borders:false,
+	colorBorderShadow:"none",
+	needleShadow:false,
+	valueTextShadow:false,
+	valueBoxStroke:0,
+	colorValueBoxShadow:"none",
+	borders:false,
+	colorNeedleShadowUp:"red",
+	colorNeedle:"rgb(205, 0, 0)",
+	colorNeedleStart:"rgb(205, 0, 0	)",			
+	colorNeedleEnd:"rgb(205, 0, 0	)",		
+	fontUnitsSize:32,
+	needleCircleOuter:true,
+    needleCircleInner:true,
+	strokeTicks: true
+};
+
 var gaugeTypes = {
 	"RPM":{
 		"bindEdcValue":0x4242,
-		"size":"large",
+		"size":"large",		
+		"priority":1,
 		"init":	{
 			units: "RPM",
 			minValue: 0,
-			maxValue: 6000,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",			
+			maxValue: 6000,	
 			majorTicks: [
 				"0",
 				"1000",
@@ -19,7 +35,6 @@ var gaugeTypes = {
 				"6000"
 			],
 			minorTicks: 4,
-			strokeTicks: true,
 			highlights: [
 				{
 					"from": 5250,
@@ -32,13 +47,12 @@ var gaugeTypes = {
 	"Boost":{
 		"bindEdcValue":0x4243,
 		"size":"large",		
+		"priority":1,		
 		"init":	{
 			units: "Boost (bar)",
 			minValue: 0,
 			maxValue: 3,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
+
 			majorTicks: [
 				"0",
 				"0.5",
@@ -56,13 +70,11 @@ var gaugeTypes = {
 	"TPS":{
 		"bindEdcValue":0x4243,
 		"size":"large",		
+		"priority":2,		
 		"init":	{
 			units: "TPS %",
 			minValue: 0,
 			maxValue: 100,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"0",
 				"25",
@@ -71,20 +83,17 @@ var gaugeTypes = {
 				"100"
 			],
 			minorTicks: 2,
-			strokeTicks: true,
 			highlights: []			
 		}
 	},
 	"Injection":{
 		"bindEdcValue":0x4243,
-		"size":"medium",		
+		"size":"medium",	
+		"priority":1,		
 		"init":	{
 			units: "Injection quantity",
 			minValue: 0,
 			maxValue: 4096,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"0",
 				"1024",
@@ -93,20 +102,28 @@ var gaugeTypes = {
 				"4096"
 			],
 			minorTicks: 4,
-			strokeTicks: true,
-			highlights: []			
+			highlights: [
+				{
+					"from": 0,
+					"to": 768,
+					"color": "rgba(50, 225, 50, 1)"
+				},
+				{
+					"from":769,
+					"to": 888,
+					"color": "rgba(255, 200, 0, 1)"
+				}								
+			]			
 		}
 	},
 	"Timing":{
 		"bindEdcValue":0x4243,
-		"size":"medium",		
+		"size":"medium",
+		"priority":2,		
 		"init":	{
 			units: "Timing °BTDC",
 			minValue: -10,
 			maxValue: 40,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"-10",
 				"0",
@@ -117,19 +134,23 @@ var gaugeTypes = {
 			],
 			minorTicks: 2,
 			strokeTicks: true,
-			highlights: []			
+			highlights: [
+				{
+					"from": 12.5,
+					"to": 13.5,
+					"color": "rgba(50, 225, 50, 1)"
+				},				
+			]			
 		}
 	},	
 	"Coolant":{
 		"bindEdcValue":0x4243,
+		"priority":15,		
 		"size":"medium",		
 		"init":	{
 			units: "Coolant °C",
 			minValue: -20,
 			maxValue: 140,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"-20",
 				"0",
@@ -142,7 +163,6 @@ var gaugeTypes = {
 				"140"
 			],
 			minorTicks: 2,
-			strokeTicks: true,
 			highlights: [
 				{
 					"from": -20,
@@ -159,14 +179,12 @@ var gaugeTypes = {
 	},
 	"Intake":{
 		"bindEdcValue":0x4243,
+		"priority":15,				
 		"size":"medium",		
 		"init":	{
 			units: "Intake °C",
 			minValue: -20,
 			maxValue: 140,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"-20",
 				"0",
@@ -191,14 +209,12 @@ var gaugeTypes = {
 	},
 	"Fuel":{
 		"bindEdcValue":0x4243,
+		"priority":15,				
 		"size":"small",		
 		"init":	{
 			units: "Fuel °C",
 			minValue: -20,
 			maxValue: 140,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"-20",
 				"0",
@@ -211,7 +227,6 @@ var gaugeTypes = {
 				"140"
 			],
 			minorTicks: 2,
-			strokeTicks: true,
 			highlights: [
 				
 			]			
@@ -219,14 +234,12 @@ var gaugeTypes = {
 	},
 	"AuxTemp":{
 		"bindEdcValue":0x4243,
+		"priority":15,				
 		"size":"small",		
 		"init":	{
 			units: "Aux °C",
 			minValue: -20,
 			maxValue: 140,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"-20",
 				"0",
@@ -247,14 +260,12 @@ var gaugeTypes = {
 	},
 	"AuxIn":{
 		"bindEdcValue":0x4243,
+		"priority":15,				
 		"size":"small",		
 		"init":	{
 			units: "Aux In (v)",
 			minValue: 0,
 			maxValue: 5,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"0",
 				"1",
@@ -272,14 +283,12 @@ var gaugeTypes = {
 	},
 	"Battery":{
 		"bindEdcValue":0x4243,
+		"priority":3,				
 		"size":"small",		
 		"init":	{
 			units: "Battery (v)",
 			minValue: 9,
 			maxValue: 18,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"9",
 				"10",
@@ -291,21 +300,18 @@ var gaugeTypes = {
 				"16"
 			],
 			minorTicks: 2,
-			strokeTicks: true,
 			highlights: [	
 			]			
 		}
 	},
 	"QaPWM":{
 		"bindEdcValue":0x4243,
+		"priority":1,				
 		"size":"small",		
 		"init":	{
 			units: "QA PWM",
 			minValue: 0,
 			maxValue: 4096,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"0",
 				"1024",
@@ -314,21 +320,18 @@ var gaugeTypes = {
 				"4096"
 			],
 			minorTicks: 2,
-			strokeTicks: true,
 			highlights: [	
 			]			
 		}
 	},	
 	"TimingPWM":{
 		"bindEdcValue":0x4243,
+		"priority":4,				
 		"size":"small",		
 		"init":	{
 			units: "Timing PWM",
 			minValue: 0,
 			maxValue: 255,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"0",
 				"64",
@@ -337,21 +340,18 @@ var gaugeTypes = {
 				"256",
 			],
 			minorTicks: 2,
-			strokeTicks: true,
 			highlights: [	
 			]			
 		}
 	},
 	"BoostPWM":{
 		"bindEdcValue":0x4243,
+		"priority":4,				
 		"size":"small",		
 		"init":	{
 			units: "Boost PWM",
 			minValue: 0,
 			maxValue: 255,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"0",
 				"64",
@@ -360,21 +360,18 @@ var gaugeTypes = {
 				"256",
 			],
 			minorTicks: 2,
-			strokeTicks: true,
 			highlights: [	
 			]			
 		}
 	},
 	"AuxPWM":{
 		"bindEdcValue":0x4243,
+		"priority":10,				
 		"size":"small",		
 		"init":	{
 			units: "Aux PWM",
 			minValue: 0,
 			maxValue: 255,
-			colorNeedle:"rgb(205, 0, 0)",
-			colorNeedleStart:"rgb(205, 0, 0	)",			
-			colorNeedleEnd:"rgb(205, 0, 0	)",
 			majorTicks: [
 				"0",
 				"64",
@@ -383,7 +380,6 @@ var gaugeTypes = {
 				"256",
 			],
 			minorTicks: 2,
-			strokeTicks: true,
 			highlights: [	
 			]			
 		}
