@@ -4,7 +4,6 @@ class Serial {
 	private:
 //	char buf[160];
 	char *buf;
-		
 	bool dmaRxMode;
     public:
 	volatile  uint8_t dmaBuf[2];
@@ -35,7 +34,6 @@ class Serial {
 	void ansiSetReverse(bool status);		
 	void ansiSetBold(bool status);		
 	void ansiReset();		
-	
     int available();
 	int poll(uint32_t timeoutMs);	
 	void appendReceiveRingBuffer(uint8_t c);

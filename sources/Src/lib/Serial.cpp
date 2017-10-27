@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdlib.h>
+#include "../edcMain.h"
 
 extern UART_HandleTypeDef huart2;
 
@@ -184,6 +185,7 @@ void Serial::appendReceiveRingBuffer(uint8_t c) {
 	} else {
 		receiveOverflowError = true;
 	}
+		
 }
 
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)   {
@@ -193,4 +195,3 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)   {
 void HAL_UART_RxHalfCpltCallback(UART_HandleTypeDef *huart) {
 	serial.appendReceiveRingBuffer(serial.dmaBuf[0]);
 }
-

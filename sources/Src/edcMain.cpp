@@ -1,4 +1,5 @@
 #include <stdarg.h>
+#include <stdlib.h>
 
 #include "RPMBase.h"
 #include "edcMain.h"
@@ -610,17 +611,19 @@ void doRelayControl() {
 	
 }
 	
-
 void __probe() {
 	static char loop;
-	if (!loop) 
+/*	if (!loop) 
 		serial.ansiClearScreen();
-	serial.ansiGotoXy(1,1);
+	serial.ansiGotoXy(1,1);*/
 	loop++;
 	bool out = (loop/64)%2;
 
-	serial.printf("RPM:%4d    Timing:%5d  \r\n",rpm.getLatestMeasure(),rpm.getInjectionTiming());
+//	serial.printf("RPM:%4d    Timing:%5d  \r\n",rpm.getLatestMeasure(),rpm.getInjectionTiming());
+
+/*	serial.printf("RPM:%4d    Timing:%5d  \r\n",rpm.getLatestMeasure(),rpm.getInjectionTiming());
 	serial.printf("OUT: aux:%d  fuel:%d  glow:%d  fan:%d   relay:%d\r\n",out,out,out,out,out);
+*/
 	io.outputAux(out);
 	io.outputFuelSolenoid(out);
 	io.outputGlowPlugs(out);
@@ -628,27 +631,27 @@ void __probe() {
 	io.outputMainPowerRelay(out);
 	
 	if (out) {
-		serial.printf("PWM: QA:50%% tim:50%% bst:50%% aux:50%% speed_pulse:0\r\n");	
+//		serial.printf("PWM: QA:50%% tim:50%% bst:50%% aux:50%% speed_pulse:0\r\n");	
 		io.pwmOutQuantityAdjuster_12b(2048);
 		io.pwmOutBoostSolenoid_8b(128);
 		io.pwmOutTiming_8b(128);
 		io.pwmOutAux_8(128);
 		io.pulseOutEngineSpeedSignal(0);		
 	} else {
-		serial.printf("PWM: QA:0%%  tim:0%%  bst:0%%  aux:0%%  speed_pulse:1000rpm\r\n");			
+//		serial.printf("PWM: QA:0%%  tim:0%%  bst:0%%  aux:0%%  speed_pulse:1000rpm\r\n");			
 		io.pwmOutQuantityAdjuster_12b(0);
 		io.pwmOutBoostSolenoid_8b(0);
 		io.pwmOutTiming_8b(0);
 		io.pwmOutAux_8(0);
 		io.pulseOutEngineSpeedSignal(1000);
 	}
-	serial.printf("IN:  aux:%d  wot:%d   idle:%d  brake:%d cSet:%d   cDecel:%d          \r\n",
+/*	serial.printf("IN:  aux:%d  wot:%d   idle:%d  brake:%d cSet:%d   cDecel:%d          \r\n",
 		io.inputAux(),io.inputTPSWot(),io.inputTPSIdle(),io.inputBrake(),io.inputCruiseSet(),io.inputCruiseDecel());
 	
 	serial.printf("ADC: batv:%4d press:%4d tps:%4d   ftmp:%4d  ctmp:%4d   atmp:%4d  aux:%4d \r\n     itmp:%4d qaPos:%4d                      \r\n",
 		io.analogInBatteryVoltage(),io.analogInManifoldPressre(),io.analogInTPS(),io.analogInFuelTemp(),io.analogInCoolantTemp(),
 		io.analogInAuxTemp(),io.analogInAuxIn1(),io.analogInIntTemp(),io.analogQAPosition());
-		
+*/		
 	//HAL_ADC_Start_DMA(&hadc1,(uint32_t*)adc1buf,8);
 		
 }
@@ -669,15 +672,67 @@ void edcScheluder() {
 	
 }
 
-void edcMain() {
+void edcHandleSystemEvent(const char*name,const char *data) {
+//	serial.printf("System event:%s, data:%s\n",name,data);
+	if (strcmp(name,"PING") == 0) {
+		serial.printf("%cPONG:DMN-EDC32 ready. version:20171026%c",0x02,0x03);					
+		return;
+	}
+	// if we are here, event is unhandled, log it
+	serial.printf("Unsupported event:%s\n",name);
+}
 
+void edcMain() {
+	const int cmdBufSize = 512;
+	char *cmdBuf = (char*)malloc(cmdBufSize);
 	setup();
+	serial.print("edcMain()");
 
 	edcRunning = 1;
+	static char loop=0;
+	static char commandState=0;
+	unsigned int cmdIdx=0;
 	// main loop
 	while (true) {
+		if (serial.available()) {
+			char c=serial.read();
+			if (c==0x02) {
+				memset(cmdBuf,0,cmdBufSize);
+				commandState=1;
+				cmdIdx=0;
+				continue;
+			}
+			if (c==0x03) {
+				commandState=0;
+				cmdBuf[cmdIdx] = 0;
+				edcHandleSystemEvent(cmdBuf,(char*)(&cmdBuf+commandState));
+				continue;
+			}
+			if (commandState) {
+				// TODO commandState also acts as key:value separator (:), check length
+				if (cmdIdx < cmdBufSize-1) {
+					if (c == ':') {
+						cmdBuf[cmdIdx] = 0;
+						commandState = cmdIdx+1;
+					} else {
+						cmdBuf[cmdIdx] = c;
+					}
+					cmdIdx++;
+				}
+			} else {
+				// error
+			}
+
+		}
+		loop++;
+		if ((loop % 32) == 0) {
+//			serial.printf("RPM:%4d    Timing:%5d  \r\n",rpm.getLatestMeasure(),rpm.getInjectionTiming());			
+			serial.printf("%c4242:5600\n1000:%d%c",0x02,loop,0x03);			
+			
+		}
 
 		__probe();
+		
 //		__HAL_TIM_SET_COUNTER(&htim15,0);
 //		z=__HAL_TIM_GET_COUNTER(&htim15);
 //		if (z<zz) {
@@ -698,7 +753,7 @@ void edcMain() {
 //		handleUserInterface();
 //		dtc.save();
 
-		HAL_Delay(1000/40);		
+		HAL_Delay(1000/60);		
 	}
 		
 /*

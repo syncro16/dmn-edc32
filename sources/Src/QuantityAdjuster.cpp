@@ -3,6 +3,7 @@
 #include "utils.h"
 #include "DTC.h"
 #include <math.h>
+#include <stdlib.h>
 
 QuantityAdjuster::QuantityAdjuster() {
 }
