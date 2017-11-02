@@ -674,8 +674,8 @@ void edcScheluder() {
 
 void edcHandleSystemEvent(const char*name,const char *data) {
 //	serial.printf("System event:%s, data:%s\n",name,data);
-	if (strcmp(name,"PING") == 0) {
-		serial.printf("%cPONG:DMN-EDC32 ready. version:20171026%c",0x02,0x03);					
+	if (strcmp(name,"_INI") == 0) {
+		serial.printf("%c_RDY:DMN-EDC32 ready. version:20171026%c",0x02,0x03);					
 		return;
 	}
 	// if we are here, event is unhandled, log it
@@ -727,7 +727,7 @@ void edcMain() {
 		loop++;
 		if ((loop % 32) == 0) {
 //			serial.printf("RPM:%4d    Timing:%5d  \r\n",rpm.getLatestMeasure(),rpm.getInjectionTiming());			
-			serial.printf("%c4242:5600\n1000:%d%c",0x02,loop,0x03);			
+			serial.printf("%c1001:5600\n1000:%d%c",0x02,loop,0x03);			
 			
 		}
 
