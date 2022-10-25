@@ -1,0 +1,2836 @@
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 4
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"ConfEditor.cpp"
+  16              		.text
+  17              		.section	.rodata._ZN10ConfEditor11printHeaderEv.str1.1,"aMS",%progbits,1
+  18              	.LC0:
+  19 0000 202800   		.ascii	" (\000"
+  20              	.LC1:
+  21 0003 2900     		.ascii	")\000"
+  22              	.LC2:
+  23 0005 2052504D 		.ascii	" RPM\000"
+  23      00
+  24              	.LC3:
+  25 000a 20545053 		.ascii	" TPS\000"
+  25      00
+  26              	.LC4:
+  27 000f 206B5061 		.ascii	" kPa\000"
+  27      00
+  28              		.section	.text._ZN10ConfEditor11printHeaderEv,"ax",%progbits
+  29              		.align	1
+  30              		.global	_ZN10ConfEditor11printHeaderEv
+  31              		.syntax unified
+  32              		.thumb
+  33              		.thumb_func
+  35              	_ZN10ConfEditor11printHeaderEv:
+  36              		.fnstart
+  37              	.LFB929:
+  38              		@ args = 0, pretend = 0, frame = 16
+  39              		@ frame_needed = 0, uses_anonymous_args = 0
+  40 0000 7FB5     		push	{r0, r1, r2, r3, r4, r5, r6, lr}
+  41              		.save {r4, r5, r6, lr}
+  42              		.pad #16
+  43 0002 0122     		movs	r2, #1
+  44 0004 1146     		mov	r1, r2
+  45 0006 0446     		mov	r4, r0
+  46 0008 3548     		ldr	r0, .L7
+  47 000a 364D     		ldr	r5, .L7+4
+  48 000c FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+  49 0010 3348     		ldr	r0, .L7
+  50 0012 FFF7FEFF 		bl	_ZN6Serial12ansiClearEolEv
+  51 0016 637D     		ldrb	r3, [r4, #21]	@ zero_extendqisi2
+  52 0018 334A     		ldr	r2, .L7+8
+  53 001a 3148     		ldr	r0, .L7
+  54 001c 0133     		adds	r3, r3, #1
+  55 001e 52F82310 		ldr	r1, [r2, r3, lsl #2]
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 2
+
+
+  56 0022 0631     		adds	r1, r1, #6
+  57 0024 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+  58 0028 3049     		ldr	r1, .L7+12
+  59 002a 2D48     		ldr	r0, .L7
+  60 002c FFF7FEFF 		bl	_ZN6Serial5printEPKc
+  61 0030 2968     		ldr	r1, [r5]
+  62 0032 2B48     		ldr	r0, .L7
+  63 0034 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+  64 0038 2D49     		ldr	r1, .L7+16
+  65 003a 2948     		ldr	r0, .L7
+  66 003c FFF7FEFF 		bl	_ZN6Serial5printEPKc
+  67 0040 A37D     		ldrb	r3, [r4, #22]	@ zero_extendqisi2
+  68 0042 6E68     		ldr	r6, [r5, #4]
+  69 0044 03F00303 		and	r3, r3, #3
+  70 0048 022B     		cmp	r3, #2
+  71 004a 2ED0     		beq	.L2
+  72 004c 032B     		cmp	r3, #3
+  73 004e 39D0     		beq	.L3
+  74 0050 012B     		cmp	r3, #1
+  75 0052 11D1     		bne	.L5
+  76 0054 274B     		ldr	r3, .L7+20
+  77 0056 0A22     		movs	r2, #10
+  78 0058 D869     		ldr	r0, [r3, #28]
+  79 005a 6946     		mov	r1, sp
+  80 005c FFF7FEFF 		bl	itoa
+  81 0060 6846     		mov	r0, sp
+  82 0062 FFF7FEFF 		bl	strlen
+  83 0066 244B     		ldr	r3, .L7+24
+  84 0068 0DEB0002 		add	r2, sp, r0
+  85              	.L6:
+  86 006c 1968     		ldr	r1, [r3]	@ unaligned
+  87 006e 1B79     		ldrb	r3, [r3, #4]	@ zero_extendqisi2
+  88 0070 4DF80010 		str	r1, [sp, r0]	@ unaligned
+  89 0074 6C46     		mov	r4, sp
+  90 0076 1371     		strb	r3, [r2, #4]
+  91              	.L5:
+  92 0078 3046     		mov	r0, r6
+  93 007a FFF7FEFF 		bl	strlen
+  94 007e 0546     		mov	r5, r0
+  95 0080 2046     		mov	r0, r4
+  96 0082 FFF7FEFF 		bl	strlen
+  97 0086 2844     		add	r0, r0, r5
+  98 0088 C0F15001 		rsb	r1, r0, #80
+  99 008c 0122     		movs	r2, #1
+ 100 008e 1448     		ldr	r0, .L7
+ 101 0090 C9B2     		uxtb	r1, r1
+ 102 0092 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 103 0096 3146     		mov	r1, r6
+ 104 0098 1148     		ldr	r0, .L7
+ 105 009a FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 106 009e 1048     		ldr	r0, .L7
+ 107 00a0 2146     		mov	r1, r4
+ 108 00a2 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 109 00a6 04B0     		add	sp, sp, #16
+ 110              		@ sp needed
+ 111 00a8 70BD     		pop	{r4, r5, r6, pc}
+ 112              	.L2:
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 3
+
+
+ 113 00aa 124B     		ldr	r3, .L7+20
+ 114 00ac 0A22     		movs	r2, #10
+ 115 00ae 9868     		ldr	r0, [r3, #8]
+ 116 00b0 6946     		mov	r1, sp
+ 117 00b2 FFF7FEFF 		bl	itoa
+ 118 00b6 6846     		mov	r0, sp
+ 119 00b8 FFF7FEFF 		bl	strlen
+ 120 00bc 0F4B     		ldr	r3, .L7+28
+ 121 00be 0DEB0002 		add	r2, sp, r0
+ 122 00c2 D3E7     		b	.L6
+ 123              	.L3:
+ 124 00c4 0B4B     		ldr	r3, .L7+20
+ 125 00c6 0A22     		movs	r2, #10
+ 126 00c8 9869     		ldr	r0, [r3, #24]
+ 127 00ca 6946     		mov	r1, sp
+ 128 00cc FFF7FEFF 		bl	itoa
+ 129 00d0 6846     		mov	r0, sp
+ 130 00d2 FFF7FEFF 		bl	strlen
+ 131 00d6 0A4B     		ldr	r3, .L7+32
+ 132 00d8 0DEB0002 		add	r2, sp, r0
+ 133 00dc C6E7     		b	.L6
+ 134              	.L8:
+ 135 00de 00BF     		.align	2
+ 136              	.L7:
+ 137 00e0 00000000 		.word	serial
+ 138 00e4 00000000 		.word	.LANCHOR1
+ 139 00e8 00000000 		.word	.LANCHOR0
+ 140 00ec 00000000 		.word	.LC0
+ 141 00f0 03000000 		.word	.LC1
+ 142 00f4 00000000 		.word	core
+ 143 00f8 05000000 		.word	.LC2
+ 144 00fc 0A000000 		.word	.LC3
+ 145 0100 0F000000 		.word	.LC4
+ 146              		.fnend
+ 148              		.section	.text._ZN10ConfEditor10mainScreenEv,"ax",%progbits
+ 149              		.align	1
+ 150              		.global	_ZN10ConfEditor10mainScreenEv
+ 151              		.syntax unified
+ 152              		.thumb
+ 153              		.thumb_func
+ 155              	_ZN10ConfEditor10mainScreenEv:
+ 156              		.fnstart
+ 157              	.LFB930:
+ 158              		@ args = 0, pretend = 0, frame = 0
+ 159              		@ frame_needed = 0, uses_anonymous_args = 0
+ 160 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 161              		.save {r3, r4, r5, r6, r7, lr}
+ 162 0002 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 163 0004 8BB9     		cbnz	r3, .L13
+ 164              	.L9:
+ 165 0006 F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 166              	.L11:
+ 167 0008 A21C     		adds	r2, r4, #2
+ 168 000a 0121     		movs	r1, #1
+ 169 000c 3046     		mov	r0, r6
+ 170 000e D2B2     		uxtb	r2, r2
+ 171 0010 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 4
+
+
+ 172 0014 2946     		mov	r1, r5
+ 173 0016 3046     		mov	r0, r6
+ 174 0018 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 175              	.L10:
+ 176 001c E3B2     		uxtb	r3, r4
+ 177 001e 0134     		adds	r4, r4, #1
+ 178 0020 57F82350 		ldr	r5, [r7, r3, lsl #2]
+ 179 0024 002D     		cmp	r5, #0
+ 180 0026 EFD1     		bne	.L11
+ 181 0028 EDE7     		b	.L9
+ 182              	.L13:
+ 183 002a 024F     		ldr	r7, .L14
+ 184 002c 024E     		ldr	r6, .L14+4
+ 185 002e 0024     		movs	r4, #0
+ 186 0030 F4E7     		b	.L10
+ 187              	.L15:
+ 188 0032 00BF     		.align	2
+ 189              	.L14:
+ 190 0034 00000000 		.word	.LANCHOR0
+ 191 0038 00000000 		.word	serial
+ 192              		.fnend
+ 194              		.section	.text._ZN10ConfEditor15pageOutputTestsEv,"ax",%progbits
+ 195              		.align	1
+ 196              		.global	_ZN10ConfEditor15pageOutputTestsEv
+ 197              		.syntax unified
+ 198              		.thumb
+ 199              		.thumb_func
+ 201              	_ZN10ConfEditor15pageOutputTestsEv:
+ 202              		.fnstart
+ 203              	.LFB931:
+ 204              		@ args = 0, pretend = 0, frame = 0
+ 205              		@ frame_needed = 0, uses_anonymous_args = 0
+ 206 0000 70B5     		push	{r4, r5, r6, lr}
+ 207              		.save {r4, r5, r6, lr}
+ 208 0002 594C     		ldr	r4, .L48
+ 209 0004 0123     		movs	r3, #1
+ 210 0006 C4F88830 		str	r3, [r4, #136]
+ 211 000a 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 212 000c 542B     		cmp	r3, #84
+ 213 000e 0546     		mov	r5, r0
+ 214 0010 00F09380 		beq	.L17
+ 215 0014 6CD8     		bhi	.L18
+ 216 0016 4E2B     		cmp	r3, #78
+ 217 0018 00F09880 		beq	.L19
+ 218 001c 60D8     		bhi	.L20
+ 219 001e 002B     		cmp	r3, #0
+ 220 0020 00F0A080 		beq	.L16
+ 221 0024 412B     		cmp	r3, #65
+ 222 0026 00F08280 		beq	.L22
+ 223              	.L23:
+ 224 002a 5048     		ldr	r0, .L48+4
+ 225 002c 504E     		ldr	r6, .L48+8
+ 226 002e FFF7FEFF 		bl	_ZN6Serial15ansiClearScreenEv
+ 227 0032 2846     		mov	r0, r5
+ 228 0034 FFF7FEFF 		bl	_ZN10ConfEditor11printHeaderEv
+ 229 0038 0522     		movs	r2, #5
+ 230 003a 4C48     		ldr	r0, .L48+4
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 5
+
+
+ 231 003c 4D4D     		ldr	r5, .L48+12
+ 232 003e 0121     		movs	r1, #1
+ 233 0040 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 234 0044 4C49     		ldr	r1, .L48+16
+ 235 0046 4948     		ldr	r0, .L48+4
+ 236 0048 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 237 004c 0522     		movs	r2, #5
+ 238 004e 4748     		ldr	r0, .L48+4
+ 239 0050 2321     		movs	r1, #35
+ 240 0052 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 241 0056 616F     		ldr	r1, [r4, #116]
+ 242 0058 4448     		ldr	r0, .L48+4
+ 243 005a 0029     		cmp	r1, #0
+ 244 005c 14BF     		ite	ne
+ 245 005e 3146     		movne	r1, r6
+ 246 0060 2946     		moveq	r1, r5
+ 247 0062 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 248 0066 0622     		movs	r2, #6
+ 249 0068 4048     		ldr	r0, .L48+4
+ 250 006a 0121     		movs	r1, #1
+ 251 006c FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 252 0070 4249     		ldr	r1, .L48+20
+ 253 0072 3E48     		ldr	r0, .L48+4
+ 254 0074 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 255 0078 0622     		movs	r2, #6
+ 256 007a 3C48     		ldr	r0, .L48+4
+ 257 007c 2321     		movs	r1, #35
+ 258 007e FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 259 0082 A16F     		ldr	r1, [r4, #120]
+ 260 0084 3948     		ldr	r0, .L48+4
+ 261 0086 0029     		cmp	r1, #0
+ 262 0088 14BF     		ite	ne
+ 263 008a 3146     		movne	r1, r6
+ 264 008c 2946     		moveq	r1, r5
+ 265 008e FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 266 0092 0722     		movs	r2, #7
+ 267 0094 3548     		ldr	r0, .L48+4
+ 268 0096 0121     		movs	r1, #1
+ 269 0098 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 270 009c 3849     		ldr	r1, .L48+24
+ 271 009e 3348     		ldr	r0, .L48+4
+ 272 00a0 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 273 00a4 0722     		movs	r2, #7
+ 274 00a6 3148     		ldr	r0, .L48+4
+ 275 00a8 2321     		movs	r1, #35
+ 276 00aa FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 277 00ae E16F     		ldr	r1, [r4, #124]
+ 278 00b0 2E48     		ldr	r0, .L48+4
+ 279 00b2 FFF7FEFF 		bl	_ZN6Serial5printEi
+ 280 00b6 0822     		movs	r2, #8
+ 281 00b8 2C48     		ldr	r0, .L48+4
+ 282 00ba 0121     		movs	r1, #1
+ 283 00bc FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 284 00c0 3049     		ldr	r1, .L48+28
+ 285 00c2 2A48     		ldr	r0, .L48+4
+ 286 00c4 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 287 00c8 2848     		ldr	r0, .L48+4
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 6
+
+
+ 288 00ca 2321     		movs	r1, #35
+ 289 00cc 0822     		movs	r2, #8
+ 290 00ce FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 291 00d2 D4F88410 		ldr	r1, [r4, #132]
+ 292 00d6 2548     		ldr	r0, .L48+4
+ 293 00d8 BDE87040 		pop	{r4, r5, r6, lr}
+ 294 00dc FFF7FEBF 		b	_ZN6Serial5printEi
+ 295              	.L20:
+ 296 00e0 512B     		cmp	r3, #81
+ 297 00e2 A2D1     		bne	.L23
+ 298              	.L24:
+ 299 00e4 636F     		ldr	r3, [r4, #116]
+ 300 00e6 B3FA83F3 		clz	r3, r3
+ 301 00ea 5B09     		lsrs	r3, r3, #5
+ 302 00ec 6367     		str	r3, [r4, #116]
+ 303 00ee 9CE7     		b	.L23
+ 304              	.L18:
+ 305 00f0 712B     		cmp	r3, #113
+ 306 00f2 F7D0     		beq	.L24
+ 307 00f4 10D8     		bhi	.L25
+ 308 00f6 612B     		cmp	r3, #97
+ 309 00f8 19D0     		beq	.L22
+ 310 00fa 6E2B     		cmp	r3, #110
+ 311 00fc 95D1     		bne	.L23
+ 312 00fe D4F88430 		ldr	r3, [r4, #132]
+ 313 0102 103B     		subs	r3, r3, #16
+ 314 0104 C4F88430 		str	r3, [r4, #132]
+ 315 0108 D4F88430 		ldr	r3, [r4, #132]
+ 316 010c 002B     		cmp	r3, #0
+ 317 010e 8CDA     		bge	.L23
+ 318 0110 0023     		movs	r3, #0
+ 319              	.L47:
+ 320 0112 C4F88430 		str	r3, [r4, #132]
+ 321 0116 88E7     		b	.L23
+ 322              	.L25:
+ 323 0118 742B     		cmp	r3, #116
+ 324 011a 86D1     		bne	.L23
+ 325 011c E36F     		ldr	r3, [r4, #124]
+ 326 011e 103B     		subs	r3, r3, #16
+ 327 0120 E367     		str	r3, [r4, #124]
+ 328 0122 E36F     		ldr	r3, [r4, #124]
+ 329 0124 002B     		cmp	r3, #0
+ 330 0126 80DA     		bge	.L23
+ 331 0128 0023     		movs	r3, #0
+ 332              	.L46:
+ 333 012a E367     		str	r3, [r4, #124]
+ 334 012c 7DE7     		b	.L23
+ 335              	.L22:
+ 336 012e A36F     		ldr	r3, [r4, #120]
+ 337 0130 B3FA83F3 		clz	r3, r3
+ 338 0134 5B09     		lsrs	r3, r3, #5
+ 339 0136 A367     		str	r3, [r4, #120]
+ 340 0138 77E7     		b	.L23
+ 341              	.L17:
+ 342 013a E36F     		ldr	r3, [r4, #124]
+ 343 013c 1033     		adds	r3, r3, #16
+ 344 013e E367     		str	r3, [r4, #124]
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 7
+
+
+ 345 0140 E36F     		ldr	r3, [r4, #124]
+ 346 0142 FF2B     		cmp	r3, #255
+ 347 0144 7FF771AF 		ble	.L23
+ 348 0148 FF23     		movs	r3, #255
+ 349 014a EEE7     		b	.L46
+ 350              	.L19:
+ 351 014c D4F88430 		ldr	r3, [r4, #132]
+ 352 0150 1033     		adds	r3, r3, #16
+ 353 0152 C4F88430 		str	r3, [r4, #132]
+ 354 0156 D4F88430 		ldr	r3, [r4, #132]
+ 355 015a FF2B     		cmp	r3, #255
+ 356 015c 7FF765AF 		ble	.L23
+ 357 0160 FF23     		movs	r3, #255
+ 358 0162 D6E7     		b	.L47
+ 359              	.L16:
+ 360 0164 70BD     		pop	{r4, r5, r6, pc}
+ 361              	.L49:
+ 362 0166 00BF     		.align	2
+ 363              	.L48:
+ 364 0168 00000000 		.word	core
+ 365 016c 00000000 		.word	serial
+ 366 0170 00000000 		.word	.LANCHOR2
+ 367 0174 00000000 		.word	.LANCHOR3
+ 368 0178 00000000 		.word	.LANCHOR4
+ 369 017c 00000000 		.word	.LANCHOR5
+ 370 0180 00000000 		.word	.LANCHOR6
+ 371 0184 00000000 		.word	.LANCHOR7
+ 372              		.fnend
+ 374              		.section	.rodata._ZN10ConfEditor14pageVisualizerEv.str1.1,"aMS",%progbits,1
+ 375              	.LC5:
+ 376 0000 3D00     		.ascii	"=\000"
+ 377              	.LC6:
+ 378 0002 2A00     		.ascii	"*\000"
+ 379              	.LC7:
+ 380 0004 51412044 		.ascii	"QA Disabled\000"
+ 380      69736162 
+ 380      6C656400 
+ 381              	.LC8:
+ 382 0010 6D696E20 		.ascii	"min clip\000"
+ 382      636C6970 
+ 382      00
+ 383              	.LC9:
+ 384 0019 4D415820 		.ascii	"MAX clip\000"
+ 384      636C6970 
+ 384      00
+ 385              		.section	.text._ZN10ConfEditor14pageVisualizerEv,"ax",%progbits
+ 386              		.align	1
+ 387              		.global	_ZN10ConfEditor14pageVisualizerEv
+ 388              		.syntax unified
+ 389              		.thumb
+ 390              		.thumb_func
+ 392              	_ZN10ConfEditor14pageVisualizerEv:
+ 393              		.fnstart
+ 394              	.LFB932:
+ 395              		@ args = 0, pretend = 0, frame = 0
+ 396              		@ frame_needed = 0, uses_anonymous_args = 0
+ 397 0000 2DE9F843 		push	{r3, r4, r5, r6, r7, r8, r9, lr}
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 8
+
+
+ 398              		.save {r3, r4, r5, r6, r7, r8, r9, lr}
+ 399 0004 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 400 0006 B94D     		ldr	r5, .L99
+ 401 0008 0646     		mov	r6, r0
+ 402 000a 002B     		cmp	r3, #0
+ 403 000c 59D0     		beq	.L51
+ 404 000e B84A     		ldr	r2, .L99+4
+ 405 0010 B848     		ldr	r0, .L99+8
+ 406 0012 FF23     		movs	r3, #255
+ 407 0014 1370     		strb	r3, [r2]
+ 408 0016 B84A     		ldr	r2, .L99+12
+ 409 0018 2B70     		strb	r3, [r5]
+ 410 001a 1370     		strb	r3, [r2]
+ 411 001c B74A     		ldr	r2, .L99+16
+ 412 001e 1370     		strb	r3, [r2]
+ 413 0020 B74A     		ldr	r2, .L99+20
+ 414 0022 1370     		strb	r3, [r2]
+ 415 0024 B74A     		ldr	r2, .L99+24
+ 416 0026 1370     		strb	r3, [r2]
+ 417 0028 FFF7FEFF 		bl	_ZN6Serial15ansiClearScreenEv
+ 418 002c 3046     		mov	r0, r6
+ 419 002e FFF7FEFF 		bl	_ZN10ConfEditor11printHeaderEv
+ 420 0032 0422     		movs	r2, #4
+ 421 0034 AF48     		ldr	r0, .L99+8
+ 422 0036 0121     		movs	r1, #1
+ 423 0038 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 424 003c B249     		ldr	r1, .L99+28
+ 425 003e AD48     		ldr	r0, .L99+8
+ 426 0040 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 427 0044 0522     		movs	r2, #5
+ 428 0046 AB48     		ldr	r0, .L99+8
+ 429 0048 0121     		movs	r1, #1
+ 430 004a FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 431 004e AF49     		ldr	r1, .L99+32
+ 432 0050 A848     		ldr	r0, .L99+8
+ 433 0052 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 434 0056 0622     		movs	r2, #6
+ 435 0058 A648     		ldr	r0, .L99+8
+ 436 005a 0121     		movs	r1, #1
+ 437 005c FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 438 0060 AB49     		ldr	r1, .L99+36
+ 439 0062 A448     		ldr	r0, .L99+8
+ 440 0064 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 441 0068 0722     		movs	r2, #7
+ 442 006a A248     		ldr	r0, .L99+8
+ 443 006c 0121     		movs	r1, #1
+ 444 006e FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 445 0072 A849     		ldr	r1, .L99+40
+ 446 0074 9F48     		ldr	r0, .L99+8
+ 447 0076 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 448 007a 0822     		movs	r2, #8
+ 449 007c 9D48     		ldr	r0, .L99+8
+ 450 007e 0121     		movs	r1, #1
+ 451 0080 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 452 0084 A449     		ldr	r1, .L99+44
+ 453 0086 9B48     		ldr	r0, .L99+8
+ 454 0088 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 9
+
+
+ 455 008c 0922     		movs	r2, #9
+ 456 008e 9948     		ldr	r0, .L99+8
+ 457 0090 0121     		movs	r1, #1
+ 458 0092 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 459 0096 A149     		ldr	r1, .L99+48
+ 460 0098 9648     		ldr	r0, .L99+8
+ 461 009a FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 462 009e 0A22     		movs	r2, #10
+ 463 00a0 9448     		ldr	r0, .L99+8
+ 464 00a2 0121     		movs	r1, #1
+ 465 00a4 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 466 00a8 9D49     		ldr	r1, .L99+52
+ 467 00aa 9248     		ldr	r0, .L99+8
+ 468 00ac FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 469 00b0 9048     		ldr	r0, .L99+8
+ 470 00b2 0121     		movs	r1, #1
+ 471 00b4 0B22     		movs	r2, #11
+ 472 00b6 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 473 00ba 9A49     		ldr	r1, .L99+56
+ 474 00bc 8D48     		ldr	r0, .L99+8
+ 475 00be FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 476              	.L51:
+ 477 00c2 994C     		ldr	r4, .L99+60
+ 478 00c4 2A78     		ldrb	r2, [r5]	@ zero_extendqisi2
+ 479 00c6 A368     		ldr	r3, [r4, #8]
+ 480 00c8 002B     		cmp	r3, #0
+ 481 00ca B8BF     		it	lt
+ 482 00cc 0333     		addlt	r3, r3, #3
+ 483 00ce B2EBA30F 		cmp	r2, r3, asr #2
+ 484 00d2 19D0     		beq	.L52
+ 485 00d4 A368     		ldr	r3, [r4, #8]
+ 486 00d6 8748     		ldr	r0, .L99+8
+ 487 00d8 DFF87482 		ldr	r8, .L99+100
+ 488 00dc DFF81492 		ldr	r9, .L99+8
+ 489 00e0 002B     		cmp	r3, #0
+ 490 00e2 B8BF     		it	lt
+ 491 00e4 0333     		addlt	r3, r3, #3
+ 492 00e6 9B10     		asrs	r3, r3, #2
+ 493 00e8 0422     		movs	r2, #4
+ 494 00ea 0D21     		movs	r1, #13
+ 495 00ec 2B70     		strb	r3, [r5]
+ 496 00ee FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 497 00f2 0027     		movs	r7, #0
+ 498              	.L55:
+ 499 00f4 2B78     		ldrb	r3, [r5]	@ zero_extendqisi2
+ 500 00f6 FAB2     		uxtb	r2, r7
+ 501 00f8 9342     		cmp	r3, r2
+ 502 00fa 00F24A81 		bhi	.L56
+ 503 00fe 8B49     		ldr	r1, .L99+64
+ 504 0100 7C48     		ldr	r0, .L99+8
+ 505 0102 1944     		add	r1, r1, r3
+ 506 0104 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 507              	.L52:
+ 508 0108 D4F89030 		ldr	r3, [r4, #144]
+ 509 010c 784F     		ldr	r7, .L99+4
+ 510 010e 002B     		cmp	r3, #0
+ 511 0110 3A78     		ldrb	r2, [r7]	@ zero_extendqisi2
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 10
+
+
+ 512 0112 B8BF     		it	lt
+ 513 0114 0333     		addlt	r3, r3, #3
+ 514 0116 B2EBA30F 		cmp	r2, r3, asr #2
+ 515 011a 1AD0     		beq	.L57
+ 516 011c D4F89030 		ldr	r3, [r4, #144]
+ 517 0120 7448     		ldr	r0, .L99+8
+ 518 0122 DFF83082 		ldr	r8, .L99+104
+ 519 0126 DFF8CC91 		ldr	r9, .L99+8
+ 520 012a 002B     		cmp	r3, #0
+ 521 012c B8BF     		it	lt
+ 522 012e 0333     		addlt	r3, r3, #3
+ 523 0130 9B10     		asrs	r3, r3, #2
+ 524 0132 0522     		movs	r2, #5
+ 525 0134 0D21     		movs	r1, #13
+ 526 0136 3B70     		strb	r3, [r7]
+ 527 0138 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 528 013c 0025     		movs	r5, #0
+ 529              	.L60:
+ 530 013e 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 531 0140 EAB2     		uxtb	r2, r5
+ 532 0142 9342     		cmp	r3, r2
+ 533 0144 00F22B81 		bhi	.L61
+ 534 0148 7949     		ldr	r1, .L99+68
+ 535 014a 6A48     		ldr	r0, .L99+8
+ 536 014c 1944     		add	r1, r1, r3
+ 537 014e FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 538              	.L57:
+ 539 0152 E36A     		ldr	r3, [r4, #44]
+ 540 0154 6A4F     		ldr	r7, .L99+20
+ 541 0156 002B     		cmp	r3, #0
+ 542 0158 3A78     		ldrb	r2, [r7]	@ zero_extendqisi2
+ 543 015a B8BF     		it	lt
+ 544 015c 0F33     		addlt	r3, r3, #15
+ 545 015e B2EB231F 		cmp	r2, r3, asr #4
+ 546 0162 19D0     		beq	.L62
+ 547 0164 E36A     		ldr	r3, [r4, #44]
+ 548 0166 6348     		ldr	r0, .L99+8
+ 549 0168 DFF8E881 		ldr	r8, .L99+104
+ 550 016c DFF88491 		ldr	r9, .L99+8
+ 551 0170 002B     		cmp	r3, #0
+ 552 0172 B8BF     		it	lt
+ 553 0174 0F33     		addlt	r3, r3, #15
+ 554 0176 1B11     		asrs	r3, r3, #4
+ 555 0178 0622     		movs	r2, #6
+ 556 017a 0D21     		movs	r1, #13
+ 557 017c 3B70     		strb	r3, [r7]
+ 558 017e FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 559 0182 0025     		movs	r5, #0
+ 560              	.L65:
+ 561 0184 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 562 0186 EAB2     		uxtb	r2, r5
+ 563 0188 9342     		cmp	r3, r2
+ 564 018a 00F20E81 		bhi	.L66
+ 565 018e 6949     		ldr	r1, .L99+72
+ 566 0190 5848     		ldr	r0, .L99+8
+ 567 0192 1944     		add	r1, r1, r3
+ 568 0194 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 11
+
+
+ 569              	.L62:
+ 570 0198 E36F     		ldr	r3, [r4, #124]
+ 571 019a 574F     		ldr	r7, .L99+12
+ 572 019c 002B     		cmp	r3, #0
+ 573 019e 3A78     		ldrb	r2, [r7]	@ zero_extendqisi2
+ 574 01a0 B8BF     		it	lt
+ 575 01a2 0333     		addlt	r3, r3, #3
+ 576 01a4 B2EBA30F 		cmp	r2, r3, asr #2
+ 577 01a8 19D0     		beq	.L67
+ 578 01aa E36F     		ldr	r3, [r4, #124]
+ 579 01ac 5148     		ldr	r0, .L99+8
+ 580 01ae DFF8A481 		ldr	r8, .L99+104
+ 581 01b2 DFF84091 		ldr	r9, .L99+8
+ 582 01b6 002B     		cmp	r3, #0
+ 583 01b8 B8BF     		it	lt
+ 584 01ba 0333     		addlt	r3, r3, #3
+ 585 01bc 9B10     		asrs	r3, r3, #2
+ 586 01be 0722     		movs	r2, #7
+ 587 01c0 0D21     		movs	r1, #13
+ 588 01c2 3B70     		strb	r3, [r7]
+ 589 01c4 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 590 01c8 0025     		movs	r5, #0
+ 591              	.L70:
+ 592 01ca 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 593 01cc EAB2     		uxtb	r2, r5
+ 594 01ce 9342     		cmp	r3, r2
+ 595 01d0 00F2F180 		bhi	.L71
+ 596 01d4 5849     		ldr	r1, .L99+76
+ 597 01d6 4748     		ldr	r0, .L99+8
+ 598 01d8 1944     		add	r1, r1, r3
+ 599 01da FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 600              	.L67:
+ 601 01de D4F88430 		ldr	r3, [r4, #132]
+ 602 01e2 464F     		ldr	r7, .L99+16
+ 603 01e4 002B     		cmp	r3, #0
+ 604 01e6 3A78     		ldrb	r2, [r7]	@ zero_extendqisi2
+ 605 01e8 B8BF     		it	lt
+ 606 01ea 0333     		addlt	r3, r3, #3
+ 607 01ec B2EBA30F 		cmp	r2, r3, asr #2
+ 608 01f0 1AD0     		beq	.L72
+ 609 01f2 D4F88430 		ldr	r3, [r4, #132]
+ 610 01f6 3F48     		ldr	r0, .L99+8
+ 611 01f8 DFF85881 		ldr	r8, .L99+104
+ 612 01fc DFF8F490 		ldr	r9, .L99+8
+ 613 0200 002B     		cmp	r3, #0
+ 614 0202 B8BF     		it	lt
+ 615 0204 0333     		addlt	r3, r3, #3
+ 616 0206 9B10     		asrs	r3, r3, #2
+ 617 0208 0822     		movs	r2, #8
+ 618 020a 0D21     		movs	r1, #13
+ 619 020c 3B70     		strb	r3, [r7]
+ 620 020e FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 621 0212 0025     		movs	r5, #0
+ 622              	.L75:
+ 623 0214 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 624 0216 EAB2     		uxtb	r2, r5
+ 625 0218 9342     		cmp	r3, r2
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 12
+
+
+ 626 021a 00F2D280 		bhi	.L76
+ 627 021e 4749     		ldr	r1, .L99+80
+ 628 0220 3448     		ldr	r0, .L99+8
+ 629 0222 1944     		add	r1, r1, r3
+ 630 0224 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 631              	.L72:
+ 632 0228 A369     		ldr	r3, [r4, #24]
+ 633 022a 364F     		ldr	r7, .L99+24
+ 634 022c 002B     		cmp	r3, #0
+ 635 022e 3A78     		ldrb	r2, [r7]	@ zero_extendqisi2
+ 636 0230 B8BF     		it	lt
+ 637 0232 0333     		addlt	r3, r3, #3
+ 638 0234 B2EBA30F 		cmp	r2, r3, asr #2
+ 639 0238 19D0     		beq	.L77
+ 640 023a A369     		ldr	r3, [r4, #24]
+ 641 023c 2D48     		ldr	r0, .L99+8
+ 642 023e DFF81481 		ldr	r8, .L99+104
+ 643 0242 DFF8B090 		ldr	r9, .L99+8
+ 644 0246 002B     		cmp	r3, #0
+ 645 0248 B8BF     		it	lt
+ 646 024a 0333     		addlt	r3, r3, #3
+ 647 024c 9B10     		asrs	r3, r3, #2
+ 648 024e 0922     		movs	r2, #9
+ 649 0250 0D21     		movs	r1, #13
+ 650 0252 3B70     		strb	r3, [r7]
+ 651 0254 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 652 0258 0025     		movs	r5, #0
+ 653              	.L80:
+ 654 025a 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 655 025c EAB2     		uxtb	r2, r5
+ 656 025e 9342     		cmp	r3, r2
+ 657 0260 00F2B580 		bhi	.L81
+ 658 0264 3649     		ldr	r1, .L99+84
+ 659 0266 2348     		ldr	r0, .L99+8
+ 660 0268 1944     		add	r1, r1, r3
+ 661 026a FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 662              	.L77:
+ 663 026e D4F8C030 		ldr	r3, [r4, #192]
+ 664 0272 344F     		ldr	r7, .L99+88
+ 665 0274 002B     		cmp	r3, #0
+ 666 0276 3A78     		ldrb	r2, [r7]	@ zero_extendqisi2
+ 667 0278 B8BF     		it	lt
+ 668 027a 0333     		addlt	r3, r3, #3
+ 669 027c B2EBA30F 		cmp	r2, r3, asr #2
+ 670 0280 1AD0     		beq	.L82
+ 671 0282 D4F8C030 		ldr	r3, [r4, #192]
+ 672 0286 1B48     		ldr	r0, .L99+8
+ 673 0288 DFF8C880 		ldr	r8, .L99+104
+ 674 028c DFF86490 		ldr	r9, .L99+8
+ 675 0290 002B     		cmp	r3, #0
+ 676 0292 B8BF     		it	lt
+ 677 0294 0333     		addlt	r3, r3, #3
+ 678 0296 9B10     		asrs	r3, r3, #2
+ 679 0298 0A22     		movs	r2, #10
+ 680 029a 0D21     		movs	r1, #13
+ 681 029c 3B70     		strb	r3, [r7]
+ 682 029e FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 13
+
+
+ 683 02a2 0025     		movs	r5, #0
+ 684              	.L85:
+ 685 02a4 3B78     		ldrb	r3, [r7]	@ zero_extendqisi2
+ 686 02a6 EAB2     		uxtb	r2, r5
+ 687 02a8 9342     		cmp	r3, r2
+ 688 02aa 00F29680 		bhi	.L86
+ 689 02ae 2649     		ldr	r1, .L99+92
+ 690 02b0 1048     		ldr	r0, .L99+8
+ 691 02b2 1944     		add	r1, r1, r3
+ 692 02b4 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 693              	.L82:
+ 694 02b8 E369     		ldr	r3, [r4, #28]
+ 695 02ba 0E48     		ldr	r0, .L99+8
+ 696 02bc E569     		ldr	r5, [r4, #28]
+ 697 02be 0A23     		movs	r3, #10
+ 698 02c0 0B22     		movs	r2, #11
+ 699 02c2 95FBF3F5 		sdiv	r5, r5, r3
+ 700 02c6 0D21     		movs	r1, #13
+ 701 02c8 5D43     		muls	r5, r3, r5
+ 702 02ca FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 703 02ce 2023     		movs	r3, #32
+ 704 02d0 0848     		ldr	r0, .L99+8
+ 705 02d2 0522     		movs	r2, #5
+ 706 02d4 2946     		mov	r1, r5
+ 707 02d6 FFF7FEFF 		bl	_ZN6Serial16printWithPaddingEihc
+ 708 02da 1C49     		ldr	r1, .L99+96
+ 709 02dc 0548     		ldr	r0, .L99+8
+ 710 02de 2944     		add	r1, r1, r5
+ 711 02e0 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 712 02e4 337D     		ldrb	r3, [r6, #20]	@ zero_extendqisi2
+ 713 02e6 502B     		cmp	r3, #80
+ 714 02e8 44D1     		bne	.L88
+ 715 02ea 35E0     		b	.L100
+ 716              	.L101:
+ 717              		.align	2
+ 718              	.L99:
+ 719 02ec 00000000 		.word	.LANCHOR8
+ 720 02f0 00000000 		.word	.LANCHOR9
+ 721 02f4 00000000 		.word	serial
+ 722 02f8 00000000 		.word	.LANCHOR10
+ 723 02fc 00000000 		.word	.LANCHOR11
+ 724 0300 00000000 		.word	.LANCHOR12
+ 725 0304 00000000 		.word	.LANCHOR13
+ 726 0308 00000000 		.word	.LANCHOR14
+ 727 030c 00000000 		.word	.LANCHOR15
+ 728 0310 00000000 		.word	.LANCHOR16
+ 729 0314 00000000 		.word	.LANCHOR17
+ 730 0318 00000000 		.word	.LANCHOR18
+ 731 031c 00000000 		.word	.LANCHOR19
+ 732 0320 00000000 		.word	.LANCHOR20
+ 733 0324 00000000 		.word	.LANCHOR21
+ 734 0328 00000000 		.word	core
+ 735 032c 0C000000 		.word	.LANCHOR14+12
+ 736 0330 0C000000 		.word	.LANCHOR15+12
+ 737 0334 0C000000 		.word	.LANCHOR16+12
+ 738 0338 0C000000 		.word	.LANCHOR17+12
+ 739 033c 0C000000 		.word	.LANCHOR18+12
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 14
+
+
+ 740 0340 0C000000 		.word	.LANCHOR19+12
+ 741 0344 00000000 		.word	.LANCHOR22
+ 742 0348 0C000000 		.word	.LANCHOR20+12
+ 743 034c 0C000000 		.word	.LANCHOR21+12
+ 744 0350 00000000 		.word	.LC5
+ 745 0354 02000000 		.word	.LC6
+ 746              	.L100:
+ 747 0358 D4F8D830 		ldr	r3, [r4, #216]
+ 748 035c B3FA83F3 		clz	r3, r3
+ 749 0360 5B09     		lsrs	r3, r3, #5
+ 750 0362 C4F8D830 		str	r3, [r4, #216]
+ 751 0366 D4F8D830 		ldr	r3, [r4, #216]
+ 752 036a 1BB1     		cbz	r3, .L88
+ 753 036c 2349     		ldr	r1, .L102
+ 754 036e 2448     		ldr	r0, .L102+4
+ 755 0370 FFF7FEFF 		bl	_ZN6Serial6printfEPKcz
+ 756              	.L88:
+ 757 0374 2248     		ldr	r0, .L102+4
+ 758 0376 1422     		movs	r2, #20
+ 759 0378 0D21     		movs	r1, #13
+ 760 037a FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 761 037e D4F8CC30 		ldr	r3, [r4, #204]
+ 762 0382 022B     		cmp	r3, #2
+ 763 0384 2FD1     		bne	.L90
+ 764 0386 1F49     		ldr	r1, .L102+8
+ 765              	.L98:
+ 766 0388 1D48     		ldr	r0, .L102+4
+ 767 038a BDE8F843 		pop	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 768 038e FFF7FEBF 		b	_ZN6Serial5printEPKc
+ 769              	.L56:
+ 770 0392 4146     		mov	r1, r8
+ 771 0394 4846     		mov	r0, r9
+ 772 0396 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 773 039a 0137     		adds	r7, r7, #1
+ 774 039c AAE6     		b	.L55
+ 775              	.L61:
+ 776 039e 4146     		mov	r1, r8
+ 777 03a0 4846     		mov	r0, r9
+ 778 03a2 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 779 03a6 0135     		adds	r5, r5, #1
+ 780 03a8 C9E6     		b	.L60
+ 781              	.L66:
+ 782 03aa 4146     		mov	r1, r8
+ 783 03ac 4846     		mov	r0, r9
+ 784 03ae FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 785 03b2 0135     		adds	r5, r5, #1
+ 786 03b4 E6E6     		b	.L65
+ 787              	.L71:
+ 788 03b6 4146     		mov	r1, r8
+ 789 03b8 4846     		mov	r0, r9
+ 790 03ba FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 791 03be 0135     		adds	r5, r5, #1
+ 792 03c0 03E7     		b	.L70
+ 793              	.L76:
+ 794 03c2 4146     		mov	r1, r8
+ 795 03c4 4846     		mov	r0, r9
+ 796 03c6 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 15
+
+
+ 797 03ca 0135     		adds	r5, r5, #1
+ 798 03cc 22E7     		b	.L75
+ 799              	.L81:
+ 800 03ce 4146     		mov	r1, r8
+ 801 03d0 4846     		mov	r0, r9
+ 802 03d2 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 803 03d6 0135     		adds	r5, r5, #1
+ 804 03d8 3FE7     		b	.L80
+ 805              	.L86:
+ 806 03da 4146     		mov	r1, r8
+ 807 03dc 4846     		mov	r0, r9
+ 808 03de FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 809 03e2 0135     		adds	r5, r5, #1
+ 810 03e4 5EE7     		b	.L85
+ 811              	.L90:
+ 812 03e6 D4F8CC30 		ldr	r3, [r4, #204]
+ 813 03ea 012B     		cmp	r3, #1
+ 814 03ec 01D1     		bne	.L91
+ 815 03ee 0649     		ldr	r1, .L102+12
+ 816 03f0 CAE7     		b	.L98
+ 817              	.L91:
+ 818 03f2 BDE8F843 		pop	{r3, r4, r5, r6, r7, r8, r9, lr}
+ 819 03f6 0248     		ldr	r0, .L102+4
+ 820 03f8 FFF7FEBF 		b	_ZN6Serial12ansiClearEolEv
+ 821              	.L103:
+ 822              		.align	2
+ 823              	.L102:
+ 824 03fc 04000000 		.word	.LC7
+ 825 0400 00000000 		.word	serial
+ 826 0404 10000000 		.word	.LC8
+ 827 0408 19000000 		.word	.LC9
+ 828              		.fnend
+ 830              		.section	.text._ZN10ConfEditor7pageDTCEv,"ax",%progbits
+ 831              		.align	1
+ 832              		.global	_ZN10ConfEditor7pageDTCEv
+ 833              		.syntax unified
+ 834              		.thumb
+ 835              		.thumb_func
+ 837              	_ZN10ConfEditor7pageDTCEv:
+ 838              		.fnstart
+ 839              	.LFB933:
+ 840              		@ args = 0, pretend = 0, frame = 0
+ 841              		@ frame_needed = 0, uses_anonymous_args = 0
+ 842 0000 70B5     		push	{r4, r5, r6, lr}
+ 843              		.save {r4, r5, r6, lr}
+ 844 0002 037D     		ldrb	r3, [r0, #20]	@ zero_extendqisi2
+ 845 0004 672B     		cmp	r3, #103
+ 846 0006 0446     		mov	r4, r0
+ 847 0008 3FD0     		beq	.L105
+ 848 000a 03F0DF03 		and	r3, r3, #223
+ 849 000e 522B     		cmp	r3, #82
+ 850 0010 02D1     		bne	.L106
+ 851 0012 2E48     		ldr	r0, .L114
+ 852 0014 FFF7FEFF 		bl	_ZN3DTC8resetAllEv
+ 853              	.L106:
+ 854 0018 237D     		ldrb	r3, [r4, #20]	@ zero_extendqisi2
+ 855 001a 13B9     		cbnz	r3, .L107
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 16
+
+
+ 856 001c 237E     		ldrb	r3, [r4, #24]	@ zero_extendqisi2
+ 857 001e DB06     		lsls	r3, r3, #27
+ 858 0020 32D1     		bne	.L104
+ 859              	.L107:
+ 860 0022 2B48     		ldr	r0, .L114+4
+ 861 0024 294E     		ldr	r6, .L114
+ 862 0026 2A4D     		ldr	r5, .L114+4
+ 863 0028 FFF7FEFF 		bl	_ZN6Serial15ansiClearScreenEv
+ 864 002c 2046     		mov	r0, r4
+ 865 002e 294C     		ldr	r4, .L114+8
+ 866 0030 FFF7FEFF 		bl	_ZN10ConfEditor11printHeaderEv
+ 867 0034 0322     		movs	r2, #3
+ 868 0036 2648     		ldr	r0, .L114+4
+ 869 0038 0121     		movs	r1, #1
+ 870 003a FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 871 003e 2168     		ldr	r1, [r4]
+ 872 0040 2348     		ldr	r0, .L114+4
+ 873 0042 FFF7FEFF 		bl	_ZN6Serial6printfEPKcz
+ 874 0046 0522     		movs	r2, #5
+ 875 0048 2148     		ldr	r0, .L114+4
+ 876 004a 0121     		movs	r1, #1
+ 877 004c FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 878 0050 6168     		ldr	r1, [r4, #4]
+ 879 0052 1F48     		ldr	r0, .L114+4
+ 880 0054 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 881 0058 0522     		movs	r2, #5
+ 882 005a 1D48     		ldr	r0, .L114+4
+ 883 005c 3C21     		movs	r1, #60
+ 884 005e FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 885 0062 A168     		ldr	r1, [r4, #8]
+ 886 0064 1A48     		ldr	r0, .L114+4
+ 887 0066 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 888 006a 1948     		ldr	r0, .L114+4
+ 889 006c 0622     		movs	r2, #6
+ 890 006e 0121     		movs	r1, #1
+ 891 0070 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 892 0074 1648     		ldr	r0, .L114+4
+ 893 0076 2D22     		movs	r2, #45
+ 894 0078 4621     		movs	r1, #70
+ 895 007a FFF7FEFF 		bl	_ZN6Serial9printPadsEhc
+ 896 007e 0724     		movs	r4, #7
+ 897              	.L108:
+ 898 0080 3046     		mov	r0, r6
+ 899 0082 FFF7FEFF 		bl	_ZN3DTC13seekNextErrorEv
+ 900 0086 28B9     		cbnz	r0, .L109
+ 901              	.L104:
+ 902 0088 70BD     		pop	{r4, r5, r6, pc}
+ 903              	.L105:
+ 904 008a 1048     		ldr	r0, .L114
+ 905 008c 0321     		movs	r1, #3
+ 906 008e FFF7FEFF 		bl	_ZN3DTC8setErrorEj
+ 907 0092 C1E7     		b	.L106
+ 908              	.L109:
+ 909 0094 2246     		mov	r2, r4
+ 910 0096 0321     		movs	r1, #3
+ 911 0098 2846     		mov	r0, r5
+ 912 009a FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 17
+
+
+ 913 009e 3046     		mov	r0, r6
+ 914 00a0 FFF7FEFF 		bl	_ZN3DTC7getNameEv
+ 915 00a4 0146     		mov	r1, r0
+ 916 00a6 2846     		mov	r0, r5
+ 917 00a8 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 918 00ac 2246     		mov	r2, r4
+ 919 00ae 3C21     		movs	r1, #60
+ 920 00b0 2846     		mov	r0, r5
+ 921 00b2 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 922 00b6 3046     		mov	r0, r6
+ 923 00b8 FFF7FEFF 		bl	_ZN3DTC8getCountEv
+ 924 00bc 0134     		adds	r4, r4, #1
+ 925 00be 0146     		mov	r1, r0
+ 926 00c0 2846     		mov	r0, r5
+ 927 00c2 FFF7FEFF 		bl	_ZN6Serial5printEi
+ 928 00c6 E4B2     		uxtb	r4, r4
+ 929 00c8 DAE7     		b	.L108
+ 930              	.L115:
+ 931 00ca 00BF     		.align	2
+ 932              	.L114:
+ 933 00cc 00000000 		.word	dtc
+ 934 00d0 00000000 		.word	serial
+ 935 00d4 00000000 		.word	.LANCHOR23
+ 936              		.fnend
+ 938              		.section	.rodata._ZN10ConfEditor14pageAdaptationEv.str1.1,"aMS",%progbits,1
+ 939              	.LC10:
+ 940 0000 20287669 		.ascii	" (view only)\000"
+ 940      6577206F 
+ 940      6E6C7929 
+ 940      00
+ 941              	.LC11:
+ 942 000d 20202020 		.ascii	"        \000"
+ 942      20202020 
+ 942      00
+ 943              		.section	.text._ZN10ConfEditor14pageAdaptationEv,"ax",%progbits
+ 944              		.align	1
+ 945              		.global	_ZN10ConfEditor14pageAdaptationEv
+ 946              		.syntax unified
+ 947              		.thumb
+ 948              		.thumb_func
+ 950              	_ZN10ConfEditor14pageAdaptationEv:
+ 951              		.fnstart
+ 952              	.LFB934:
+ 953              		@ args = 0, pretend = 0, frame = 0
+ 954              		@ frame_needed = 0, uses_anonymous_args = 0
+ 955 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
+ 956              		.save {r4, r5, r6, r7, r8, r9, r10, lr}
+ 957 0004 0446     		mov	r4, r0
+ 958 0006 90F82020 		ldrb	r2, [r0, #32]	@ zero_extendqisi2
+ 959 000a 237D     		ldrb	r3, [r4, #20]	@ zero_extendqisi2
+ 960 000c C069     		ldr	r0, [r0, #28]
+ 961 000e 3E2B     		cmp	r3, #62
+ 962 0010 00EB0015 		add	r5, r0, r0, lsl #4
+ 963 0014 02EB0501 		add	r1, r2, r5
+ 964 0018 00F2D580 		bhi	.L117
+ 965 001c 392B     		cmp	r3, #57
+ 966 001e 00F2BC80 		bhi	.L118
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 18
+
+
+ 967 0022 2B2B     		cmp	r3, #43
+ 968 0024 00F01A81 		beq	.L152
+ 969 0028 00F2C880 		bhi	.L120
+ 970 002c 002B     		cmp	r3, #0
+ 971 002e 00F0F080 		beq	.L121
+ 972 0032 202B     		cmp	r3, #32
+ 973 0034 00F03081 		beq	.L122
+ 974              	.L123:
+ 975 0038 9B48     		ldr	r0, .L186
+ 976 003a 9C4D     		ldr	r5, .L186+4
+ 977 003c 9C4F     		ldr	r7, .L186+8
+ 978 003e 9A4E     		ldr	r6, .L186
+ 979 0040 DFF87082 		ldr	r8, .L186+12
+ 980 0044 FFF7FEFF 		bl	_ZN6Serial15ansiClearScreenEv
+ 981 0048 2046     		mov	r0, r4
+ 982 004a FFF7FEFF 		bl	_ZN10ConfEditor11printHeaderEv
+ 983 004e 0322     		movs	r2, #3
+ 984 0050 9548     		ldr	r0, .L186
+ 985 0052 0121     		movs	r1, #1
+ 986 0054 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 987 0058 2968     		ldr	r1, [r5]
+ 988 005a 9348     		ldr	r0, .L186
+ 989 005c FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 990 0060 0522     		movs	r2, #5
+ 991 0062 9148     		ldr	r0, .L186
+ 992 0064 0121     		movs	r1, #1
+ 993 0066 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 994 006a 6968     		ldr	r1, [r5, #4]
+ 995 006c 8E48     		ldr	r0, .L186
+ 996 006e FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 997 0072 0622     		movs	r2, #6
+ 998 0074 8C48     		ldr	r0, .L186
+ 999 0076 0121     		movs	r1, #1
+ 1000 0078 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1001 007c A968     		ldr	r1, [r5, #8]
+ 1002 007e 8A48     		ldr	r0, .L186
+ 1003 0080 FFF7FEFF 		bl	_ZN6Serial6printfEPKcz
+ 1004 0084 0522     		movs	r2, #5
+ 1005 0086 8848     		ldr	r0, .L186
+ 1006 0088 1821     		movs	r1, #24
+ 1007 008a FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1008 008e E169     		ldr	r1, [r4, #28]
+ 1009 0090 8548     		ldr	r0, .L186
+ 1010 0092 0131     		adds	r1, r1, #1
+ 1011 0094 FFF7FEFF 		bl	_ZN6Serial5printEi
+ 1012 0098 8348     		ldr	r0, .L186
+ 1013 009a 0522     		movs	r2, #5
+ 1014 009c 1A21     		movs	r1, #26
+ 1015 009e FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1016 00a2 8148     		ldr	r0, .L186
+ 1017 00a4 0521     		movs	r1, #5
+ 1018 00a6 FFF7FEFF 		bl	_ZN6Serial5printEi
+ 1019 00aa 0025     		movs	r5, #0
+ 1020              	.L140:
+ 1021 00ac E169     		ldr	r1, [r4, #28]
+ 1022 00ae 01EB0111 		add	r1, r1, r1, lsl #4
+ 1023 00b2 2944     		add	r1, r1, r5
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 19
+
+
+ 1024 00b4 4929     		cmp	r1, #73
+ 1025 00b6 1BDC     		bgt	.L138
+ 1026 00b8 3846     		mov	r0, r7
+ 1027 00ba FFF7FEFF 		bl	_ZN4Core14setCurrentNodeEi
+ 1028 00be 3846     		mov	r0, r7
+ 1029 00c0 FFF7FEFF 		bl	_ZN4Core11getNodeDataEv
+ 1030 00c4 837B     		ldrb	r3, [r0, #14]	@ zero_extendqisi2
+ 1031 00c6 8146     		mov	r9, r0
+ 1032 00c8 93B1     		cbz	r3, .L138
+ 1033 00ca EA1D     		adds	r2, r5, #7
+ 1034 00cc D2B2     		uxtb	r2, r2
+ 1035 00ce 0321     		movs	r1, #3
+ 1036 00d0 3046     		mov	r0, r6
+ 1037 00d2 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1038 00d6 D9F81010 		ldr	r1, [r9, #16]	@ unaligned
+ 1039 00da 3046     		mov	r0, r6
+ 1040 00dc FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1041 00e0 99F80E30 		ldrb	r3, [r9, #14]	@ zero_extendqisi2
+ 1042 00e4 9A07     		lsls	r2, r3, #30
+ 1043 00e6 03D5     		bpl	.L138
+ 1044 00e8 4146     		mov	r1, r8
+ 1045 00ea 3046     		mov	r0, r6
+ 1046 00ec FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1047              	.L138:
+ 1048 00f0 0135     		adds	r5, r5, #1
+ 1049 00f2 112D     		cmp	r5, #17
+ 1050 00f4 DAD1     		bne	.L140
+ 1051              	.L142:
+ 1052 00f6 DFF8B881 		ldr	r8, .L186+8
+ 1053 00fa 6B4F     		ldr	r7, .L186
+ 1054 00fc DFF8B891 		ldr	r9, .L186+16
+ 1055 0100 0026     		movs	r6, #0
+ 1056              	.L141:
+ 1057 0102 E169     		ldr	r1, [r4, #28]
+ 1058 0104 01EB0111 		add	r1, r1, r1, lsl #4
+ 1059 0108 3144     		add	r1, r1, r6
+ 1060 010a 4929     		cmp	r1, #73
+ 1061 010c 41DC     		bgt	.L144
+ 1062 010e 4046     		mov	r0, r8
+ 1063 0110 FFF7FEFF 		bl	_ZN4Core14setCurrentNodeEi
+ 1064 0114 4046     		mov	r0, r8
+ 1065 0116 FFF7FEFF 		bl	_ZN4Core11getNodeDataEv
+ 1066 011a 94F82030 		ldrb	r3, [r4, #32]	@ zero_extendqisi2
+ 1067 011e B342     		cmp	r3, r6
+ 1068 0120 0546     		mov	r5, r0
+ 1069 0122 03D1     		bne	.L145
+ 1070 0124 0121     		movs	r1, #1
+ 1071 0126 3846     		mov	r0, r7
+ 1072 0128 FFF7FEFF 		bl	_ZN6Serial14ansiSetReverseEb
+ 1073              	.L145:
+ 1074 012c 06F1070A 		add	r10, r6, #7
+ 1075 0130 5FFA8AFA 		uxtb	r10, r10
+ 1076 0134 5246     		mov	r2, r10
+ 1077 0136 3221     		movs	r1, #50
+ 1078 0138 3846     		mov	r0, r7
+ 1079 013a FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1080 013e AB7B     		ldrb	r3, [r5, #14]	@ zero_extendqisi2
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 20
+
+
+ 1081 0140 002B     		cmp	r3, #0
+ 1082 0142 00F0AC80 		beq	.L146
+ 1083 0146 E97B     		ldrb	r1, [r5, #15]	@ zero_extendqisi2
+ 1084 0148 A888     		ldrh	r0, [r5, #4]	@ unaligned
+ 1085 014a FFF7FEFF 		bl	_Z10printValueic
+ 1086              	.L147:
+ 1087 014e 94F82030 		ldrb	r3, [r4, #32]	@ zero_extendqisi2
+ 1088 0152 B342     		cmp	r3, r6
+ 1089 0154 03D1     		bne	.L148
+ 1090 0156 0021     		movs	r1, #0
+ 1091 0158 3846     		mov	r0, r7
+ 1092 015a FFF7FEFF 		bl	_ZN6Serial14ansiSetReverseEb
+ 1093              	.L148:
+ 1094 015e 2B7B     		ldrb	r3, [r5, #12]	@ zero_extendqisi2
+ 1095 0160 53B1     		cbz	r3, .L149
+ 1096 0162 3C21     		movs	r1, #60
+ 1097 0164 3846     		mov	r0, r7
+ 1098 0166 5246     		mov	r2, r10
+ 1099 0168 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1100 016c 2B7B     		ldrb	r3, [r5, #12]	@ zero_extendqisi2
+ 1101 016e E97B     		ldrb	r1, [r5, #15]	@ zero_extendqisi2
+ 1102 0170 58F82300 		ldr	r0, [r8, r3, lsl #2]
+ 1103 0174 FFF7FEFF 		bl	_Z10printValueic
+ 1104              	.L149:
+ 1105 0178 6B7B     		ldrb	r3, [r5, #13]	@ zero_extendqisi2
+ 1106 017a 53B1     		cbz	r3, .L144
+ 1107 017c 4621     		movs	r1, #70
+ 1108 017e 3846     		mov	r0, r7
+ 1109 0180 5246     		mov	r2, r10
+ 1110 0182 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1111 0186 6B7B     		ldrb	r3, [r5, #13]	@ zero_extendqisi2
+ 1112 0188 0421     		movs	r1, #4
+ 1113 018a 58F82300 		ldr	r0, [r8, r3, lsl #2]
+ 1114 018e FFF7FEFF 		bl	_Z10printValueic
+ 1115              	.L144:
+ 1116 0192 0136     		adds	r6, r6, #1
+ 1117 0194 112E     		cmp	r6, #17
+ 1118 0196 B4D1     		bne	.L141
+ 1119 0198 43E0     		b	.L116
+ 1120              	.L118:
+ 1121 019a 3A3B     		subs	r3, r3, #58
+ 1122 019c 042B     		cmp	r3, #4
+ 1123 019e 3FF64BAF 		bhi	.L123
+ 1124 01a2 01A2     		adr	r2, .L130
+ 1125 01a4 52F823F0 		ldr	pc, [r2, r3, lsl #2]
+ 1126              		.p2align 2
+ 1127              	.L130:
+ 1128 01a8 79020000 		.word	.L153+1
+ 1129 01ac 7D020000 		.word	.L154+1
+ 1130 01b0 27020000 		.word	.L129+1
+ 1131 01b4 39000000 		.word	.L123+1
+ 1132 01b8 39020000 		.word	.L126+1
+ 1133              		.p2align 1
+ 1134              	.L120:
+ 1135 01bc 2D2B     		cmp	r3, #45
+ 1136 01be 7FF43BAF 		bne	.L123
+ 1137 01c2 0126     		movs	r6, #1
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 21
+
+
+ 1138 01c4 5BE0     		b	.L131
+ 1139              	.L117:
+ 1140 01c6 683B     		subs	r3, r3, #104
+ 1141 01c8 DEB2     		uxtb	r6, r3
+ 1142 01ca 0B2E     		cmp	r6, #11
+ 1143 01cc 3FF634AF 		bhi	.L123
+ 1144 01d0 0B2B     		cmp	r3, #11
+ 1145 01d2 3FF631AF 		bhi	.L123
+ 1146 01d6 01A6     		adr	r6, .L125
+ 1147 01d8 56F823F0 		ldr	pc, [r6, r3, lsl #2]
+ 1148              		.p2align 2
+ 1149              	.L125:
+ 1150 01dc 27020000 		.word	.L129+1
+ 1151 01e0 39000000 		.word	.L123+1
+ 1152 01e4 51020000 		.word	.L128+1
+ 1153 01e8 45020000 		.word	.L127+1
+ 1154 01ec 39020000 		.word	.L126+1
+ 1155 01f0 39000000 		.word	.L123+1
+ 1156 01f4 39000000 		.word	.L123+1
+ 1157 01f8 39000000 		.word	.L123+1
+ 1158 01fc 39000000 		.word	.L123+1
+ 1159 0200 39000000 		.word	.L123+1
+ 1160 0204 39000000 		.word	.L123+1
+ 1161 0208 0D020000 		.word	.L124+1
+ 1162              		.p2align 1
+ 1163              	.L124:
+ 1164 020c 2848     		ldr	r0, .L186+8
+ 1165 020e FFF7FEFF 		bl	_ZN4Core4saveEv
+ 1166              	.L121:
+ 1167 0212 237D     		ldrb	r3, [r4, #20]	@ zero_extendqisi2
+ 1168 0214 002B     		cmp	r3, #0
+ 1169 0216 7FF46EAF 		bne	.L142
+ 1170 021a 237E     		ldrb	r3, [r4, #24]	@ zero_extendqisi2
+ 1171 021c 1B07     		lsls	r3, r3, #28
+ 1172 021e 3FF46AAF 		beq	.L142
+ 1173              	.L116:
+ 1174 0222 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1175              	.L129:
+ 1176 0226 0028     		cmp	r0, #0
+ 1177 0228 7FF706AF 		ble	.L123
+ 1178 022c 0138     		subs	r0, r0, #1
+ 1179              	.L184:
+ 1180 022e 0023     		movs	r3, #0
+ 1181 0230 E061     		str	r0, [r4, #28]
+ 1182 0232 84F82030 		strb	r3, [r4, #32]
+ 1183 0236 FFE6     		b	.L123
+ 1184              	.L126:
+ 1185 0238 372D     		cmp	r5, #55
+ 1186 023a 00F10100 		add	r0, r0, #1
+ 1187 023e 3FF7FBAE 		bgt	.L123
+ 1188 0242 F4E7     		b	.L184
+ 1189              	.L127:
+ 1190 0244 002A     		cmp	r2, #0
+ 1191 0246 E4D0     		beq	.L121
+ 1192 0248 013A     		subs	r2, r2, #1
+ 1193              	.L185:
+ 1194 024a 84F82020 		strb	r2, [r4, #32]
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 22
+
+
+ 1195 024e E0E7     		b	.L121
+ 1196              	.L128:
+ 1197 0250 0F2A     		cmp	r2, #15
+ 1198 0252 DED8     		bhi	.L121
+ 1199 0254 4829     		cmp	r1, #72
+ 1200 0256 DCDC     		bgt	.L121
+ 1201 0258 0132     		adds	r2, r2, #1
+ 1202 025a F6E7     		b	.L185
+ 1203              	.L152:
+ 1204 025c 0126     		movs	r6, #1
+ 1205              	.L119:
+ 1206 025e 1448     		ldr	r0, .L186+8
+ 1207 0260 134F     		ldr	r7, .L186+8
+ 1208 0262 FFF7FEFF 		bl	_ZN4Core14setCurrentNodeEi
+ 1209 0266 0025     		movs	r5, #0
+ 1210              	.L135:
+ 1211 0268 3846     		mov	r0, r7
+ 1212 026a 0135     		adds	r5, r5, #1
+ 1213 026c FFF7FEFF 		bl	_ZN4Core8incValueEv
+ 1214 0270 EBB2     		uxtb	r3, r5
+ 1215 0272 9E42     		cmp	r6, r3
+ 1216 0274 F8D8     		bhi	.L135
+ 1217 0276 CCE7     		b	.L121
+ 1218              	.L153:
+ 1219 0278 2026     		movs	r6, #32
+ 1220 027a F0E7     		b	.L119
+ 1221              	.L154:
+ 1222 027c 2026     		movs	r6, #32
+ 1223              	.L131:
+ 1224 027e 0C48     		ldr	r0, .L186+8
+ 1225 0280 0B4F     		ldr	r7, .L186+8
+ 1226 0282 FFF7FEFF 		bl	_ZN4Core14setCurrentNodeEi
+ 1227 0286 0025     		movs	r5, #0
+ 1228              	.L136:
+ 1229 0288 3846     		mov	r0, r7
+ 1230 028a 0135     		adds	r5, r5, #1
+ 1231 028c FFF7FEFF 		bl	_ZN4Core8decValueEv
+ 1232 0290 EBB2     		uxtb	r3, r5
+ 1233 0292 9E42     		cmp	r6, r3
+ 1234 0294 F8D8     		bhi	.L136
+ 1235 0296 BCE7     		b	.L121
+ 1236              	.L122:
+ 1237 0298 FFF7FEFF 		bl	_Z25toggleHumanReadableValuesv
+ 1238 029c B9E7     		b	.L121
+ 1239              	.L146:
+ 1240 029e 4946     		mov	r1, r9
+ 1241 02a0 3846     		mov	r0, r7
+ 1242 02a2 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1243 02a6 52E7     		b	.L147
+ 1244              	.L187:
+ 1245              		.align	2
+ 1246              	.L186:
+ 1247 02a8 00000000 		.word	serial
+ 1248 02ac 00000000 		.word	.LANCHOR24
+ 1249 02b0 00000000 		.word	core
+ 1250 02b4 00000000 		.word	.LC10
+ 1251 02b8 0D000000 		.word	.LC11
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 23
+
+
+ 1252              		.fnend
+ 1254              		.section	.rodata._ZN10ConfEditor13pageMapEditorEv.str1.1,"aMS",%progbits,1
+ 1255              	.LC12:
+ 1256 0000 7C00     		.ascii	"|\000"
+ 1257              	.LC13:
+ 1258 0002 202000   		.ascii	"  \000"
+ 1259              	.LC14:
+ 1260 0005 2000     		.ascii	" \000"
+ 1261              	.LC15:
+ 1262 0007 3E3E00   		.ascii	">>\000"
+ 1263              	.LC16:
+ 1264 000a 7600     		.ascii	"v\000"
+ 1265              		.section	.text._ZN10ConfEditor13pageMapEditorEv,"ax",%progbits
+ 1266              		.align	1
+ 1267              		.global	_ZN10ConfEditor13pageMapEditorEv
+ 1268              		.syntax unified
+ 1269              		.thumb
+ 1270              		.thumb_func
+ 1272              	_ZN10ConfEditor13pageMapEditorEv:
+ 1273              		.fnstart
+ 1274              	.LFB935:
+ 1275              		@ args = 0, pretend = 0, frame = 24
+ 1276              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1277 0000 2DE9F04F 		push	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1278              		.save {r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1279 0004 2DED088B 		vpush.64	{d8, d9, d10, d11}
+ 1280              		.vsave {d8, d9, d10, d11}
+ 1281 0008 AC49     		ldr	r1, .L251
+ 1282 000a 0446     		mov	r4, r0
+ 1283              		.pad #28
+ 1284 000c 87B0     		sub	sp, sp, #28
+ 1285 000e FF20     		movs	r0, #255
+ 1286              	.L212:
+ 1287 0010 94F82A20 		ldrb	r2, [r4, #42]	@ zero_extendqisi2
+ 1288 0014 02F5D673 		add	r3, r2, #428
+ 1289 0018 51F82330 		ldr	r3, [r1, r3, lsl #2]
+ 1290 001c 9E79     		ldrb	r6, [r3, #6]	@ zero_extendqisi2
+ 1291 001e 5D79     		ldrb	r5, [r3, #5]	@ zero_extendqisi2
+ 1292 0020 0196     		str	r6, [sp, #4]
+ 1293 0022 03F10209 		add	r9, r3, #2
+ 1294 0026 1E7A     		ldrb	r6, [r3, #8]	@ zero_extendqisi2
+ 1295 0028 93F807B0 		ldrb	fp, [r3, #7]	@ zero_extendqisi2
+ 1296 002c 5B7A     		ldrb	r3, [r3, #9]	@ zero_extendqisi2
+ 1297 002e 0AEE903A 		vmov	s21, r3	@ int
+ 1298 0032 019B     		ldr	r3, [sp, #4]
+ 1299 0034 05FB0393 		mla	r3, r5, r3, r9
+ 1300 0038 09EE906A 		vmov	s19, r6	@ int
+ 1301 003c 1E7A     		ldrb	r6, [r3, #8]	@ zero_extendqisi2
+ 1302 003e 0296     		str	r6, [sp, #8]
+ 1303 0040 5E7A     		ldrb	r6, [r3, #9]	@ zero_extendqisi2
+ 1304 0042 9B7A     		ldrb	r3, [r3, #10]	@ zero_extendqisi2
+ 1305 0044 0396     		str	r6, [sp, #12]
+ 1306 0046 0BEE103A 		vmov	s22, r3	@ int
+ 1307 004a 237D     		ldrb	r3, [r4, #20]	@ zero_extendqisi2
+ 1308 004c 082D     		cmp	r5, #8
+ 1309 004e 8CBF     		ite	hi
+ 1310 0050 0526     		movhi	r6, #5
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 24
+
+
+ 1311 0052 0726     		movls	r6, #7
+ 1312 0054 762B     		cmp	r3, #118
+ 1313 0056 0DD8     		bhi	.L190
+ 1314 0058 622B     		cmp	r3, #98
+ 1315 005a 3FD8     		bhi	.L191
+ 1316 005c 3E2B     		cmp	r3, #62
+ 1317 005e 09D8     		bhi	.L190
+ 1318 0060 392B     		cmp	r3, #57
+ 1319 0062 69D8     		bhi	.L192
+ 1320 0064 2B2B     		cmp	r3, #43
+ 1321 0066 00F0FC81 		beq	.L193
+ 1322 006a 2D2B     		cmp	r3, #45
+ 1323 006c 00F00782 		beq	.L194
+ 1324 0070 002B     		cmp	r3, #0
+ 1325 0072 7BD0     		beq	.L224
+ 1326              	.L190:
+ 1327 0074 94F82830 		ldrb	r3, [r4, #40]	@ zero_extendqisi2
+ 1328 0078 9342     		cmp	r3, r2
+ 1329 007a 04D0     		beq	.L213
+ 1330 007c 0023     		movs	r3, #0
+ 1331 007e 6384     		strh	r3, [r4, #34]	@ movhi
+ 1332 0080 A384     		strh	r3, [r4, #36]	@ movhi
+ 1333 0082 84F82820 		strb	r2, [r4, #40]
+ 1334              	.L213:
+ 1335 0086 8E48     		ldr	r0, .L251+4
+ 1336 0088 DFF83482 		ldr	r8, .L251+4
+ 1337 008c 9FED8D9A 		vldr.32	s18, .L251+8
+ 1338 0090 FFF7FEFF 		bl	_ZN6Serial15ansiClearScreenEv
+ 1339 0094 2046     		mov	r0, r4
+ 1340 0096 FFF7FEFF 		bl	_ZN10ConfEditor11printHeaderEv
+ 1341 009a 0322     		movs	r2, #3
+ 1342 009c 8848     		ldr	r0, .L251+4
+ 1343 009e 0021     		movs	r1, #0
+ 1344 00a0 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1345 00a4 8849     		ldr	r1, .L251+12
+ 1346 00a6 8648     		ldr	r0, .L251+4
+ 1347 00a8 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1348 00ac 0522     		movs	r2, #5
+ 1349 00ae 8448     		ldr	r0, .L251+4
+ 1350 00b0 0021     		movs	r1, #0
+ 1351 00b2 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1352 00b6 8549     		ldr	r1, .L251+16
+ 1353 00b8 8148     		ldr	r0, .L251+4
+ 1354 00ba FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1355 00be 94F82A30 		ldrb	r3, [r4, #42]	@ zero_extendqisi2
+ 1356 00c2 7E4A     		ldr	r2, .L251
+ 1357 00c4 7E48     		ldr	r0, .L251+4
+ 1358 00c6 03F5E673 		add	r3, r3, #460
+ 1359 00ca 0027     		movs	r7, #0
+ 1360 00cc 52F82310 		ldr	r1, [r2, r3, lsl #2]
+ 1361 00d0 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1362 00d4 731D     		adds	r3, r6, #5
+ 1363 00d6 0493     		str	r3, [sp, #16]
+ 1364 00d8 9A46     		mov	r10, r3
+ 1365 00da 2BE2     		b	.L223
+ 1366              	.L191:
+ 1367 00dc 633B     		subs	r3, r3, #99
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 25
+
+
+ 1368 00de 132B     		cmp	r3, #19
+ 1369 00e0 C8D8     		bhi	.L190
+ 1370 00e2 01A1     		adr	r1, .L197
+ 1371 00e4 51F823F0 		ldr	pc, [r1, r3, lsl #2]
+ 1372              		.p2align 2
+ 1373              	.L197:
+ 1374 00e8 59010000 		.word	.L203+1
+ 1375 00ec 75000000 		.word	.L190+1
+ 1376 00f0 75000000 		.word	.L190+1
+ 1377 00f4 75000000 		.word	.L190+1
+ 1378 00f8 75000000 		.word	.L190+1
+ 1379 00fc CF030000 		.word	.L202+1
+ 1380 0100 75000000 		.word	.L190+1
+ 1381 0104 25040000 		.word	.L201+1
+ 1382 0108 07040000 		.word	.L200+1
+ 1383 010c EB030000 		.word	.L199+1
+ 1384 0110 75000000 		.word	.L190+1
+ 1385 0114 75000000 		.word	.L190+1
+ 1386 0118 75000000 		.word	.L190+1
+ 1387 011c 75000000 		.word	.L190+1
+ 1388 0120 75000000 		.word	.L190+1
+ 1389 0124 75000000 		.word	.L190+1
+ 1390 0128 B7040000 		.word	.L198+1
+ 1391 012c 75000000 		.word	.L190+1
+ 1392 0130 75000000 		.word	.L190+1
+ 1393 0134 E5020000 		.word	.L196+1
+ 1394              		.p2align 1
+ 1395              	.L192:
+ 1396 0138 3A3B     		subs	r3, r3, #58
+ 1397 013a 042B     		cmp	r3, #4
+ 1398 013c 9AD8     		bhi	.L190
+ 1399 013e 01A7     		adr	r7, .L205
+ 1400 0140 57F823F0 		ldr	pc, [r7, r3, lsl #2]
+ 1401              		.p2align 2
+ 1402              	.L205:
+ 1403 0144 43040000 		.word	.L208+1
+ 1404 0148 9B040000 		.word	.L207+1
+ 1405 014c BF040000 		.word	.L206+1
+ 1406 0150 75000000 		.word	.L190+1
+ 1407 0154 CB040000 		.word	.L204+1
+ 1408              		.p2align 1
+ 1409              	.L203:
+ 1410 0158 94F82430 		ldrb	r3, [r4, #36]	@ zero_extendqisi2
+ 1411 015c 94F82220 		ldrb	r2, [r4, #34]	@ zero_extendqisi2
+ 1412 0160 03FB0593 		mla	r3, r3, r5, r9
+ 1413 0164 1344     		add	r3, r3, r2
+ 1414 0166 1B7A     		ldrb	r3, [r3, #8]	@ zero_extendqisi2
+ 1415 0168 84F82930 		strb	r3, [r4, #41]
+ 1416              	.L224:
+ 1417 016c 237E     		ldrb	r3, [r4, #24]	@ zero_extendqisi2
+ 1418 016e 9B07     		lsls	r3, r3, #30
+ 1419 0170 40F07682 		bne	.L188
+ 1420 0174 019B     		ldr	r3, [sp, #4]
+ 1421 0176 9FED53AA 		vldr.32	s20, .L251+8
+ 1422 017a 013B     		subs	r3, r3, #1
+ 1423 017c 07EE903A 		vmov	s15, r3	@ int
+ 1424 0180 F8EEE77A 		vcvt.f32.s32	s15, s15
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 26
+
+
+ 1425 0184 94F82730 		ldrb	r3, [r4, #39]	@ zero_extendqisi2
+ 1426 0188 77EEA77A 		vadd.f32	s15, s15, s15
+ 1427 018c 00EE103A 		vmov	s0, r3	@ int
+ 1428 0190 C7EE8A9A 		vdiv.f32	s19, s15, s20
+ 1429 0194 771D     		adds	r7, r6, #5
+ 1430 0196 B8EE400A 		vcvt.f32.u32	s0, s0
+ 1431 019a B2EE029A 		vmov.f32	s18, #9.0e+0
+ 1432 019e 20EE290A 		vmul.f32	s0, s0, s19
+ 1433 01a2 FFF7FEFF 		bl	roundf
+ 1434 01a6 30EE090A 		vadd.f32	s0, s0, s18
+ 1435 01aa 4548     		ldr	r0, .L251+4
+ 1436 01ac FCEEC07A 		vcvt.u32.f32	s15, s0
+ 1437 01b0 0221     		movs	r1, #2
+ 1438 01b2 CDED047A 		vstr.32	s15, [sp, #16]	@ int
+ 1439 01b6 9DF81020 		ldrb	r2, [sp, #16]	@ zero_extendqisi2
+ 1440 01ba FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1441 01be 4449     		ldr	r1, .L251+20
+ 1442 01c0 3F48     		ldr	r0, .L251+4
+ 1443 01c2 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1444 01c6 07EE907A 		vmov	s15, r7	@ int
+ 1445 01ca 07EE106A 		vmov	s14, r6	@ int
+ 1446 01ce B8EEE78A 		vcvt.f32.s32	s16, s15
+ 1447 01d2 07EE905A 		vmov	s15, r5	@ int
+ 1448 01d6 B8EE477A 		vcvt.f32.u32	s14, s14
+ 1449 01da F8EE677A 		vcvt.f32.u32	s15, s15
+ 1450 01de 94F82630 		ldrb	r3, [r4, #38]	@ zero_extendqisi2
+ 1451 01e2 67EE877A 		vmul.f32	s15, s15, s14
+ 1452 01e6 00EE103A 		vmov	s0, r3	@ int
+ 1453 01ea C7EE8A8A 		vdiv.f32	s17, s15, s20
+ 1454 01ee B8EE400A 		vcvt.f32.u32	s0, s0
+ 1455 01f2 20EE280A 		vmul.f32	s0, s0, s17
+ 1456 01f6 FFF7FEFF 		bl	roundf
+ 1457 01fa 38EE000A 		vadd.f32	s0, s16, s0
+ 1458 01fe 0622     		movs	r2, #6
+ 1459 0200 FCEEC07A 		vcvt.u32.f32	s15, s0
+ 1460 0204 2E48     		ldr	r0, .L251+4
+ 1461 0206 CDED047A 		vstr.32	s15, [sp, #16]	@ int
+ 1462 020a 9DF81010 		ldrb	r1, [sp, #16]	@ zero_extendqisi2
+ 1463 020e FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1464 0212 3049     		ldr	r1, .L251+24
+ 1465 0214 2A48     		ldr	r0, .L251+4
+ 1466 0216 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1467 021a DDED037A 		vldr.32	s15, [sp, #12]	@ int
+ 1468 021e 039B     		ldr	r3, [sp, #12]
+ 1469 0220 84F82730 		strb	r3, [r4, #39]
+ 1470 0224 B8EE670A 		vcvt.f32.u32	s0, s15
+ 1471 0228 029B     		ldr	r3, [sp, #8]
+ 1472 022a 84F82630 		strb	r3, [r4, #38]
+ 1473 022e 20EE290A 		vmul.f32	s0, s0, s19
+ 1474 0232 FFF7FEFF 		bl	roundf
+ 1475 0236 30EE090A 		vadd.f32	s0, s0, s18
+ 1476 023a 2148     		ldr	r0, .L251+4
+ 1477 023c FCEEC07A 		vcvt.u32.f32	s15, s0
+ 1478 0240 0221     		movs	r1, #2
+ 1479 0242 CDED037A 		vstr.32	s15, [sp, #12]	@ int
+ 1480 0246 9DF80C20 		ldrb	r2, [sp, #12]	@ zero_extendqisi2
+ 1481 024a FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 27
+
+
+ 1482 024e 2249     		ldr	r1, .L251+28
+ 1483 0250 1B48     		ldr	r0, .L251+4
+ 1484 0252 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1485 0256 DDED027A 		vldr.32	s15, [sp, #8]	@ int
+ 1486 025a B8EE670A 		vcvt.f32.u32	s0, s15
+ 1487 025e 20EE280A 		vmul.f32	s0, s0, s17
+ 1488 0262 FFF7FEFF 		bl	roundf
+ 1489 0266 38EE000A 		vadd.f32	s0, s16, s0
+ 1490 026a 0622     		movs	r2, #6
+ 1491 026c FCEEC07A 		vcvt.u32.f32	s15, s0
+ 1492 0270 1348     		ldr	r0, .L251+4
+ 1493 0272 CDED027A 		vstr.32	s15, [sp, #8]	@ int
+ 1494 0276 9DF80810 		ldrb	r1, [sp, #8]	@ zero_extendqisi2
+ 1495 027a FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1496 027e 1749     		ldr	r1, .L251+32
+ 1497 0280 0F48     		ldr	r0, .L251+4
+ 1498 0282 FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1499 0286 019B     		ldr	r3, [sp, #4]
+ 1500 0288 0D48     		ldr	r0, .L251+4
+ 1501 028a 5A00     		lsls	r2, r3, #1
+ 1502 028c 0932     		adds	r2, r2, #9
+ 1503 028e D2B2     		uxtb	r2, r2
+ 1504 0290 3946     		mov	r1, r7
+ 1505 0292 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1506 0296 1249     		ldr	r1, .L251+36
+ 1507 0298 0948     		ldr	r0, .L251+4
+ 1508 029a FFF7FEFF 		bl	_ZN6Serial6printfEPKcz
+ 1509 029e 1AEE900A 		vmov	r0, s21	@ int
+ 1510 02a2 1BEE101A 		vmov	r1, s22	@ int
+ 1511 02a6 0122     		movs	r2, #1
+ 1512 02a8 FFF7FEFF 		bl	_Z12printMapAxishhb
+ 1513 02ac 0448     		ldr	r0, .L251+4
+ 1514 02ae 07B0     		add	sp, sp, #28
+ 1515              		@ sp needed
+ 1516 02b0 BDEC088B 		vldm	sp!, {d8-d11}
+ 1517 02b4 BDE8F04F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1518 02b8 FFF7FEBF 		b	_ZN6Serial12ansiClearEolEv
+ 1519              	.L252:
+ 1520              		.align	2
+ 1521              	.L251:
+ 1522 02bc 00000000 		.word	core
+ 1523 02c0 00000000 		.word	serial
+ 1524 02c4 00007F43 		.word	1132396544
+ 1525 02c8 00000000 		.word	.LANCHOR26
+ 1526 02cc 00000000 		.word	.LANCHOR27
+ 1527 02d0 02000000 		.word	.LC13
+ 1528 02d4 05000000 		.word	.LC14
+ 1529 02d8 07000000 		.word	.LC15
+ 1530 02dc 0A000000 		.word	.LC16
+ 1531 02e0 00000000 		.word	.LANCHOR25
+ 1532              	.L196:
+ 1533 02e4 94F82430 		ldrb	r3, [r4, #36]	@ zero_extendqisi2
+ 1534 02e8 94F82210 		ldrb	r1, [r4, #34]	@ zero_extendqisi2
+ 1535 02ec 94F82920 		ldrb	r2, [r4, #41]	@ zero_extendqisi2
+ 1536 02f0 03FB0593 		mla	r3, r3, r5, r9
+ 1537 02f4 0B44     		add	r3, r3, r1
+ 1538 02f6 1A72     		strb	r2, [r3, #8]
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 28
+
+
+ 1539              	.L210:
+ 1540 02f8 C748     		ldr	r0, .L253
+ 1541 02fa 0021     		movs	r1, #0
+ 1542 02fc FFF7FEFF 		bl	_ZN6Serial14ansiSetReverseEb
+ 1543 0300 94F82520 		ldrb	r2, [r4, #37]	@ zero_extendqisi2
+ 1544 0304 94F82310 		ldrb	r1, [r4, #35]	@ zero_extendqisi2
+ 1545 0308 C348     		ldr	r0, .L253
+ 1546 030a 01FB0661 		mla	r1, r1, r6, r6
+ 1547 030e 5200     		lsls	r2, r2, #1
+ 1548 0310 B71E     		subs	r7, r6, #2
+ 1549 0312 0932     		adds	r2, r2, #9
+ 1550 0314 0531     		adds	r1, r1, #5
+ 1551 0316 FFB2     		uxtb	r7, r7
+ 1552 0318 D2B2     		uxtb	r2, r2
+ 1553 031a C9B2     		uxtb	r1, r1
+ 1554 031c FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1555 0320 3946     		mov	r1, r7
+ 1556 0322 BD48     		ldr	r0, .L253
+ 1557 0324 2022     		movs	r2, #32
+ 1558 0326 FFF7FEFF 		bl	_ZN6Serial9printPadsEhc
+ 1559 032a 94F82520 		ldrb	r2, [r4, #37]	@ zero_extendqisi2
+ 1560 032e 94F82310 		ldrb	r1, [r4, #35]	@ zero_extendqisi2
+ 1561 0332 B948     		ldr	r0, .L253
+ 1562 0334 01FB0661 		mla	r1, r1, r6, r6
+ 1563 0338 5200     		lsls	r2, r2, #1
+ 1564 033a 0932     		adds	r2, r2, #9
+ 1565 033c 0631     		adds	r1, r1, #6
+ 1566 033e D2B2     		uxtb	r2, r2
+ 1567 0340 C9B2     		uxtb	r1, r1
+ 1568 0342 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1569 0346 94F82530 		ldrb	r3, [r4, #37]	@ zero_extendqisi2
+ 1570 034a 94F82320 		ldrb	r2, [r4, #35]	@ zero_extendqisi2
+ 1571 034e 03FB0593 		mla	r3, r3, r5, r9
+ 1572 0352 1344     		add	r3, r3, r2
+ 1573 0354 1AEE900A 		vmov	r0, s21	@ int
+ 1574 0358 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1575 035a 0022     		movs	r2, #0
+ 1576 035c FFF7FEFF 		bl	_Z12printMapAxishhb
+ 1577 0360 94F82420 		ldrb	r2, [r4, #36]	@ zero_extendqisi2
+ 1578 0364 94F82210 		ldrb	r1, [r4, #34]	@ zero_extendqisi2
+ 1579 0368 AB48     		ldr	r0, .L253
+ 1580 036a 01FB0661 		mla	r1, r1, r6, r6
+ 1581 036e 5200     		lsls	r2, r2, #1
+ 1582 0370 0932     		adds	r2, r2, #9
+ 1583 0372 0531     		adds	r1, r1, #5
+ 1584 0374 D2B2     		uxtb	r2, r2
+ 1585 0376 C9B2     		uxtb	r1, r1
+ 1586 0378 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1587 037c A648     		ldr	r0, .L253
+ 1588 037e 0121     		movs	r1, #1
+ 1589 0380 FFF7FEFF 		bl	_ZN6Serial14ansiSetReverseEb
+ 1590 0384 3946     		mov	r1, r7
+ 1591 0386 A448     		ldr	r0, .L253
+ 1592 0388 2022     		movs	r2, #32
+ 1593 038a FFF7FEFF 		bl	_ZN6Serial9printPadsEhc
+ 1594 038e 94F82420 		ldrb	r2, [r4, #36]	@ zero_extendqisi2
+ 1595 0392 94F82210 		ldrb	r1, [r4, #34]	@ zero_extendqisi2
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 29
+
+
+ 1596 0396 A048     		ldr	r0, .L253
+ 1597 0398 01FB0661 		mla	r1, r1, r6, r6
+ 1598 039c 5200     		lsls	r2, r2, #1
+ 1599 039e 0932     		adds	r2, r2, #9
+ 1600 03a0 0631     		adds	r1, r1, #6
+ 1601 03a2 D2B2     		uxtb	r2, r2
+ 1602 03a4 C9B2     		uxtb	r1, r1
+ 1603 03a6 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1604 03aa 94F82430 		ldrb	r3, [r4, #36]	@ zero_extendqisi2
+ 1605 03ae 94F82220 		ldrb	r2, [r4, #34]	@ zero_extendqisi2
+ 1606 03b2 03FB0593 		mla	r3, r3, r5, r9
+ 1607 03b6 1344     		add	r3, r3, r2
+ 1608 03b8 1AEE900A 		vmov	r0, s21	@ int
+ 1609 03bc 197A     		ldrb	r1, [r3, #8]	@ zero_extendqisi2
+ 1610 03be 0022     		movs	r2, #0
+ 1611 03c0 FFF7FEFF 		bl	_Z12printMapAxishhb
+ 1612 03c4 9448     		ldr	r0, .L253
+ 1613 03c6 0021     		movs	r1, #0
+ 1614 03c8 FFF7FEFF 		bl	_ZN6Serial14ansiSetReverseEb
+ 1615 03cc CEE6     		b	.L224
+ 1616              	.L202:
+ 1617 03ce 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+ 1618 03d2 94F82420 		ldrb	r2, [r4, #36]	@ zero_extendqisi2
+ 1619 03d6 84F82330 		strb	r3, [r4, #35]
+ 1620 03da 84F82520 		strb	r2, [r4, #37]
+ 1621 03de 002B     		cmp	r3, #0
+ 1622 03e0 8AD0     		beq	.L210
+ 1623 03e2 013B     		subs	r3, r3, #1
+ 1624              	.L249:
+ 1625 03e4 84F82230 		strb	r3, [r4, #34]
+ 1626 03e8 86E7     		b	.L210
+ 1627              	.L199:
+ 1628 03ea 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+ 1629 03ee 94F82420 		ldrb	r2, [r4, #36]	@ zero_extendqisi2
+ 1630 03f2 84F82520 		strb	r2, [r4, #37]
+ 1631 03f6 6A1E     		subs	r2, r5, #1
+ 1632 03f8 9342     		cmp	r3, r2
+ 1633 03fa 84F82330 		strb	r3, [r4, #35]
+ 1634 03fe BFF67BAF 		bge	.L210
+ 1635 0402 0133     		adds	r3, r3, #1
+ 1636 0404 EEE7     		b	.L249
+ 1637              	.L200:
+ 1638 0406 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+ 1639 040a 84F82330 		strb	r3, [r4, #35]
+ 1640 040e 94F82430 		ldrb	r3, [r4, #36]	@ zero_extendqisi2
+ 1641 0412 84F82530 		strb	r3, [r4, #37]
+ 1642 0416 002B     		cmp	r3, #0
+ 1643 0418 3FF46EAF 		beq	.L210
+ 1644 041c 013B     		subs	r3, r3, #1
+ 1645              	.L248:
+ 1646 041e 84F82430 		strb	r3, [r4, #36]
+ 1647 0422 69E7     		b	.L210
+ 1648              	.L201:
+ 1649 0424 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+ 1650 0428 019A     		ldr	r2, [sp, #4]
+ 1651 042a 84F82330 		strb	r3, [r4, #35]
+ 1652 042e 94F82430 		ldrb	r3, [r4, #36]	@ zero_extendqisi2
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 30
+
+
+ 1653 0432 84F82530 		strb	r3, [r4, #37]
+ 1654 0436 013A     		subs	r2, r2, #1
+ 1655 0438 9342     		cmp	r3, r2
+ 1656 043a BFF65DAF 		bge	.L210
+ 1657 043e 0133     		adds	r3, r3, #1
+ 1658 0440 EDE7     		b	.L248
+ 1659              	.L208:
+ 1660 0442 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+ 1661 0446 94F82420 		ldrb	r2, [r4, #36]	@ zero_extendqisi2
+ 1662 044a 0833     		adds	r3, r3, #8
+ 1663 044c 02FB0533 		mla	r3, r2, r5, r3
+ 1664 0450 19F80320 		ldrb	r2, [r9, r3]	@ zero_extendqisi2
+ 1665 0454 DE2A     		cmp	r2, #222
+ 1666 0456 3FF64FAF 		bhi	.L210
+ 1667 045a 2032     		adds	r2, r2, #32
+ 1668              	.L250:
+ 1669 045c 09F80320 		strb	r2, [r9, r3]
+ 1670 0460 4AE7     		b	.L210
+ 1671              	.L193:
+ 1672 0462 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+ 1673 0466 94F82420 		ldrb	r2, [r4, #36]	@ zero_extendqisi2
+ 1674 046a 0833     		adds	r3, r3, #8
+ 1675 046c 02FB0533 		mla	r3, r2, r5, r3
+ 1676 0470 19F80320 		ldrb	r2, [r9, r3]	@ zero_extendqisi2
+ 1677 0474 FF2A     		cmp	r2, #255
+ 1678 0476 3FF43FAF 		beq	.L210
+ 1679 047a 0132     		adds	r2, r2, #1
+ 1680 047c EEE7     		b	.L250
+ 1681              	.L194:
+ 1682 047e 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+ 1683 0482 94F82420 		ldrb	r2, [r4, #36]	@ zero_extendqisi2
+ 1684 0486 0833     		adds	r3, r3, #8
+ 1685 0488 02FB0533 		mla	r3, r2, r5, r3
+ 1686 048c 19F80320 		ldrb	r2, [r9, r3]	@ zero_extendqisi2
+ 1687 0490 002A     		cmp	r2, #0
+ 1688 0492 3FF431AF 		beq	.L210
+ 1689 0496 013A     		subs	r2, r2, #1
+ 1690 0498 E0E7     		b	.L250
+ 1691              	.L207:
+ 1692 049a 94F82230 		ldrb	r3, [r4, #34]	@ zero_extendqisi2
+ 1693 049e 94F82420 		ldrb	r2, [r4, #36]	@ zero_extendqisi2
+ 1694 04a2 0833     		adds	r3, r3, #8
+ 1695 04a4 02FB0533 		mla	r3, r2, r5, r3
+ 1696 04a8 19F80320 		ldrb	r2, [r9, r3]	@ zero_extendqisi2
+ 1697 04ac 202A     		cmp	r2, #32
+ 1698 04ae 7FF623AF 		bls	.L210
+ 1699 04b2 203A     		subs	r2, r2, #32
+ 1700 04b4 D2E7     		b	.L250
+ 1701              	.L198:
+ 1702 04b6 5948     		ldr	r0, .L253+4
+ 1703 04b8 FFF7FEFF 		bl	_ZN4Core4saveEv
+ 1704 04bc 56E6     		b	.L224
+ 1705              	.L206:
+ 1706 04be 12B1     		cbz	r2, .L211
+ 1707 04c0 013A     		subs	r2, r2, #1
+ 1708              	.L247:
+ 1709 04c2 84F82A20 		strb	r2, [r4, #42]
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 31
+
+
+ 1710              	.L211:
+ 1711 04c6 2075     		strb	r0, [r4, #20]
+ 1712 04c8 A2E5     		b	.L212
+ 1713              	.L204:
+ 1714 04ca 91F8B037 		ldrb	r3, [r1, #1968]	@ zero_extendqisi2
+ 1715 04ce 013B     		subs	r3, r3, #1
+ 1716 04d0 9A42     		cmp	r2, r3
+ 1717 04d2 F8DA     		bge	.L211
+ 1718 04d4 0132     		adds	r2, r2, #1
+ 1719 04d6 F4E7     		b	.L247
+ 1720              	.L215:
+ 1721 04d8 0722     		movs	r2, #7
+ 1722 04da 5146     		mov	r1, r10
+ 1723 04dc 4046     		mov	r0, r8
+ 1724 04de FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1725 04e2 6B1E     		subs	r3, r5, #1
+ 1726 04e4 08EE103A 		vmov	s16, r3	@ int
+ 1727 04e8 F8EEC87A 		vcvt.f32.s32	s15, s16
+ 1728 04ec 89EE270A 		vdiv.f32	s0, s18, s15
+ 1729 04f0 07EE907A 		vmov	s15, r7	@ int
+ 1730 04f4 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1731 04f8 20EE270A 		vmul.f32	s0, s0, s15
+ 1732 04fc FFF7FEFF 		bl	roundf
+ 1733 0500 0121     		movs	r1, #1
+ 1734 0502 F0EE408A 		vmov.f32	s17, s0
+ 1735 0506 2022     		movs	r2, #32
+ 1736 0508 4046     		mov	r0, r8
+ 1737 050a FFF7FEFF 		bl	_ZN6Serial9printPadsEhc
+ 1738 050e FDEEE87A 		vcvt.s32.f32	s15, s17
+ 1739 0512 CDED057A 		vstr.32	s15, [sp, #20]	@ int
+ 1740 0516 9DF81410 		ldrb	r1, [sp, #20]	@ zero_extendqisi2
+ 1741 051a A7B3     		cbz	r7, .L226
+ 1742 051c 18EE103A 		vmov	r3, s16	@ int
+ 1743 0520 D81B     		subs	r0, r3, r7
+ 1744 0522 4242     		rsbs	r2, r0, #0
+ 1745 0524 4241     		adcs	r2, r2, r0
+ 1746              	.L214:
+ 1747 0526 5846     		mov	r0, fp
+ 1748 0528 FFF7FEFF 		bl	_Z12printMapAxishhb
+ 1749 052c B244     		add	r10, r10, r6
+ 1750 052e 0137     		adds	r7, r7, #1
+ 1751 0530 5FFA8AFA 		uxtb	r10, r10
+ 1752              	.L223:
+ 1753 0534 BD42     		cmp	r5, r7
+ 1754 0536 CFD1     		bne	.L215
+ 1755 0538 0499     		ldr	r1, [sp, #16]
+ 1756 053a 3748     		ldr	r0, .L253
+ 1757 053c DFF8D8A0 		ldr	r10, .L253
+ 1758 0540 DFED378A 		vldr.32	s17, .L253+8
+ 1759 0544 0822     		movs	r2, #8
+ 1760 0546 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1761 054a 16FB05F1 		smulbb	r1, r6, r5
+ 1762 054e 3248     		ldr	r0, .L253
+ 1763 0550 2D22     		movs	r2, #45
+ 1764 0552 C9B2     		uxtb	r1, r1
+ 1765 0554 FFF7FEFF 		bl	_ZN6Serial9printPadsEhc
+ 1766 0558 0027     		movs	r7, #0
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 32
+
+
+ 1767              	.L216:
+ 1768 055a 019B     		ldr	r3, [sp, #4]
+ 1769 055c BB42     		cmp	r3, r7
+ 1770 055e 14D1     		bne	.L218
+ 1771 0560 2D4B     		ldr	r3, .L253
+ 1772 0562 4F46     		mov	r7, r9
+ 1773 0564 4FF0000B 		mov	fp, #0
+ 1774              	.L219:
+ 1775 0568 019A     		ldr	r2, [sp, #4]
+ 1776 056a 5A45     		cmp	r2, fp
+ 1777 056c 3FF4C4AE 		beq	.L210
+ 1778 0570 4FEA4B0A 		lsl	r10, fp, #1
+ 1779 0574 0AF1090A 		add	r10, r10, #9
+ 1780 0578 EA19     		adds	r2, r5, r7
+ 1781 057a DDF81080 		ldr	r8, [sp, #16]
+ 1782 057e 0592     		str	r2, [sp, #20]
+ 1783 0580 5FFA8AFA 		uxtb	r10, r10
+ 1784 0584 66E0     		b	.L221
+ 1785              	.L226:
+ 1786 0586 0122     		movs	r2, #1
+ 1787 0588 CDE7     		b	.L214
+ 1788              	.L218:
+ 1789 058a 4FEA4708 		lsl	r8, r7, #1
+ 1790 058e 5FFA88F8 		uxtb	r8, r8
+ 1791 0592 08F1090B 		add	fp, r8, #9
+ 1792 0596 5FFA8BFB 		uxtb	fp, fp
+ 1793 059a 5A46     		mov	r2, fp
+ 1794 059c 0421     		movs	r1, #4
+ 1795 059e 5046     		mov	r0, r10
+ 1796 05a0 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1797 05a4 019B     		ldr	r3, [sp, #4]
+ 1798 05a6 013B     		subs	r3, r3, #1
+ 1799 05a8 08EE103A 		vmov	s16, r3	@ int
+ 1800 05ac F8EEC87A 		vcvt.f32.s32	s15, s16
+ 1801 05b0 88EEA70A 		vdiv.f32	s0, s17, s15
+ 1802 05b4 07EE907A 		vmov	s15, r7	@ int
+ 1803 05b8 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 1804 05bc 20EE270A 		vmul.f32	s0, s0, s15
+ 1805 05c0 FFF7FEFF 		bl	roundf
+ 1806 05c4 FDEEC07A 		vcvt.s32.f32	s15, s0
+ 1807 05c8 19EE900A 		vmov	r0, s19	@ int
+ 1808 05cc CDED057A 		vstr.32	s15, [sp, #20]	@ int
+ 1809 05d0 9DF81410 		ldrb	r1, [sp, #20]	@ zero_extendqisi2
+ 1810 05d4 0122     		movs	r2, #1
+ 1811 05d6 FFF7FEFF 		bl	_Z12printMapAxishhb
+ 1812 05da 331D     		adds	r3, r6, #4
+ 1813 05dc 1946     		mov	r1, r3
+ 1814 05de 5A46     		mov	r2, fp
+ 1815 05e0 5046     		mov	r0, r10
+ 1816 05e2 0593     		str	r3, [sp, #20]
+ 1817 05e4 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1818 05e8 0E49     		ldr	r1, .L253+12
+ 1819 05ea 5046     		mov	r0, r10
+ 1820 05ec FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1821 05f0 18EE103A 		vmov	r3, s16	@ int
+ 1822 05f4 BB42     		cmp	r3, r7
+ 1823 05f6 0CDD     		ble	.L217
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 33
+
+
+ 1824 05f8 059B     		ldr	r3, [sp, #20]
+ 1825 05fa 08F10A02 		add	r2, r8, #10
+ 1826 05fe 1946     		mov	r1, r3
+ 1827 0600 5046     		mov	r0, r10
+ 1828 0602 02F0FE02 		and	r2, r2, #254
+ 1829 0606 FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1830 060a 0649     		ldr	r1, .L253+12
+ 1831 060c 5046     		mov	r0, r10
+ 1832 060e FFF7FEFF 		bl	_ZN6Serial5printEPKc
+ 1833              	.L217:
+ 1834 0612 0137     		adds	r7, r7, #1
+ 1835 0614 A1E7     		b	.L216
+ 1836              	.L254:
+ 1837 0616 00BF     		.align	2
+ 1838              	.L253:
+ 1839 0618 00000000 		.word	serial
+ 1840 061c 00000000 		.word	core
+ 1841 0620 00007F43 		.word	1132396544
+ 1842 0624 00000000 		.word	.LC12
+ 1843              	.L220:
+ 1844 0628 4146     		mov	r1, r8
+ 1845 062a 1846     		mov	r0, r3
+ 1846 062c 5246     		mov	r2, r10
+ 1847 062e FFF7FEFF 		bl	_ZN6Serial10ansiGotoXyEcc
+ 1848 0632 0E4B     		ldr	r3, .L255
+ 1849 0634 2022     		movs	r2, #32
+ 1850 0636 1846     		mov	r0, r3
+ 1851 0638 0121     		movs	r1, #1
+ 1852 063a FFF7FEFF 		bl	_ZN6Serial9printPadsEhc
+ 1853 063e 397A     		ldrb	r1, [r7, #8]	@ zero_extendqisi2
+ 1854 0640 1AEE900A 		vmov	r0, s21	@ int
+ 1855 0644 0022     		movs	r2, #0
+ 1856 0646 FFF7FEFF 		bl	_Z12printMapAxishhb
+ 1857 064a B044     		add	r8, r8, r6
+ 1858 064c 074B     		ldr	r3, .L255
+ 1859 064e 5FFA88F8 		uxtb	r8, r8
+ 1860 0652 0137     		adds	r7, r7, #1
+ 1861              	.L221:
+ 1862 0654 059A     		ldr	r2, [sp, #20]
+ 1863 0656 9742     		cmp	r7, r2
+ 1864 0658 E6D1     		bne	.L220
+ 1865 065a 0BF1010B 		add	fp, fp, #1
+ 1866 065e 83E7     		b	.L219
+ 1867              	.L188:
+ 1868 0660 07B0     		add	sp, sp, #28
+ 1869              		@ sp needed
+ 1870 0662 BDEC088B 		vldm	sp!, {d8-d11}
+ 1871 0666 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1872              	.L256:
+ 1873 066a 00BF     		.align	2
+ 1874              	.L255:
+ 1875 066c 00000000 		.word	serial
+ 1876              		.fnend
+ 1878              		.section	.text._ZN10ConfEditor22setSystemStatusMessageEPKc,"ax",%progbits
+ 1879              		.align	1
+ 1880              		.global	_ZN10ConfEditor22setSystemStatusMessageEPKc
+ 1881              		.syntax unified
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 34
+
+
+ 1882              		.thumb
+ 1883              		.thumb_func
+ 1885              	_ZN10ConfEditor22setSystemStatusMessageEPKc:
+ 1886              		.fnstart
+ 1887              	.LFB936:
+ 1888              		@ args = 0, pretend = 0, frame = 8
+ 1889              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1890 0000 13B5     		push	{r0, r1, r4, lr}
+ 1891 0002 0023     		movs	r3, #0
+ 1892 0004 C375     		strb	r3, [r0, #23]
+ 1893 0006 0446     		mov	r4, r0
+ 1894 0008 0846     		mov	r0, r1
+ 1895 000a 0191     		str	r1, [sp, #4]
+ 1896 000c FFF7FEFF 		bl	strlen
+ 1897 0010 1328     		cmp	r0, #19
+ 1898 0012 0199     		ldr	r1, [sp, #4]
+ 1899 0014 10D9     		bls	.L258
+ 1900 0016 2346     		mov	r3, r4
+ 1901 0018 01F11002 		add	r2, r1, #16
+ 1902              	.L259:
+ 1903 001c 51F8040B 		ldr	r0, [r1], #4	@ unaligned
+ 1904 0020 43F8040B 		str	r0, [r3], #4	@ unaligned
+ 1905 0024 9142     		cmp	r1, r2
+ 1906 0026 F9D1     		bne	.L259
+ 1907 0028 0A88     		ldrh	r2, [r1]	@ unaligned
+ 1908 002a 1A80     		strh	r2, [r3]	@ unaligned
+ 1909 002c 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
+ 1910 002e 9A70     		strb	r2, [r3, #2]
+ 1911 0030 0023     		movs	r3, #0
+ 1912 0032 2375     		strb	r3, [r4, #20]
+ 1913 0034 02B0     		add	sp, sp, #8
+ 1914              		@ sp needed
+ 1915 0036 10BD     		pop	{r4, pc}
+ 1916              	.L258:
+ 1917 0038 2046     		mov	r0, r4
+ 1918 003a 02B0     		add	sp, sp, #8
+ 1919              		@ sp needed
+ 1920 003c BDE81040 		pop	{r4, lr}
+ 1921 0040 FFF7FEBF 		b	strcpy
+ 1922              		.cantunwind
+ 1923              		.fnend
+ 1925              		.section	.rodata._ZN10ConfEditorC2Ev.str1.1,"aMS",%progbits,1
+ 1926              	.LC17:
+ 1927 0000 00       		.ascii	"\000"
+ 1928              		.section	.text._ZN10ConfEditorC2Ev,"ax",%progbits
+ 1929              		.align	1
+ 1930              		.global	_ZN10ConfEditorC2Ev
+ 1931              		.syntax unified
+ 1932              		.thumb
+ 1933              		.thumb_func
+ 1935              	_ZN10ConfEditorC2Ev:
+ 1936              		.fnstart
+ 1937              	.LFB927:
+ 1938              		@ args = 0, pretend = 0, frame = 0
+ 1939              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1940 0000 10B5     		push	{r4, lr}
+ 1941 0002 FF23     		movs	r3, #255
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 35
+
+
+ 1942 0004 8382     		strh	r3, [r0, #20]	@ movhi
+ 1943 0006 0023     		movs	r3, #0
+ 1944 0008 0446     		mov	r4, r0
+ 1945 000a C375     		strb	r3, [r0, #23]
+ 1946 000c 4385     		strh	r3, [r0, #42]	@ movhi
+ 1947 000e 80F82C30 		strb	r3, [r0, #44]
+ 1948 0012 0249     		ldr	r1, .L264
+ 1949 0014 FFF7FEFF 		bl	_ZN10ConfEditor22setSystemStatusMessageEPKc
+ 1950 0018 2046     		mov	r0, r4
+ 1951 001a 10BD     		pop	{r4, pc}
+ 1952              	.L265:
+ 1953              		.align	2
+ 1954              	.L264:
+ 1955 001c 00000000 		.word	.LC17
+ 1956              		.cantunwind
+ 1957              		.fnend
+ 1959              		.global	_ZN10ConfEditorC1Ev
+ 1960              		.thumb_set _ZN10ConfEditorC1Ev,_ZN10ConfEditorC2Ev
+ 1961              		.section	.text._ZN10ConfEditor12toggleStatusEv,"ax",%progbits
+ 1962              		.align	1
+ 1963              		.global	_ZN10ConfEditor12toggleStatusEv
+ 1964              		.syntax unified
+ 1965              		.thumb
+ 1966              		.thumb_func
+ 1968              	_ZN10ConfEditor12toggleStatusEv:
+ 1969              		.fnstart
+ 1970              	.LFB937:
+ 1971              		@ args = 0, pretend = 0, frame = 0
+ 1972              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1973              		@ link register save eliminated.
+ 1974 0000 837D     		ldrb	r3, [r0, #22]	@ zero_extendqisi2
+ 1975 0002 0133     		adds	r3, r3, #1
+ 1976 0004 8375     		strb	r3, [r0, #22]
+ 1977 0006 0023     		movs	r3, #0
+ 1978 0008 C375     		strb	r3, [r0, #23]
+ 1979 000a 7047     		bx	lr
+ 1980              		.cantunwind
+ 1981              		.fnend
+ 1983              		.section	.text._ZN10ConfEditor11handleInputEc,"ax",%progbits
+ 1984              		.align	1
+ 1985              		.global	_ZN10ConfEditor11handleInputEc
+ 1986              		.syntax unified
+ 1987              		.thumb
+ 1988              		.thumb_func
+ 1990              	_ZN10ConfEditor11handleInputEc:
+ 1991              		.fnstart
+ 1992              	.LFB938:
+ 1993              		@ args = 0, pretend = 0, frame = 0
+ 1994              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1995 0000 38B5     		push	{r3, r4, r5, lr}
+ 1996              		.save {r3, r4, r5, lr}
+ 1997 0002 90F82C30 		ldrb	r3, [r0, #44]	@ zero_extendqisi2
+ 1998 0006 0175     		strb	r1, [r0, #20]
+ 1999 0008 0546     		mov	r5, r0
+ 2000 000a 0C46     		mov	r4, r1
+ 2001 000c 2BB9     		cbnz	r3, .L268
+ 2002 000e 0B48     		ldr	r0, .L271
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 36
+
+
+ 2003 0010 FFF7FEFF 		bl	_ZN6Serial15ansiClearScreenEv
+ 2004 0014 0123     		movs	r3, #1
+ 2005 0016 85F82C30 		strb	r3, [r5, #44]
+ 2006              	.L268:
+ 2007 001a 2E2C     		cmp	r4, #46
+ 2008 001c 02D1     		bne	.L269
+ 2009 001e 2846     		mov	r0, r5
+ 2010 0020 FFF7FEFF 		bl	_ZN10ConfEditor12toggleStatusEv
+ 2011              	.L269:
+ 2012 0024 303C     		subs	r4, r4, #48
+ 2013 0026 E4B2     		uxtb	r4, r4
+ 2014 0028 092C     		cmp	r4, #9
+ 2015 002a 06D8     		bhi	.L267
+ 2016 002c 0348     		ldr	r0, .L271
+ 2017 002e 6C75     		strb	r4, [r5, #21]
+ 2018 0030 FFF7FEFF 		bl	_ZN6Serial15ansiClearScreenEv
+ 2019 0034 0023     		movs	r3, #0
+ 2020 0036 2B76     		strb	r3, [r5, #24]
+ 2021 0038 EB75     		strb	r3, [r5, #23]
+ 2022              	.L267:
+ 2023 003a 38BD     		pop	{r3, r4, r5, pc}
+ 2024              	.L272:
+ 2025              		.align	2
+ 2026              	.L271:
+ 2027 003c 00000000 		.word	serial
+ 2028              		.fnend
+ 2030              		.section	.text._ZN10ConfEditor7refreshEv,"ax",%progbits
+ 2031              		.align	1
+ 2032              		.global	_ZN10ConfEditor7refreshEv
+ 2033              		.syntax unified
+ 2034              		.thumb
+ 2035              		.thumb_func
+ 2037              	_ZN10ConfEditor7refreshEv:
+ 2038              		.fnstart
+ 2039              	.LFB939:
+ 2040              		@ args = 0, pretend = 0, frame = 0
+ 2041              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2042 0000 90F82C30 		ldrb	r3, [r0, #44]	@ zero_extendqisi2
+ 2043 0004 10B5     		push	{r4, lr}
+ 2044              		.save {r4, lr}
+ 2045 0006 0446     		mov	r4, r0
+ 2046 0008 F3B1     		cbz	r3, .L273
+ 2047 000a 437D     		ldrb	r3, [r0, #21]	@ zero_extendqisi2
+ 2048 000c 052B     		cmp	r3, #5
+ 2049 000e 84BF     		itt	hi
+ 2050 0010 0023     		movhi	r3, #0
+ 2051 0012 4375     		strbhi	r3, [r0, #21]
+ 2052 0014 C37D     		ldrb	r3, [r0, #23]	@ zero_extendqisi2
+ 2053 0016 1BB9     		cbnz	r3, .L276
+ 2054 0018 FFF7FEFF 		bl	_ZN10ConfEditor11printHeaderEv
+ 2055 001c 0123     		movs	r3, #1
+ 2056 001e E375     		strb	r3, [r4, #23]
+ 2057              	.L276:
+ 2058 0020 627D     		ldrb	r2, [r4, #21]	@ zero_extendqisi2
+ 2059 0022 0023     		movs	r3, #0
+ 2060 0024 052A     		cmp	r2, #5
+ 2061 0026 0AD8     		bhi	.L277
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 37
+
+
+ 2062 0028 DFE802F0 		tbb	[pc, r2]
+ 2063              	.L279:
+ 2064 002c 03       		.byte	(.L284-.L279)/2
+ 2065 002d 0F       		.byte	(.L283-.L279)/2
+ 2066 002e 16       		.byte	(.L282-.L279)/2
+ 2067 002f 1D       		.byte	(.L281-.L279)/2
+ 2068 0030 24       		.byte	(.L280-.L279)/2
+ 2069 0031 2C       		.byte	(.L278-.L279)/2
+ 2070              		.p2align 1
+ 2071              	.L284:
+ 2072 0032 184A     		ldr	r2, .L289
+ 2073 0034 2046     		mov	r0, r4
+ 2074 0036 C2F88830 		str	r3, [r2, #136]
+ 2075 003a FFF7FEFF 		bl	_ZN10ConfEditor10mainScreenEv
+ 2076              	.L277:
+ 2077 003e 0023     		movs	r3, #0
+ 2078 0040 2375     		strb	r3, [r4, #20]
+ 2079 0042 237E     		ldrb	r3, [r4, #24]	@ zero_extendqisi2
+ 2080 0044 0133     		adds	r3, r3, #1
+ 2081 0046 2376     		strb	r3, [r4, #24]
+ 2082              	.L273:
+ 2083 0048 10BD     		pop	{r4, pc}
+ 2084              	.L283:
+ 2085 004a 124A     		ldr	r2, .L289
+ 2086 004c 2046     		mov	r0, r4
+ 2087 004e C2F88830 		str	r3, [r2, #136]
+ 2088 0052 FFF7FEFF 		bl	_ZN10ConfEditor7pageDTCEv
+ 2089 0056 F2E7     		b	.L277
+ 2090              	.L282:
+ 2091 0058 0E4A     		ldr	r2, .L289
+ 2092 005a 2046     		mov	r0, r4
+ 2093 005c C2F88830 		str	r3, [r2, #136]
+ 2094 0060 FFF7FEFF 		bl	_ZN10ConfEditor14pageAdaptationEv
+ 2095 0064 EBE7     		b	.L277
+ 2096              	.L281:
+ 2097 0066 0B4A     		ldr	r2, .L289
+ 2098 0068 2046     		mov	r0, r4
+ 2099 006a C2F88830 		str	r3, [r2, #136]
+ 2100 006e FFF7FEFF 		bl	_ZN10ConfEditor13pageMapEditorEv
+ 2101 0072 E4E7     		b	.L277
+ 2102              	.L280:
+ 2103 0074 074B     		ldr	r3, .L289
+ 2104 0076 0122     		movs	r2, #1
+ 2105 0078 C3F88820 		str	r2, [r3, #136]
+ 2106 007c 2046     		mov	r0, r4
+ 2107 007e FFF7FEFF 		bl	_ZN10ConfEditor15pageOutputTestsEv
+ 2108 0082 DCE7     		b	.L277
+ 2109              	.L278:
+ 2110 0084 034A     		ldr	r2, .L289
+ 2111 0086 2046     		mov	r0, r4
+ 2112 0088 C2F88830 		str	r3, [r2, #136]
+ 2113 008c FFF7FEFF 		bl	_ZN10ConfEditor14pageVisualizerEv
+ 2114 0090 D5E7     		b	.L277
+ 2115              	.L290:
+ 2116 0092 00BF     		.align	2
+ 2117              	.L289:
+ 2118 0094 00000000 		.word	core
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 38
+
+
+ 2119              		.fnend
+ 2121              		.section	.text.startup._GLOBAL__sub_I_confeditor,"ax",%progbits
+ 2122              		.align	1
+ 2123              		.syntax unified
+ 2124              		.thumb
+ 2125              		.thumb_func
+ 2127              	_GLOBAL__sub_I_confeditor:
+ 2128              		.fnstart
+ 2129              	.LFB1091:
+ 2130              		@ args = 0, pretend = 0, frame = 0
+ 2131              		@ frame_needed = 0, uses_anonymous_args = 0
+ 2132              		@ link register save eliminated.
+ 2133 0000 0148     		ldr	r0, .L292
+ 2134 0002 FFF7FEBF 		b	_ZN10ConfEditorC1Ev
+ 2135              	.L293:
+ 2136 0006 00BF     		.align	2
+ 2137              	.L292:
+ 2138 0008 00000000 		.word	.LANCHOR28
+ 2139              		.cantunwind
+ 2140              		.fnend
+ 2142              		.section	.init_array,"aw",%init_array
+ 2143              		.align	2
+ 2144 0000 00000000 		.word	_GLOBAL__sub_I_confeditor(target1)
+ 2145              		.global	confEditorAdaptationText
+ 2146              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 2147              	.LC18:
+ 2148 0000 4B657973 		.ascii	"Keys: -/+ adjust (;/: *32) <spc> raw/human </> page"
+ 2148      3A202D2F 
+ 2148      2B206164 
+ 2148      6A757374 
+ 2148      20283B2F 
+ 2149 0033 203C6372 		.ascii	" <crsr keys> move s-save\000"
+ 2149      7372206B 
+ 2149      6579733E 
+ 2149      206D6F76 
+ 2149      6520732D 
+ 2150              	.LC19:
+ 2151 004c 4974656D 		.ascii	"Item description (Page x/x)                      Se"
+ 2151      20646573 
+ 2151      63726970 
+ 2151      74696F6E 
+ 2151      20285061 
+ 2152 007f 74506F69 		.ascii	"tPoint   Input     Actual\000"
+ 2152      6E742020 
+ 2152      20496E70 
+ 2152      75742020 
+ 2152      20202041 
+ 2153              	.LC20:
+ 2154 0099 2D2D2D2D 		.ascii	"------------------------------------------------ --"
+ 2154      2D2D2D2D 
+ 2154      2D2D2D2D 
+ 2154      2D2D2D2D 
+ 2154      2D2D2D2D 
+ 2155 00cc 2D2D2D2D 		.ascii	"-------- --------- -------\000"
+ 2155      2D2D2D2D 
+ 2155      202D2D2D 
+ 2155      2D2D2D2D 
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 39
+
+
+ 2155      2D2D202D 
+ 2156              		.global	confEditorDTCText
+ 2157              	.LC21:
+ 2158 00e7 4B657973 		.ascii	"Keys: r - reset fault memory, g - generate error\000"
+ 2158      3A207220 
+ 2158      2D207265 
+ 2158      73657420 
+ 2158      6661756C 
+ 2159              	.LC22:
+ 2160 0118 44544320 		.ascii	"DTC Name\000"
+ 2160      4E616D65 
+ 2160      00
+ 2161              	.LC23:
+ 2162 0121 436F756E 		.ascii	"Count\000"
+ 2162      7400
+ 2163              		.global	confEditorMainScreen
+ 2164              	.LC24:
+ 2165 0127 476C6F62 		.ascii	"Global shortcuts:\000"
+ 2165      616C2073 
+ 2165      686F7274 
+ 2165      63757473 
+ 2165      3A00
+ 2166              	.LC25:
+ 2167 0139 20203C30 		.ascii	"  <0> Main menu\000"
+ 2167      3E204D61 
+ 2167      696E206D 
+ 2167      656E7500 
+ 2168              	.LC26:
+ 2169 0149 20203C31 		.ascii	"  <1> DTC memory\000"
+ 2169      3E204454 
+ 2169      43206D65 
+ 2169      6D6F7279 
+ 2169      00
+ 2170              	.LC27:
+ 2171 015a 20203C32 		.ascii	"  <2> Configuration/Adaptation\000"
+ 2171      3E20436F 
+ 2171      6E666967 
+ 2171      75726174 
+ 2171      696F6E2F 
+ 2172              	.LC28:
+ 2173 0179 20203C33 		.ascii	"  <3> Map Editor\000"
+ 2173      3E204D61 
+ 2173      70204564 
+ 2173      69746F72 
+ 2173      00
+ 2174              	.LC29:
+ 2175 018a 20203C34 		.ascii	"  <4> Output tests\000"
+ 2175      3E204F75 
+ 2175      74707574 
+ 2175      20746573 
+ 2175      747300
+ 2176              	.LC30:
+ 2177 019d 20203C35 		.ascii	"  <5> Visualizer\000"
+ 2177      3E205669 
+ 2177      7375616C 
+ 2177      697A6572 
+ 2177      00
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 40
+
+
+ 2178              	.LC31:
+ 2179 01ae 20203C2E 		.ascii	"  <.> Toggle status indicator (Status/RPM/TPS/Map)\000"
+ 2179      3E20546F 
+ 2179      67676C65 
+ 2179      20737461 
+ 2179      74757320 
+ 2180              	.LC32:
+ 2181 01e1 53656E64 		.ascii	"Send feedback to syncro16@outlook.com or visit http"
+ 2181      20666565 
+ 2181      64626163 
+ 2181      6B20746F 
+ 2181      2073796E 
+ 2182 0214 3A2F2F64 		.ascii	"://dmn.kuulalaakeri.org/\000"
+ 2182      6D6E2E6B 
+ 2182      75756C61 
+ 2182      6C61616B 
+ 2182      6572692E 
+ 2183              		.global	confEditorHeader
+ 2184              	.LC33:
+ 2185 022d 646D6E2D 		.ascii	"dmn-edc for stm32f334 rel.201710\000"
+ 2185      65646320 
+ 2185      666F7220 
+ 2185      73746D33 
+ 2185      32663333 
+ 2186              	.LC34:
+ 2187 024e 53746174 		.ascii	"Status:\000"
+ 2187      75733A00 
+ 2188              		.global	confeditor
+ 2189              		.section	.bss._ZZN10ConfEditor14pageVisualizerEvE10oldAdvance,"aw",%nobits
+ 2190              		.set	.LANCHOR10,. + 0
+ 2193              	_ZZN10ConfEditor14pageVisualizerEvE10oldAdvance:
+ 2194 0000 00       		.space	1
+ 2195              		.section	.bss._ZZN10ConfEditor14pageVisualizerEvE13oldFuelAmount,"aw",%nobits
+ 2196              		.set	.LANCHOR9,. + 0
+ 2199              	_ZZN10ConfEditor14pageVisualizerEvE13oldFuelAmount:
+ 2200 0000 00       		.space	1
+ 2201              		.section	.bss._ZZN10ConfEditor14pageVisualizerEvE13oldMapRequest,"aw",%nobits
+ 2202              		.set	.LANCHOR22,. + 0
+ 2205              	_ZZN10ConfEditor14pageVisualizerEvE13oldMapRequest:
+ 2206 0000 00       		.space	1
+ 2207              		.section	.bss._ZZN10ConfEditor14pageVisualizerEvE6oldMap,"aw",%nobits
+ 2208              		.set	.LANCHOR13,. + 0
+ 2211              	_ZZN10ConfEditor14pageVisualizerEvE6oldMap:
+ 2212 0000 00       		.space	1
+ 2213              		.section	.bss._ZZN10ConfEditor14pageVisualizerEvE6oldN75,"aw",%nobits
+ 2214              		.set	.LANCHOR11,. + 0
+ 2217              	_ZZN10ConfEditor14pageVisualizerEvE6oldN75:
+ 2218 0000 00       		.space	1
+ 2219              		.section	.bss._ZZN10ConfEditor14pageVisualizerEvE6oldTps,"aw",%nobits
+ 2220              		.set	.LANCHOR8,. + 0
+ 2223              	_ZZN10ConfEditor14pageVisualizerEvE6oldTps:
+ 2224 0000 00       		.space	1
+ 2225              		.section	.bss._ZZN10ConfEditor14pageVisualizerEvE7oldQAFB,"aw",%nobits
+ 2226              		.set	.LANCHOR12,. + 0
+ 2229              	_ZZN10ConfEditor14pageVisualizerEvE7oldQAFB:
+ 2230 0000 00       		.space	1
+ 2231              		.section	.bss.confeditor,"aw",%nobits
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 41
+
+
+ 2232              		.align	2
+ 2233              		.set	.LANCHOR28,. + 0
+ 2236              	confeditor:
+ 2237 0000 00000000 		.space	48
+ 2237      00000000 
+ 2237      00000000 
+ 2237      00000000 
+ 2237      00000000 
+ 2238              		.section	.data.confEditorAdaptationText,"aw"
+ 2239              		.align	2
+ 2240              		.set	.LANCHOR24,. + 0
+ 2243              	confEditorAdaptationText:
+ 2244 0000 00000000 		.word	.LC18
+ 2245 0004 4C000000 		.word	.LC19
+ 2246 0008 99000000 		.word	.LC20
+ 2247 000c 00000000 		.word	0
+ 2248              		.section	.data.confEditorDTCText,"aw"
+ 2249              		.align	2
+ 2250              		.set	.LANCHOR23,. + 0
+ 2253              	confEditorDTCText:
+ 2254 0000 E7000000 		.word	.LC21
+ 2255 0004 18010000 		.word	.LC22
+ 2256 0008 21010000 		.word	.LC23
+ 2257 000c 00000000 		.word	0
+ 2258              		.section	.data.confEditorHeader,"aw"
+ 2259              		.align	2
+ 2260              		.set	.LANCHOR1,. + 0
+ 2263              	confEditorHeader:
+ 2264 0000 2D020000 		.word	.LC33
+ 2265 0004 4E020000 		.word	.LC34
+ 2266 0008 05000000 		.word	.LC14
+ 2267 000c 05000000 		.word	.LC14
+ 2268 0010 00000000 		.word	0
+ 2269              		.section	.data.confEditorMainScreen,"aw"
+ 2270              		.align	2
+ 2271              		.set	.LANCHOR0,. + 0
+ 2274              	confEditorMainScreen:
+ 2275 0000 27010000 		.word	.LC24
+ 2276 0004 39010000 		.word	.LC25
+ 2277 0008 49010000 		.word	.LC26
+ 2278 000c 5A010000 		.word	.LC27
+ 2279 0010 79010000 		.word	.LC28
+ 2280 0014 8A010000 		.word	.LC29
+ 2281 0018 9D010000 		.word	.LC30
+ 2282 001c AE010000 		.word	.LC31
+ 2283 0020 05000000 		.word	.LC14
+ 2284 0024 E1010000 		.word	.LC32
+ 2285 0028 00000000 		.word	0
+ 2286              		.section	.rodata._ZL19confEditorOutputN75,"a"
+ 2287              		.set	.LANCHOR7,. + 0
+ 2290              	_ZL19confEditorOutputN75:
+ 2291 0000 20206E2F 		.ascii	"  n/N            N75 duty cycle:\000"
+ 2291      4E202020 
+ 2291      20202020 
+ 2291      20202020 
+ 2291      204E3735 
+ 2292 0021 00000000 		.space	47
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 42
+
+
+ 2292      00000000 
+ 2292      00000000 
+ 2292      00000000 
+ 2292      00000000 
+ 2293              		.section	.rodata._ZL23confEditorMapCurrentMap,"a"
+ 2294              		.set	.LANCHOR27,. + 0
+ 2297              	_ZL23confEditorMapCurrentMap:
+ 2298 0000 43757272 		.ascii	"Current map:\000"
+ 2298      656E7420 
+ 2298      6D61703A 
+ 2298      00
+ 2299              		.section	.rodata._ZL23confEditorMapEditorHelp,"a"
+ 2300              		.set	.LANCHOR26,. + 0
+ 2303              	_ZL23confEditorMapEditorHelp:
+ 2304 0000 4B657973 		.ascii	"Keys: -/+ adjust (;/: *32), </> change c-copy v-pas"
+ 2304      3A202D2F 
+ 2304      2B206164 
+ 2304      6A757374 
+ 2304      20283B2F 
+ 2305 0033 74652073 		.ascii	"te s-save <crsr keys> move\000"
+ 2305      2D736176 
+ 2305      65203C63 
+ 2305      72737220 
+ 2305      6B657973 
+ 2306              		.section	.rodata._ZL23confEditorOutputLabelOn,"a"
+ 2307              		.set	.LANCHOR2,. + 0
+ 2310              	_ZL23confEditorOutputLabelOn:
+ 2311 0000 4F4E00   		.ascii	"ON\000"
+ 2312 0003 00000000 		.space	77
+ 2312      00000000 
+ 2312      00000000 
+ 2312      00000000 
+ 2312      00000000 
+ 2313              		.section	.rodata._ZL23confEditorVisualizerN75,"a"
+ 2314              		.set	.LANCHOR18,. + 0
+ 2317              	_ZL23confEditorVisualizerN75:
+ 2318 0000 20202020 		.ascii	"        N75 0% . . . . . . . . . . . . . 50% . . . "
+ 2318      20202020 
+ 2318      4E373520 
+ 2318      3025202E 
+ 2318      202E202E 
+ 2319 0033 2E202E20 		.ascii	". . . . . . . . . . .100%\000"
+ 2319      2E202E20 
+ 2319      2E202E20 
+ 2319      2E202E20 
+ 2319      2E202E20 
+ 2320 004d 000000   		.space	3
+ 2321              		.section	.rodata._ZL23confEditorVisualizerRPM,"a"
+ 2322              		.set	.LANCHOR21,. + 0
+ 2325              	_ZL23confEditorVisualizerRPM:
+ 2326 0000 20202020 		.ascii	"        RPM \000"
+ 2326      20202020 
+ 2326      52504D20 
+ 2326      00
+ 2327 000d 00000000 		.space	67
+ 2327      00000000 
+ 2327      00000000 
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 43
+
+
+ 2327      00000000 
+ 2327      00000000 
+ 2328              		.section	.rodata._ZL23confEditorVisualizerTPS,"a"
+ 2329              		.set	.LANCHOR14,. + 0
+ 2332              	_ZL23confEditorVisualizerTPS:
+ 2333 0000 20202020 		.ascii	"        TPS 0% . . . . . . . . . . . . . 50% . . . "
+ 2333      20202020 
+ 2333      54505320 
+ 2333      3025202E 
+ 2333      202E202E 
+ 2334 0033 2E202E20 		.ascii	". . . . . . . . . . .100%\000"
+ 2334      2E202E20 
+ 2334      2E202E20 
+ 2334      2E202E20 
+ 2334      2E202E20 
+ 2335              		.section	.rodata._ZL24confEditorOutputLabelOff,"a"
+ 2336              		.set	.LANCHOR3,. + 0
+ 2339              	_ZL24confEditorOutputLabelOff:
+ 2340 0000 4F464600 		.ascii	"OFF\000"
+ 2341 0004 00000000 		.space	76
+ 2341      00000000 
+ 2341      00000000 
+ 2341      00000000 
+ 2341      00000000 
+ 2342              		.section	.rodata._ZL24confEditorOutputTestsFan,"a"
+ 2343              		.set	.LANCHOR5,. + 0
+ 2346              	_ZL24confEditorOutputTestsFan:
+ 2347 0000 20203C41 		.ascii	"  <A>                Fan status:\000"
+ 2347      3E202020 
+ 2347      20202020 
+ 2347      20202020 
+ 2347      20202020 
+ 2348 0021 00000000 		.space	47
+ 2348      00000000 
+ 2348      00000000 
+ 2348      00000000 
+ 2348      00000000 
+ 2349              		.section	.rodata._ZL24confEditorVisualizerQAFB,"a"
+ 2350              		.set	.LANCHOR16,. + 0
+ 2353              	_ZL24confEditorVisualizerQAFB:
+ 2354 0000 51412046 		.ascii	"QA FeedBack 0% . . . . . . . . . . . . . 50% . . . "
+ 2354      65656442 
+ 2354      61636B20 
+ 2354      3025202E 
+ 2354      202E202E 
+ 2355 0033 2E202E20 		.ascii	". . . . . . . . . . .100%\000"
+ 2355      2E202E20 
+ 2355      2E202E20 
+ 2355      2E202E20 
+ 2355      2E202E20 
+ 2356 004d 000000   		.space	3
+ 2357              		.section	.rodata._ZL25confEditorOutputTestsGlow,"a"
+ 2358              		.set	.LANCHOR4,. + 0
+ 2361              	_ZL25confEditorOutputTestsGlow:
+ 2362 0000 20203C51 		.ascii	"  <Q>          Glow Plug status:\000"
+ 2362      3E202020 
+ 2362      20202020 
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 44
+
+
+ 2362      20202047 
+ 2362      6C6F7720 
+ 2363 0021 00000000 		.space	47
+ 2363      00000000 
+ 2363      00000000 
+ 2363      00000000 
+ 2363      00000000 
+ 2364              		.section	.rodata._ZL26confEditorMapCurrentOutput,"a"
+ 2365              		.set	.LANCHOR25,. + 0
+ 2368              	_ZL26confEditorMapCurrentOutput:
+ 2369 0000 4F757470 		.ascii	"Output: \000"
+ 2369      75743A20 
+ 2369      00
+ 2370              		.section	.rodata._ZL27confEditorOutputPumpAdvance,"a"
+ 2371              		.set	.LANCHOR6,. + 0
+ 2374              	_ZL27confEditorOutputPumpAdvance:
+ 2375 0000 2020742F 		.ascii	"  t/T   Pump advance duty cycle:\000"
+ 2375      54202020 
+ 2375      50756D70 
+ 2375      20616476 
+ 2375      616E6365 
+ 2376 0021 00000000 		.space	47
+ 2376      00000000 
+ 2376      00000000 
+ 2376      00000000 
+ 2376      00000000 
+ 2377              		.section	.rodata._ZL27confEditorVisualizerAdvance,"a"
+ 2378              		.set	.LANCHOR17,. + 0
+ 2381              	_ZL27confEditorVisualizerAdvance:
+ 2382 0000 20202020 		.ascii	"    Advance 0% . . . . . . . . . . . . . 50% . . . "
+ 2382      41647661 
+ 2382      6E636520 
+ 2382      3025202E 
+ 2382      202E202E 
+ 2383 0033 2E202E20 		.ascii	". . . . . . . . . . .100%\000"
+ 2383      2E202E20 
+ 2383      2E202E20 
+ 2383      2E202E20 
+ 2383      2E202E20 
+ 2384 004d 000000   		.space	3
+ 2385              		.section	.rodata._ZL29confEditorVisualizerMapActual,"a"
+ 2386              		.set	.LANCHOR19,. + 0
+ 2389              	_ZL29confEditorVisualizerMapActual:
+ 2390 0000 204D4150 		.ascii	" MAP Actual 0% . . . . . . . . . . . . . 50% . . . "
+ 2390      20416374 
+ 2390      75616C20 
+ 2390      3025202E 
+ 2390      202E202E 
+ 2391 0033 2E202E20 		.ascii	". . . . . . . . . . .100%\000"
+ 2391      2E202E20 
+ 2391      2E202E20 
+ 2391      2E202E20 
+ 2391      2E202E20 
+ 2392 004d 000000   		.space	3
+ 2393              		.section	.rodata._ZL30confEditorVisualizerFuelAmount,"a"
+ 2394              		.set	.LANCHOR15,. + 0
+ 2397              	_ZL30confEditorVisualizerFuelAmount:
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 45
+
+
+ 2398 0000 20467565 		.ascii	" FuelAmount 0% . . . . . . . . . . . . . 50% . . . "
+ 2398      6C416D6F 
+ 2398      756E7420 
+ 2398      3025202E 
+ 2398      202E202E 
+ 2399 0033 2E202E20 		.ascii	". . . . . . . . . . .100%\000"
+ 2399      2E202E20 
+ 2399      2E202E20 
+ 2399      2E202E20 
+ 2399      2E202E20 
+ 2400 004d 000000   		.space	3
+ 2401              		.section	.rodata._ZL30confEditorVisualizerMapRequest,"a"
+ 2402              		.set	.LANCHOR20,. + 0
+ 2405              	_ZL30confEditorVisualizerMapRequest:
+ 2406 0000 4D415020 		.ascii	"MAP Request 0% . . . . . . . . . . . . . 50% . . . "
+ 2406      52657175 
+ 2406      65737420 
+ 2406      3025202E 
+ 2406      202E202E 
+ 2407 0033 2E202E20 		.ascii	". . . . . . . . . . .100%\000"
+ 2407      2E202E20 
+ 2407      2E202E20 
+ 2407      2E202E20 
+ 2407      2E202E20 
+ 2408 004d 000000   		.space	3
+ 2409              		.ident	"GCC: (Arm GNU Toolchain 11.3.Rel1) 11.3.1 20220712"
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 46
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ConfEditor.cpp
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:29     .text._ZN10ConfEditor11printHeaderEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:35     .text._ZN10ConfEditor11printHeaderEv:0000000000000000 _ZN10ConfEditor11printHeaderEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:137    .text._ZN10ConfEditor11printHeaderEv:00000000000000e0 $d
+.ARM.exidx.text._ZN10ConfEditor11printHeaderEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:149    .text._ZN10ConfEditor10mainScreenEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:155    .text._ZN10ConfEditor10mainScreenEv:0000000000000000 _ZN10ConfEditor10mainScreenEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:190    .text._ZN10ConfEditor10mainScreenEv:0000000000000034 $d
+.ARM.exidx.text._ZN10ConfEditor10mainScreenEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:195    .text._ZN10ConfEditor15pageOutputTestsEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:201    .text._ZN10ConfEditor15pageOutputTestsEv:0000000000000000 _ZN10ConfEditor15pageOutputTestsEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:364    .text._ZN10ConfEditor15pageOutputTestsEv:0000000000000168 $d
+.ARM.exidx.text._ZN10ConfEditor15pageOutputTestsEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:386    .text._ZN10ConfEditor14pageVisualizerEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:392    .text._ZN10ConfEditor14pageVisualizerEv:0000000000000000 _ZN10ConfEditor14pageVisualizerEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:719    .text._ZN10ConfEditor14pageVisualizerEv:00000000000002ec $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:747    .text._ZN10ConfEditor14pageVisualizerEv:0000000000000358 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:824    .text._ZN10ConfEditor14pageVisualizerEv:00000000000003fc $d
+.ARM.exidx.text._ZN10ConfEditor14pageVisualizerEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:831    .text._ZN10ConfEditor7pageDTCEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:837    .text._ZN10ConfEditor7pageDTCEv:0000000000000000 _ZN10ConfEditor7pageDTCEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:933    .text._ZN10ConfEditor7pageDTCEv:00000000000000cc $d
+.ARM.exidx.text._ZN10ConfEditor7pageDTCEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:944    .text._ZN10ConfEditor14pageAdaptationEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:950    .text._ZN10ConfEditor14pageAdaptationEv:0000000000000000 _ZN10ConfEditor14pageAdaptationEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1128   .text._ZN10ConfEditor14pageAdaptationEv:00000000000001a8 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1133   .text._ZN10ConfEditor14pageAdaptationEv:00000000000001bc $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1150   .text._ZN10ConfEditor14pageAdaptationEv:00000000000001dc $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1162   .text._ZN10ConfEditor14pageAdaptationEv:000000000000020c $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1247   .text._ZN10ConfEditor14pageAdaptationEv:00000000000002a8 $d
+.ARM.exidx.text._ZN10ConfEditor14pageAdaptationEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1266   .text._ZN10ConfEditor13pageMapEditorEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1272   .text._ZN10ConfEditor13pageMapEditorEv:0000000000000000 _ZN10ConfEditor13pageMapEditorEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1374   .text._ZN10ConfEditor13pageMapEditorEv:00000000000000e8 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1394   .text._ZN10ConfEditor13pageMapEditorEv:0000000000000138 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1403   .text._ZN10ConfEditor13pageMapEditorEv:0000000000000144 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1408   .text._ZN10ConfEditor13pageMapEditorEv:0000000000000158 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1522   .text._ZN10ConfEditor13pageMapEditorEv:00000000000002bc $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1533   .text._ZN10ConfEditor13pageMapEditorEv:00000000000002e4 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1839   .text._ZN10ConfEditor13pageMapEditorEv:0000000000000618 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1844   .text._ZN10ConfEditor13pageMapEditorEv:0000000000000628 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1875   .text._ZN10ConfEditor13pageMapEditorEv:000000000000066c $d
+.ARM.extab.text._ZN10ConfEditor13pageMapEditorEv:0000000000000000 $d
+.ARM.exidx.text._ZN10ConfEditor13pageMapEditorEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1879   .text._ZN10ConfEditor22setSystemStatusMessageEPKc:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1885   .text._ZN10ConfEditor22setSystemStatusMessageEPKc:0000000000000000 _ZN10ConfEditor22setSystemStatusMessageEPKc
+.ARM.exidx.text._ZN10ConfEditor22setSystemStatusMessageEPKc:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1929   .text._ZN10ConfEditorC2Ev:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1935   .text._ZN10ConfEditorC2Ev:0000000000000000 _ZN10ConfEditorC2Ev
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1955   .text._ZN10ConfEditorC2Ev:000000000000001c $d
+.ARM.exidx.text._ZN10ConfEditorC2Ev:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1935   .text._ZN10ConfEditorC2Ev:0000000000000000 _ZN10ConfEditorC1Ev
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1962   .text._ZN10ConfEditor12toggleStatusEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1968   .text._ZN10ConfEditor12toggleStatusEv:0000000000000000 _ZN10ConfEditor12toggleStatusEv
+.ARM.exidx.text._ZN10ConfEditor12toggleStatusEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1984   .text._ZN10ConfEditor11handleInputEc:0000000000000000 $t
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 47
+
+
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:1990   .text._ZN10ConfEditor11handleInputEc:0000000000000000 _ZN10ConfEditor11handleInputEc
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2027   .text._ZN10ConfEditor11handleInputEc:000000000000003c $d
+.ARM.exidx.text._ZN10ConfEditor11handleInputEc:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2031   .text._ZN10ConfEditor7refreshEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2037   .text._ZN10ConfEditor7refreshEv:0000000000000000 _ZN10ConfEditor7refreshEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2064   .text._ZN10ConfEditor7refreshEv:000000000000002c $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2070   .text._ZN10ConfEditor7refreshEv:0000000000000032 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2118   .text._ZN10ConfEditor7refreshEv:0000000000000094 $d
+.ARM.exidx.text._ZN10ConfEditor7refreshEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2122   .text.startup._GLOBAL__sub_I_confeditor:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2127   .text.startup._GLOBAL__sub_I_confeditor:0000000000000000 _GLOBAL__sub_I_confeditor
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2138   .text.startup._GLOBAL__sub_I_confeditor:0000000000000008 $d
+.ARM.exidx.text.startup._GLOBAL__sub_I_confeditor:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2143   .init_array:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2243   .data.confEditorAdaptationText:0000000000000000 confEditorAdaptationText
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2253   .data.confEditorDTCText:0000000000000000 confEditorDTCText
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2274   .data.confEditorMainScreen:0000000000000000 confEditorMainScreen
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2263   .data.confEditorHeader:0000000000000000 confEditorHeader
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2236   .bss.confeditor:0000000000000000 confeditor
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2193   .bss._ZZN10ConfEditor14pageVisualizerEvE10oldAdvance:0000000000000000 _ZZN10ConfEditor14pageVisualizerEvE10oldAdvance
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2194   .bss._ZZN10ConfEditor14pageVisualizerEvE10oldAdvance:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2199   .bss._ZZN10ConfEditor14pageVisualizerEvE13oldFuelAmount:0000000000000000 _ZZN10ConfEditor14pageVisualizerEvE13oldFuelAmount
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2200   .bss._ZZN10ConfEditor14pageVisualizerEvE13oldFuelAmount:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2205   .bss._ZZN10ConfEditor14pageVisualizerEvE13oldMapRequest:0000000000000000 _ZZN10ConfEditor14pageVisualizerEvE13oldMapRequest
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2206   .bss._ZZN10ConfEditor14pageVisualizerEvE13oldMapRequest:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2211   .bss._ZZN10ConfEditor14pageVisualizerEvE6oldMap:0000000000000000 _ZZN10ConfEditor14pageVisualizerEvE6oldMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2212   .bss._ZZN10ConfEditor14pageVisualizerEvE6oldMap:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2217   .bss._ZZN10ConfEditor14pageVisualizerEvE6oldN75:0000000000000000 _ZZN10ConfEditor14pageVisualizerEvE6oldN75
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2218   .bss._ZZN10ConfEditor14pageVisualizerEvE6oldN75:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2223   .bss._ZZN10ConfEditor14pageVisualizerEvE6oldTps:0000000000000000 _ZZN10ConfEditor14pageVisualizerEvE6oldTps
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2224   .bss._ZZN10ConfEditor14pageVisualizerEvE6oldTps:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2229   .bss._ZZN10ConfEditor14pageVisualizerEvE7oldQAFB:0000000000000000 _ZZN10ConfEditor14pageVisualizerEvE7oldQAFB
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2230   .bss._ZZN10ConfEditor14pageVisualizerEvE7oldQAFB:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2232   .bss.confeditor:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2239   .data.confEditorAdaptationText:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2249   .data.confEditorDTCText:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2259   .data.confEditorHeader:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2270   .data.confEditorMainScreen:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2290   .rodata._ZL19confEditorOutputN75:0000000000000000 _ZL19confEditorOutputN75
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2292   .rodata._ZL19confEditorOutputN75:0000000000000021 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2297   .rodata._ZL23confEditorMapCurrentMap:0000000000000000 _ZL23confEditorMapCurrentMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2303   .rodata._ZL23confEditorMapEditorHelp:0000000000000000 _ZL23confEditorMapEditorHelp
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2310   .rodata._ZL23confEditorOutputLabelOn:0000000000000000 _ZL23confEditorOutputLabelOn
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2312   .rodata._ZL23confEditorOutputLabelOn:0000000000000003 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2317   .rodata._ZL23confEditorVisualizerN75:0000000000000000 _ZL23confEditorVisualizerN75
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2320   .rodata._ZL23confEditorVisualizerN75:000000000000004d $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2325   .rodata._ZL23confEditorVisualizerRPM:0000000000000000 _ZL23confEditorVisualizerRPM
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2327   .rodata._ZL23confEditorVisualizerRPM:000000000000000d $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2332   .rodata._ZL23confEditorVisualizerTPS:0000000000000000 _ZL23confEditorVisualizerTPS
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2339   .rodata._ZL24confEditorOutputLabelOff:0000000000000000 _ZL24confEditorOutputLabelOff
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2341   .rodata._ZL24confEditorOutputLabelOff:0000000000000004 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2346   .rodata._ZL24confEditorOutputTestsFan:0000000000000000 _ZL24confEditorOutputTestsFan
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2348   .rodata._ZL24confEditorOutputTestsFan:0000000000000021 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2353   .rodata._ZL24confEditorVisualizerQAFB:0000000000000000 _ZL24confEditorVisualizerQAFB
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2356   .rodata._ZL24confEditorVisualizerQAFB:000000000000004d $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2361   .rodata._ZL25confEditorOutputTestsGlow:0000000000000000 _ZL25confEditorOutputTestsGlow
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2363   .rodata._ZL25confEditorOutputTestsGlow:0000000000000021 $d
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s 			page 48
+
+
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2368   .rodata._ZL26confEditorMapCurrentOutput:0000000000000000 _ZL26confEditorMapCurrentOutput
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2374   .rodata._ZL27confEditorOutputPumpAdvance:0000000000000000 _ZL27confEditorOutputPumpAdvance
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2376   .rodata._ZL27confEditorOutputPumpAdvance:0000000000000021 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2381   .rodata._ZL27confEditorVisualizerAdvance:0000000000000000 _ZL27confEditorVisualizerAdvance
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2384   .rodata._ZL27confEditorVisualizerAdvance:000000000000004d $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2389   .rodata._ZL29confEditorVisualizerMapActual:0000000000000000 _ZL29confEditorVisualizerMapActual
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2392   .rodata._ZL29confEditorVisualizerMapActual:000000000000004d $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2397   .rodata._ZL30confEditorVisualizerFuelAmount:0000000000000000 _ZL30confEditorVisualizerFuelAmount
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2400   .rodata._ZL30confEditorVisualizerFuelAmount:000000000000004d $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2405   .rodata._ZL30confEditorVisualizerMapRequest:0000000000000000 _ZL30confEditorVisualizerMapRequest
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccfcjhDU.s:2408   .rodata._ZL30confEditorVisualizerMapRequest:000000000000004d $d
+
+UNDEFINED SYMBOLS
+_ZN6Serial10ansiGotoXyEcc
+_ZN6Serial12ansiClearEolEv
+_ZN6Serial5printEPKc
+itoa
+strlen
+serial
+core
+__aeabi_unwind_cpp_pr0
+_ZN6Serial15ansiClearScreenEv
+_ZN6Serial5printEi
+_ZN6Serial16printWithPaddingEihc
+_ZN6Serial6printfEPKcz
+_ZN3DTC8resetAllEv
+_ZN6Serial9printPadsEhc
+_ZN3DTC13seekNextErrorEv
+_ZN3DTC8setErrorEj
+_ZN3DTC7getNameEv
+_ZN3DTC8getCountEv
+dtc
+_ZN4Core14setCurrentNodeEi
+_ZN4Core11getNodeDataEv
+_ZN6Serial14ansiSetReverseEb
+_Z10printValueic
+_ZN4Core4saveEv
+_ZN4Core8incValueEv
+_ZN4Core8decValueEv
+_Z25toggleHumanReadableValuesv
+roundf
+_Z12printMapAxishhb
+__aeabi_unwind_cpp_pr1
+strcpy

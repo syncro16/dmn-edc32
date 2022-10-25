@@ -1,0 +1,190 @@
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 4
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"RPMBase.cpp"
+  16              		.text
+  17              		.section	.text._ZN7RPMBase4initEv,"ax",%progbits
+  18              		.align	1
+  19              		.global	_ZN7RPMBase4initEv
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	_ZN7RPMBase4initEv:
+  25              		.fnstart
+  26              	.LFB15:
+  27              		@ args = 0, pretend = 0, frame = 0
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+  29              		@ link register save eliminated.
+  30 0000 7047     		bx	lr
+  31              		.cantunwind
+  32              		.fnend
+  34              		.section	.text._ZN7RPMBase16getLatestMeasureEv,"ax",%progbits
+  35              		.align	1
+  36              		.global	_ZN7RPMBase16getLatestMeasureEv
+  37              		.syntax unified
+  38              		.thumb
+  39              		.thumb_func
+  41              	_ZN7RPMBase16getLatestMeasureEv:
+  42              		.fnstart
+  43              	.LFB16:
+  44              		@ args = 0, pretend = 0, frame = 0
+  45              		@ frame_needed = 0, uses_anonymous_args = 0
+  46              		@ link register save eliminated.
+  47 0000 0020     		movs	r0, #0
+  48 0002 7047     		bx	lr
+  49              		.cantunwind
+  50              		.fnend
+  52              		.global	_ZN7RPMBase17getLatestRawValueEv
+  53              		.thumb_set _ZN7RPMBase17getLatestRawValueEv,_ZN7RPMBase16getLatestMeasureEv
+  54              		.section	.text._ZN7RPMBase18getInjectionTimingEv,"ax",%progbits
+  55              		.align	1
+  56              		.global	_ZN7RPMBase18getInjectionTimingEv
+  57              		.syntax unified
+  58              		.thumb
+  59              		.thumb_func
+  61              	_ZN7RPMBase18getInjectionTimingEv:
+  62              		.fnstart
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s 			page 2
+
+
+  63              	.LFB18:
+  64              		@ args = 0, pretend = 0, frame = 0
+  65              		@ frame_needed = 0, uses_anonymous_args = 0
+  66              		@ link register save eliminated.
+  67 0000 0020     		movs	r0, #0
+  68 0002 7047     		bx	lr
+  69              		.cantunwind
+  70              		.fnend
+  72              		.section	.text._ZN7RPMBaseC2Ev,"ax",%progbits
+  73              		.align	1
+  74              		.global	_ZN7RPMBaseC2Ev
+  75              		.syntax unified
+  76              		.thumb
+  77              		.thumb_func
+  79              	_ZN7RPMBaseC2Ev:
+  80              		.fnstart
+  81              	.LFB13:
+  82              		@ args = 0, pretend = 0, frame = 0
+  83              		@ frame_needed = 0, uses_anonymous_args = 0
+  84              		@ link register save eliminated.
+  85 0000 014B     		ldr	r3, .L5
+  86 0002 0360     		str	r3, [r0]
+  87 0004 7047     		bx	lr
+  88              	.L6:
+  89 0006 00BF     		.align	2
+  90              	.L5:
+  91 0008 08000000 		.word	.LANCHOR0+8
+  92              		.cantunwind
+  93              		.fnend
+  95              		.global	_ZN7RPMBaseC1Ev
+  96              		.thumb_set _ZN7RPMBaseC1Ev,_ZN7RPMBaseC2Ev
+  97              		.section	.text._ZN7RPMBase7measureEv,"ax",%progbits
+  98              		.align	1
+  99              		.global	_ZN7RPMBase7measureEv
+ 100              		.syntax unified
+ 101              		.thumb
+ 102              		.thumb_func
+ 104              	_ZN7RPMBase7measureEv:
+ 105              		.fnstart
+ 106              	.LFB19:
+ 107              		@ args = 0, pretend = 0, frame = 0
+ 108              		@ frame_needed = 0, uses_anonymous_args = 0
+ 109 0000 38B5     		push	{r3, r4, r5, lr}
+ 110              		.save {r3, r4, r5, lr}
+ 111 0002 0368     		ldr	r3, [r0]
+ 112 0004 084D     		ldr	r5, .L8
+ 113 0006 5B68     		ldr	r3, [r3, #4]
+ 114 0008 0446     		mov	r4, r0
+ 115 000a 9847     		blx	r3
+ 116 000c 2368     		ldr	r3, [r4]
+ 117 000e 6866     		str	r0, [r5, #100]
+ 118 0010 5B68     		ldr	r3, [r3, #4]
+ 119 0012 2046     		mov	r0, r4
+ 120 0014 9847     		blx	r3
+ 121 0016 2368     		ldr	r3, [r4]
+ 122 0018 E861     		str	r0, [r5, #28]
+ 123 001a 9B68     		ldr	r3, [r3, #8]
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s 			page 3
+
+
+ 124 001c 2046     		mov	r0, r4
+ 125 001e 9847     		blx	r3
+ 126 0020 C5F8E400 		str	r0, [r5, #228]
+ 127 0024 38BD     		pop	{r3, r4, r5, pc}
+ 128              	.L9:
+ 129 0026 00BF     		.align	2
+ 130              	.L8:
+ 131 0028 00000000 		.word	core
+ 132              		.fnend
+ 134              		.global	_ZTS7RPMBase
+ 135              		.global	_ZTI7RPMBase
+ 136              		.global	_ZTV7RPMBase
+ 137              		.section	.rodata._ZTI7RPMBase,"a"
+ 138              		.align	2
+ 141              	_ZTI7RPMBase:
+ 142 0000 08000000 		.word	_ZTVN10__cxxabiv117__class_type_infoE+8
+ 143 0004 00000000 		.word	_ZTS7RPMBase
+ 144              		.section	.rodata._ZTS7RPMBase,"a"
+ 147              	_ZTS7RPMBase:
+ 148 0000 3752504D 		.ascii	"7RPMBase\000"
+ 148      42617365 
+ 148      00
+ 149              		.section	.rodata._ZTV7RPMBase,"a"
+ 150              		.align	2
+ 151              		.set	.LANCHOR0,. + 0
+ 154              	_ZTV7RPMBase:
+ 155 0000 00000000 		.word	0
+ 156 0004 00000000 		.word	_ZTI7RPMBase
+ 157 0008 00000000 		.word	_ZN7RPMBase4initEv
+ 158 000c 00000000 		.word	_ZN7RPMBase16getLatestMeasureEv
+ 159 0010 00000000 		.word	_ZN7RPMBase17getLatestRawValueEv
+ 160 0014 00000000 		.word	_ZN7RPMBase18getInjectionTimingEv
+ 161              		.ident	"GCC: (Arm GNU Toolchain 11.3.Rel1) 11.3.1 20220712"
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 RPMBase.cpp
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:18     .text._ZN7RPMBase4initEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:24     .text._ZN7RPMBase4initEv:0000000000000000 _ZN7RPMBase4initEv
+.ARM.exidx.text._ZN7RPMBase4initEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:35     .text._ZN7RPMBase16getLatestMeasureEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:41     .text._ZN7RPMBase16getLatestMeasureEv:0000000000000000 _ZN7RPMBase16getLatestMeasureEv
+.ARM.exidx.text._ZN7RPMBase16getLatestMeasureEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:41     .text._ZN7RPMBase16getLatestMeasureEv:0000000000000000 _ZN7RPMBase17getLatestRawValueEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:55     .text._ZN7RPMBase18getInjectionTimingEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:61     .text._ZN7RPMBase18getInjectionTimingEv:0000000000000000 _ZN7RPMBase18getInjectionTimingEv
+.ARM.exidx.text._ZN7RPMBase18getInjectionTimingEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:73     .text._ZN7RPMBaseC2Ev:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:79     .text._ZN7RPMBaseC2Ev:0000000000000000 _ZN7RPMBaseC2Ev
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:91     .text._ZN7RPMBaseC2Ev:0000000000000008 $d
+  .ARM.exidx.text._ZN7RPMBaseC2Ev:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:79     .text._ZN7RPMBaseC2Ev:0000000000000000 _ZN7RPMBaseC1Ev
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:98     .text._ZN7RPMBase7measureEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:104    .text._ZN7RPMBase7measureEv:0000000000000000 _ZN7RPMBase7measureEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:131    .text._ZN7RPMBase7measureEv:0000000000000028 $d
+.ARM.exidx.text._ZN7RPMBase7measureEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:147    .rodata._ZTS7RPMBase:0000000000000000 _ZTS7RPMBase
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:141    .rodata._ZTI7RPMBase:0000000000000000 _ZTI7RPMBase
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:154    .rodata._ZTV7RPMBase:0000000000000000 _ZTV7RPMBase
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:138    .rodata._ZTI7RPMBase:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//cc3ybFhj.s:150    .rodata._ZTV7RPMBase:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+core
+__aeabi_unwind_cpp_pr0
+_ZTVN10__cxxabiv117__class_type_infoE

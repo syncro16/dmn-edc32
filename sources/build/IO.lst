@@ -1,0 +1,777 @@
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 4
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"IO.cpp"
+  16              		.text
+  17              		.section	.text._ZN2IOC2Ev,"ax",%progbits
+  18              		.align	1
+  19              		.global	_ZN2IOC2Ev
+  20              		.syntax unified
+  21              		.thumb
+  22              		.thumb_func
+  24              	_ZN2IOC2Ev:
+  25              		.fnstart
+  26              	.LFB124:
+  27              		@ args = 0, pretend = 0, frame = 0
+  28              		@ frame_needed = 0, uses_anonymous_args = 0
+  29              		@ link register save eliminated.
+  30 0000 7047     		bx	lr
+  31              		.cantunwind
+  32              		.fnend
+  34              		.global	_ZN2IOC1Ev
+  35              		.thumb_set _ZN2IOC1Ev,_ZN2IOC2Ev
+  36              		.section	.text._ZN2IO9outputAuxEb,"ax",%progbits
+  37              		.align	1
+  38              		.global	_ZN2IO9outputAuxEb
+  39              		.syntax unified
+  40              		.thumb
+  41              		.thumb_func
+  43              	_ZN2IO9outputAuxEb:
+  44              		.fnstart
+  45              	.LFB126:
+  46              		@ args = 0, pretend = 0, frame = 0
+  47              		@ frame_needed = 0, uses_anonymous_args = 0
+  48              		@ link register save eliminated.
+  49 0000 0A46     		mov	r2, r1
+  50 0002 4FF09040 		mov	r0, #1207959552
+  51 0006 4FF48071 		mov	r1, #256
+  52 000a FFF7FEBF 		b	HAL_GPIO_WritePin
+  53              		.cantunwind
+  54              		.fnend
+  56              		.section	.text._ZN2IO18outputFuelSolenoidEb,"ax",%progbits
+  57              		.align	1
+  58              		.global	_ZN2IO18outputFuelSolenoidEb
+  59              		.syntax unified
+  60              		.thumb
+  61              		.thumb_func
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 2
+
+
+  63              	_ZN2IO18outputFuelSolenoidEb:
+  64              		.fnstart
+  65              	.LFB127:
+  66              		@ args = 0, pretend = 0, frame = 0
+  67              		@ frame_needed = 0, uses_anonymous_args = 0
+  68              		@ link register save eliminated.
+  69 0000 0A46     		mov	r2, r1
+  70 0002 0248     		ldr	r0, .L4
+  71 0004 4FF40071 		mov	r1, #512
+  72 0008 FFF7FEBF 		b	HAL_GPIO_WritePin
+  73              	.L5:
+  74              		.align	2
+  75              	.L4:
+  76 000c 00080048 		.word	1207961600
+  77              		.cantunwind
+  78              		.fnend
+  80              		.section	.text._ZN2IO15outputGlowPlugsEb,"ax",%progbits
+  81              		.align	1
+  82              		.global	_ZN2IO15outputGlowPlugsEb
+  83              		.syntax unified
+  84              		.thumb
+  85              		.thumb_func
+  87              	_ZN2IO15outputGlowPlugsEb:
+  88              		.fnstart
+  89              	.LFB128:
+  90              		@ args = 0, pretend = 0, frame = 0
+  91              		@ frame_needed = 0, uses_anonymous_args = 0
+  92              		@ link register save eliminated.
+  93 0000 0A46     		mov	r2, r1
+  94 0002 0248     		ldr	r0, .L7
+  95 0004 4FF48071 		mov	r1, #256
+  96 0008 FFF7FEBF 		b	HAL_GPIO_WritePin
+  97              	.L8:
+  98              		.align	2
+  99              	.L7:
+ 100 000c 00080048 		.word	1207961600
+ 101              		.cantunwind
+ 102              		.fnend
+ 104              		.section	.text._ZN2IO15outputFanIntakeEb,"ax",%progbits
+ 105              		.align	1
+ 106              		.global	_ZN2IO15outputFanIntakeEb
+ 107              		.syntax unified
+ 108              		.thumb
+ 109              		.thumb_func
+ 111              	_ZN2IO15outputFanIntakeEb:
+ 112              		.fnstart
+ 113              	.LFB129:
+ 114              		@ args = 0, pretend = 0, frame = 0
+ 115              		@ frame_needed = 0, uses_anonymous_args = 0
+ 116              		@ link register save eliminated.
+ 117 0000 0A46     		mov	r2, r1
+ 118 0002 0248     		ldr	r0, .L10
+ 119 0004 8021     		movs	r1, #128
+ 120 0006 FFF7FEBF 		b	HAL_GPIO_WritePin
+ 121              	.L11:
+ 122 000a 00BF     		.align	2
+ 123              	.L10:
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 3
+
+
+ 124 000c 00080048 		.word	1207961600
+ 125              		.cantunwind
+ 126              		.fnend
+ 128              		.section	.text._ZN2IO20outputMainPowerRelayEb,"ax",%progbits
+ 129              		.align	1
+ 130              		.global	_ZN2IO20outputMainPowerRelayEb
+ 131              		.syntax unified
+ 132              		.thumb
+ 133              		.thumb_func
+ 135              	_ZN2IO20outputMainPowerRelayEb:
+ 136              		.fnstart
+ 137              	.LFB130:
+ 138              		@ args = 0, pretend = 0, frame = 0
+ 139              		@ frame_needed = 0, uses_anonymous_args = 0
+ 140              		@ link register save eliminated.
+ 141 0000 0A46     		mov	r2, r1
+ 142 0002 0248     		ldr	r0, .L13
+ 143 0004 4021     		movs	r1, #64
+ 144 0006 FFF7FEBF 		b	HAL_GPIO_WritePin
+ 145              	.L14:
+ 146 000a 00BF     		.align	2
+ 147              	.L13:
+ 148 000c 00080048 		.word	1207961600
+ 149              		.cantunwind
+ 150              		.fnend
+ 152              		.section	.text._ZN2IO25pulseOutEngineSpeedSignalEi,"ax",%progbits
+ 153              		.align	1
+ 154              		.global	_ZN2IO25pulseOutEngineSpeedSignalEi
+ 155              		.syntax unified
+ 156              		.thumb
+ 157              		.thumb_func
+ 159              	_ZN2IO25pulseOutEngineSpeedSignalEi:
+ 160              		.fnstart
+ 161              	.LFB131:
+ 162              		@ args = 0, pretend = 0, frame = 0
+ 163              		@ frame_needed = 0, uses_anonymous_args = 0
+ 164              		@ link register save eliminated.
+ 165 0000 074B     		ldr	r3, .L18
+ 166 0002 1B68     		ldr	r3, [r3]
+ 167 0004 09B9     		cbnz	r1, .L16
+ 168 0006 5963     		str	r1, [r3, #52]
+ 169 0008 7047     		bx	lr
+ 170              	.L16:
+ 171 000a 8222     		movs	r2, #130
+ 172 000c 5A63     		str	r2, [r3, #52]
+ 173 000e 3C22     		movs	r2, #60
+ 174 0010 91FBF2F1 		sdiv	r1, r1, r2
+ 175 0014 4FF6FF72 		movw	r2, #65535
+ 176 0018 92FBF1F2 		sdiv	r2, r2, r1
+ 177 001c DA62     		str	r2, [r3, #44]
+ 178 001e 7047     		bx	lr
+ 179              	.L19:
+ 180              		.align	2
+ 181              	.L18:
+ 182 0020 00000000 		.word	htim17
+ 183              		.cantunwind
+ 184              		.fnend
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 4
+
+
+ 186              		.section	.text._ZN2IO26pwmOutQuantityAdjuster_12bEt,"ax",%progbits
+ 187              		.align	1
+ 188              		.global	_ZN2IO26pwmOutQuantityAdjuster_12bEt
+ 189              		.syntax unified
+ 190              		.thumb
+ 191              		.thumb_func
+ 193              	_ZN2IO26pwmOutQuantityAdjuster_12bEt:
+ 194              		.fnstart
+ 195              	.LFB132:
+ 196              		@ args = 0, pretend = 0, frame = 0
+ 197              		@ frame_needed = 0, uses_anonymous_args = 0
+ 198              		@ link register save eliminated.
+ 199 0000 014B     		ldr	r3, .L21
+ 200 0002 1B68     		ldr	r3, [r3]
+ 201 0004 1964     		str	r1, [r3, #64]
+ 202 0006 7047     		bx	lr
+ 203              	.L22:
+ 204              		.align	2
+ 205              	.L21:
+ 206 0008 00000000 		.word	htim1
+ 207              		.cantunwind
+ 208              		.fnend
+ 210              		.section	.text._ZN2IO15pwmOutTiming_8bEh,"ax",%progbits
+ 211              		.align	1
+ 212              		.global	_ZN2IO15pwmOutTiming_8bEh
+ 213              		.syntax unified
+ 214              		.thumb
+ 215              		.thumb_func
+ 217              	_ZN2IO15pwmOutTiming_8bEh:
+ 218              		.fnstart
+ 219              	.LFB133:
+ 220              		@ args = 0, pretend = 0, frame = 0
+ 221              		@ frame_needed = 0, uses_anonymous_args = 0
+ 222              		@ link register save eliminated.
+ 223 0000 014B     		ldr	r3, .L24
+ 224 0002 1B68     		ldr	r3, [r3]
+ 225 0004 5963     		str	r1, [r3, #52]
+ 226 0006 7047     		bx	lr
+ 227              	.L25:
+ 228              		.align	2
+ 229              	.L24:
+ 230 0008 00000000 		.word	htim2
+ 231              		.cantunwind
+ 232              		.fnend
+ 234              		.section	.text._ZN2IO22pwmOutBoostSolenoid_8bEh,"ax",%progbits
+ 235              		.align	1
+ 236              		.global	_ZN2IO22pwmOutBoostSolenoid_8bEh
+ 237              		.syntax unified
+ 238              		.thumb
+ 239              		.thumb_func
+ 241              	_ZN2IO22pwmOutBoostSolenoid_8bEh:
+ 242              		.fnstart
+ 243              	.LFB134:
+ 244              		@ args = 0, pretend = 0, frame = 0
+ 245              		@ frame_needed = 0, uses_anonymous_args = 0
+ 246              		@ link register save eliminated.
+ 247 0000 014B     		ldr	r3, .L27
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 5
+
+
+ 248 0002 1B68     		ldr	r3, [r3]
+ 249 0004 9963     		str	r1, [r3, #56]
+ 250 0006 7047     		bx	lr
+ 251              	.L28:
+ 252              		.align	2
+ 253              	.L27:
+ 254 0008 00000000 		.word	htim2
+ 255              		.cantunwind
+ 256              		.fnend
+ 258              		.section	.text._ZN2IO11pwmOutAux_8Eh,"ax",%progbits
+ 259              		.align	1
+ 260              		.global	_ZN2IO11pwmOutAux_8Eh
+ 261              		.syntax unified
+ 262              		.thumb
+ 263              		.thumb_func
+ 265              	_ZN2IO11pwmOutAux_8Eh:
+ 266              		.fnstart
+ 267              	.LFB135:
+ 268              		@ args = 0, pretend = 0, frame = 0
+ 269              		@ frame_needed = 0, uses_anonymous_args = 0
+ 270              		@ link register save eliminated.
+ 271 0000 014B     		ldr	r3, .L30
+ 272 0002 1B68     		ldr	r3, [r3]
+ 273 0004 D963     		str	r1, [r3, #60]
+ 274 0006 7047     		bx	lr
+ 275              	.L31:
+ 276              		.align	2
+ 277              	.L30:
+ 278 0008 00000000 		.word	htim2
+ 279              		.cantunwind
+ 280              		.fnend
+ 282              		.section	.text._ZN2IO11inputTPSWotEv,"ax",%progbits
+ 283              		.align	1
+ 284              		.global	_ZN2IO11inputTPSWotEv
+ 285              		.syntax unified
+ 286              		.thumb
+ 287              		.thumb_func
+ 289              	_ZN2IO11inputTPSWotEv:
+ 290              		.fnstart
+ 291              	.LFB136:
+ 292              		@ args = 0, pretend = 0, frame = 0
+ 293              		@ frame_needed = 0, uses_anonymous_args = 0
+ 294 0000 08B5     		push	{r3, lr}
+ 295              		.save {r3, lr}
+ 296 0002 4FF40071 		mov	r1, #512
+ 297 0006 0348     		ldr	r0, .L33
+ 298 0008 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 299 000c 0038     		subs	r0, r0, #0
+ 300 000e 18BF     		it	ne
+ 301 0010 0120     		movne	r0, #1
+ 302 0012 08BD     		pop	{r3, pc}
+ 303              	.L34:
+ 304              		.align	2
+ 305              	.L33:
+ 306 0014 00040048 		.word	1207960576
+ 307              		.fnend
+ 309              		.section	.text._ZN2IO12inputTPSIdleEv,"ax",%progbits
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 6
+
+
+ 310              		.align	1
+ 311              		.global	_ZN2IO12inputTPSIdleEv
+ 312              		.syntax unified
+ 313              		.thumb
+ 314              		.thumb_func
+ 316              	_ZN2IO12inputTPSIdleEv:
+ 317              		.fnstart
+ 318              	.LFB137:
+ 319              		@ args = 0, pretend = 0, frame = 0
+ 320              		@ frame_needed = 0, uses_anonymous_args = 0
+ 321 0000 08B5     		push	{r3, lr}
+ 322              		.save {r3, lr}
+ 323 0002 4FF48071 		mov	r1, #256
+ 324 0006 0348     		ldr	r0, .L36
+ 325 0008 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 326 000c 0038     		subs	r0, r0, #0
+ 327 000e 18BF     		it	ne
+ 328 0010 0120     		movne	r0, #1
+ 329 0012 08BD     		pop	{r3, pc}
+ 330              	.L37:
+ 331              		.align	2
+ 332              	.L36:
+ 333 0014 00040048 		.word	1207960576
+ 334              		.fnend
+ 336              		.section	.text._ZN2IO10inputBrakeEv,"ax",%progbits
+ 337              		.align	1
+ 338              		.global	_ZN2IO10inputBrakeEv
+ 339              		.syntax unified
+ 340              		.thumb
+ 341              		.thumb_func
+ 343              	_ZN2IO10inputBrakeEv:
+ 344              		.fnstart
+ 345              	.LFB138:
+ 346              		@ args = 0, pretend = 0, frame = 0
+ 347              		@ frame_needed = 0, uses_anonymous_args = 0
+ 348 0000 08B5     		push	{r3, lr}
+ 349              		.save {r3, lr}
+ 350 0002 1021     		movs	r1, #16
+ 351 0004 0348     		ldr	r0, .L39
+ 352 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 353 000a 0038     		subs	r0, r0, #0
+ 354 000c 18BF     		it	ne
+ 355 000e 0120     		movne	r0, #1
+ 356 0010 08BD     		pop	{r3, pc}
+ 357              	.L40:
+ 358 0012 00BF     		.align	2
+ 359              	.L39:
+ 360 0014 00040048 		.word	1207960576
+ 361              		.fnend
+ 363              		.section	.text._ZN2IO14inputCruiseSetEv,"ax",%progbits
+ 364              		.align	1
+ 365              		.global	_ZN2IO14inputCruiseSetEv
+ 366              		.syntax unified
+ 367              		.thumb
+ 368              		.thumb_func
+ 370              	_ZN2IO14inputCruiseSetEv:
+ 371              		.fnstart
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 7
+
+
+ 372              	.LFB139:
+ 373              		@ args = 0, pretend = 0, frame = 0
+ 374              		@ frame_needed = 0, uses_anonymous_args = 0
+ 375 0000 08B5     		push	{r3, lr}
+ 376              		.save {r3, lr}
+ 377 0002 4021     		movs	r1, #64
+ 378 0004 0348     		ldr	r0, .L42
+ 379 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 380 000a 0038     		subs	r0, r0, #0
+ 381 000c 18BF     		it	ne
+ 382 000e 0120     		movne	r0, #1
+ 383 0010 08BD     		pop	{r3, pc}
+ 384              	.L43:
+ 385 0012 00BF     		.align	2
+ 386              	.L42:
+ 387 0014 00040048 		.word	1207960576
+ 388              		.fnend
+ 390              		.section	.text._ZN2IO16inputCruiseDecelEv,"ax",%progbits
+ 391              		.align	1
+ 392              		.global	_ZN2IO16inputCruiseDecelEv
+ 393              		.syntax unified
+ 394              		.thumb
+ 395              		.thumb_func
+ 397              	_ZN2IO16inputCruiseDecelEv:
+ 398              		.fnstart
+ 399              	.LFB140:
+ 400              		@ args = 0, pretend = 0, frame = 0
+ 401              		@ frame_needed = 0, uses_anonymous_args = 0
+ 402 0000 08B5     		push	{r3, lr}
+ 403              		.save {r3, lr}
+ 404 0002 2021     		movs	r1, #32
+ 405 0004 0348     		ldr	r0, .L45
+ 406 0006 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 407 000a 0038     		subs	r0, r0, #0
+ 408 000c 18BF     		it	ne
+ 409 000e 0120     		movne	r0, #1
+ 410 0010 08BD     		pop	{r3, pc}
+ 411              	.L46:
+ 412 0012 00BF     		.align	2
+ 413              	.L45:
+ 414 0014 00040048 		.word	1207960576
+ 415              		.fnend
+ 417              		.section	.text._ZN2IO8inputAuxEv,"ax",%progbits
+ 418              		.align	1
+ 419              		.global	_ZN2IO8inputAuxEv
+ 420              		.syntax unified
+ 421              		.thumb
+ 422              		.thumb_func
+ 424              	_ZN2IO8inputAuxEv:
+ 425              		.fnstart
+ 426              	.LFB141:
+ 427              		@ args = 0, pretend = 0, frame = 0
+ 428              		@ frame_needed = 0, uses_anonymous_args = 0
+ 429 0000 08B5     		push	{r3, lr}
+ 430              		.save {r3, lr}
+ 431 0002 4FF48051 		mov	r1, #4096
+ 432 0006 0348     		ldr	r0, .L48
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 8
+
+
+ 433 0008 FFF7FEFF 		bl	HAL_GPIO_ReadPin
+ 434 000c 0038     		subs	r0, r0, #0
+ 435 000e 18BF     		it	ne
+ 436 0010 0120     		movne	r0, #1
+ 437 0012 08BD     		pop	{r3, pc}
+ 438              	.L49:
+ 439              		.align	2
+ 440              	.L48:
+ 441 0014 00080048 		.word	1207961600
+ 442              		.fnend
+ 444              		.section	.text._ZN2IO22analogInBatteryVoltageEv,"ax",%progbits
+ 445              		.align	1
+ 446              		.global	_ZN2IO22analogInBatteryVoltageEv
+ 447              		.syntax unified
+ 448              		.thumb
+ 449              		.thumb_func
+ 451              	_ZN2IO22analogInBatteryVoltageEv:
+ 452              		.fnstart
+ 453              	.LFB142:
+ 454              		@ args = 0, pretend = 0, frame = 0
+ 455              		@ frame_needed = 0, uses_anonymous_args = 0
+ 456              		@ link register save eliminated.
+ 457 0000 014B     		ldr	r3, .L51
+ 458 0002 1888     		ldrh	r0, [r3]
+ 459 0004 80B2     		uxth	r0, r0
+ 460 0006 7047     		bx	lr
+ 461              	.L52:
+ 462              		.align	2
+ 463              	.L51:
+ 464 0008 00000000 		.word	adc1buf
+ 465              		.cantunwind
+ 466              		.fnend
+ 468              		.section	.text._ZN2IO23analogInManifoldPressreEv,"ax",%progbits
+ 469              		.align	1
+ 470              		.global	_ZN2IO23analogInManifoldPressreEv
+ 471              		.syntax unified
+ 472              		.thumb
+ 473              		.thumb_func
+ 475              	_ZN2IO23analogInManifoldPressreEv:
+ 476              		.fnstart
+ 477              	.LFB143:
+ 478              		@ args = 0, pretend = 0, frame = 0
+ 479              		@ frame_needed = 0, uses_anonymous_args = 0
+ 480              		@ link register save eliminated.
+ 481 0000 014B     		ldr	r3, .L54
+ 482 0002 5888     		ldrh	r0, [r3, #2]
+ 483 0004 80B2     		uxth	r0, r0
+ 484 0006 7047     		bx	lr
+ 485              	.L55:
+ 486              		.align	2
+ 487              	.L54:
+ 488 0008 00000000 		.word	adc1buf
+ 489              		.cantunwind
+ 490              		.fnend
+ 492              		.section	.text._ZN2IO11analogInTPSEv,"ax",%progbits
+ 493              		.align	1
+ 494              		.global	_ZN2IO11analogInTPSEv
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 9
+
+
+ 495              		.syntax unified
+ 496              		.thumb
+ 497              		.thumb_func
+ 499              	_ZN2IO11analogInTPSEv:
+ 500              		.fnstart
+ 501              	.LFB144:
+ 502              		@ args = 0, pretend = 0, frame = 0
+ 503              		@ frame_needed = 0, uses_anonymous_args = 0
+ 504              		@ link register save eliminated.
+ 505 0000 014B     		ldr	r3, .L57
+ 506 0002 9888     		ldrh	r0, [r3, #4]
+ 507 0004 80B2     		uxth	r0, r0
+ 508 0006 7047     		bx	lr
+ 509              	.L58:
+ 510              		.align	2
+ 511              	.L57:
+ 512 0008 00000000 		.word	adc1buf
+ 513              		.cantunwind
+ 514              		.fnend
+ 516              		.section	.text._ZN2IO16analogInFuelTempEv,"ax",%progbits
+ 517              		.align	1
+ 518              		.global	_ZN2IO16analogInFuelTempEv
+ 519              		.syntax unified
+ 520              		.thumb
+ 521              		.thumb_func
+ 523              	_ZN2IO16analogInFuelTempEv:
+ 524              		.fnstart
+ 525              	.LFB145:
+ 526              		@ args = 0, pretend = 0, frame = 0
+ 527              		@ frame_needed = 0, uses_anonymous_args = 0
+ 528              		@ link register save eliminated.
+ 529 0000 014B     		ldr	r3, .L60
+ 530 0002 D888     		ldrh	r0, [r3, #6]
+ 531 0004 80B2     		uxth	r0, r0
+ 532 0006 7047     		bx	lr
+ 533              	.L61:
+ 534              		.align	2
+ 535              	.L60:
+ 536 0008 00000000 		.word	adc1buf
+ 537              		.cantunwind
+ 538              		.fnend
+ 540              		.section	.text._ZN2IO19analogInCoolantTempEv,"ax",%progbits
+ 541              		.align	1
+ 542              		.global	_ZN2IO19analogInCoolantTempEv
+ 543              		.syntax unified
+ 544              		.thumb
+ 545              		.thumb_func
+ 547              	_ZN2IO19analogInCoolantTempEv:
+ 548              		.fnstart
+ 549              	.LFB146:
+ 550              		@ args = 0, pretend = 0, frame = 0
+ 551              		@ frame_needed = 0, uses_anonymous_args = 0
+ 552              		@ link register save eliminated.
+ 553 0000 014B     		ldr	r3, .L63
+ 554 0002 1889     		ldrh	r0, [r3, #8]
+ 555 0004 80B2     		uxth	r0, r0
+ 556 0006 7047     		bx	lr
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 10
+
+
+ 557              	.L64:
+ 558              		.align	2
+ 559              	.L63:
+ 560 0008 00000000 		.word	adc1buf
+ 561              		.cantunwind
+ 562              		.fnend
+ 564              		.section	.text._ZN2IO15analogInAuxTempEv,"ax",%progbits
+ 565              		.align	1
+ 566              		.global	_ZN2IO15analogInAuxTempEv
+ 567              		.syntax unified
+ 568              		.thumb
+ 569              		.thumb_func
+ 571              	_ZN2IO15analogInAuxTempEv:
+ 572              		.fnstart
+ 573              	.LFB147:
+ 574              		@ args = 0, pretend = 0, frame = 0
+ 575              		@ frame_needed = 0, uses_anonymous_args = 0
+ 576              		@ link register save eliminated.
+ 577 0000 014B     		ldr	r3, .L66
+ 578 0002 5889     		ldrh	r0, [r3, #10]
+ 579 0004 80B2     		uxth	r0, r0
+ 580 0006 7047     		bx	lr
+ 581              	.L67:
+ 582              		.align	2
+ 583              	.L66:
+ 584 0008 00000000 		.word	adc1buf
+ 585              		.cantunwind
+ 586              		.fnend
+ 588              		.section	.text._ZN2IO14analogInAuxIn1Ev,"ax",%progbits
+ 589              		.align	1
+ 590              		.global	_ZN2IO14analogInAuxIn1Ev
+ 591              		.syntax unified
+ 592              		.thumb
+ 593              		.thumb_func
+ 595              	_ZN2IO14analogInAuxIn1Ev:
+ 596              		.fnstart
+ 597              	.LFB148:
+ 598              		@ args = 0, pretend = 0, frame = 0
+ 599              		@ frame_needed = 0, uses_anonymous_args = 0
+ 600              		@ link register save eliminated.
+ 601 0000 014B     		ldr	r3, .L69
+ 602 0002 9889     		ldrh	r0, [r3, #12]
+ 603 0004 80B2     		uxth	r0, r0
+ 604 0006 7047     		bx	lr
+ 605              	.L70:
+ 606              		.align	2
+ 607              	.L69:
+ 608 0008 00000000 		.word	adc1buf
+ 609              		.cantunwind
+ 610              		.fnend
+ 612              		.section	.text._ZN2IO15analogInIntTempEv,"ax",%progbits
+ 613              		.align	1
+ 614              		.global	_ZN2IO15analogInIntTempEv
+ 615              		.syntax unified
+ 616              		.thumb
+ 617              		.thumb_func
+ 619              	_ZN2IO15analogInIntTempEv:
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 11
+
+
+ 620              		.fnstart
+ 621              	.LFB149:
+ 622              		@ args = 0, pretend = 0, frame = 0
+ 623              		@ frame_needed = 0, uses_anonymous_args = 0
+ 624              		@ link register save eliminated.
+ 625 0000 014B     		ldr	r3, .L72
+ 626 0002 D889     		ldrh	r0, [r3, #14]
+ 627 0004 80B2     		uxth	r0, r0
+ 628 0006 7047     		bx	lr
+ 629              	.L73:
+ 630              		.align	2
+ 631              	.L72:
+ 632 0008 00000000 		.word	adc1buf
+ 633              		.cantunwind
+ 634              		.fnend
+ 636              		.section	.text._ZN2IO16analogQAPositionEv,"ax",%progbits
+ 637              		.align	1
+ 638              		.global	_ZN2IO16analogQAPositionEv
+ 639              		.syntax unified
+ 640              		.thumb
+ 641              		.thumb_func
+ 643              	_ZN2IO16analogQAPositionEv:
+ 644              		.fnstart
+ 645              	.LFB150:
+ 646              		@ args = 0, pretend = 0, frame = 0
+ 647              		@ frame_needed = 0, uses_anonymous_args = 0
+ 648              		@ link register save eliminated.
+ 649 0000 014B     		ldr	r3, .L75
+ 650 0002 1888     		ldrh	r0, [r3]
+ 651 0004 80B2     		uxth	r0, r0
+ 652 0006 7047     		bx	lr
+ 653              	.L76:
+ 654              		.align	2
+ 655              	.L75:
+ 656 0008 00000000 		.word	adc2buf
+ 657              		.cantunwind
+ 658              		.fnend
+ 660              		.global	io
+ 661              		.section	.bss.io,"aw",%nobits
+ 664              	io:
+ 665 0000 00       		.space	1
+ 666              		.ident	"GCC: (Arm GNU Toolchain 11.3.Rel1) 11.3.1 20220712"
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 12
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 IO.cpp
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:18     .text._ZN2IOC2Ev:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:24     .text._ZN2IOC2Ev:0000000000000000 _ZN2IOC2Ev
+       .ARM.exidx.text._ZN2IOC2Ev:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:24     .text._ZN2IOC2Ev:0000000000000000 _ZN2IOC1Ev
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:37     .text._ZN2IO9outputAuxEb:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:43     .text._ZN2IO9outputAuxEb:0000000000000000 _ZN2IO9outputAuxEb
+.ARM.exidx.text._ZN2IO9outputAuxEb:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:57     .text._ZN2IO18outputFuelSolenoidEb:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:63     .text._ZN2IO18outputFuelSolenoidEb:0000000000000000 _ZN2IO18outputFuelSolenoidEb
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:76     .text._ZN2IO18outputFuelSolenoidEb:000000000000000c $d
+.ARM.exidx.text._ZN2IO18outputFuelSolenoidEb:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:81     .text._ZN2IO15outputGlowPlugsEb:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:87     .text._ZN2IO15outputGlowPlugsEb:0000000000000000 _ZN2IO15outputGlowPlugsEb
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:100    .text._ZN2IO15outputGlowPlugsEb:000000000000000c $d
+.ARM.exidx.text._ZN2IO15outputGlowPlugsEb:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:105    .text._ZN2IO15outputFanIntakeEb:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:111    .text._ZN2IO15outputFanIntakeEb:0000000000000000 _ZN2IO15outputFanIntakeEb
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:124    .text._ZN2IO15outputFanIntakeEb:000000000000000c $d
+.ARM.exidx.text._ZN2IO15outputFanIntakeEb:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:129    .text._ZN2IO20outputMainPowerRelayEb:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:135    .text._ZN2IO20outputMainPowerRelayEb:0000000000000000 _ZN2IO20outputMainPowerRelayEb
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:148    .text._ZN2IO20outputMainPowerRelayEb:000000000000000c $d
+.ARM.exidx.text._ZN2IO20outputMainPowerRelayEb:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:153    .text._ZN2IO25pulseOutEngineSpeedSignalEi:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:159    .text._ZN2IO25pulseOutEngineSpeedSignalEi:0000000000000000 _ZN2IO25pulseOutEngineSpeedSignalEi
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:182    .text._ZN2IO25pulseOutEngineSpeedSignalEi:0000000000000020 $d
+.ARM.exidx.text._ZN2IO25pulseOutEngineSpeedSignalEi:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:187    .text._ZN2IO26pwmOutQuantityAdjuster_12bEt:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:193    .text._ZN2IO26pwmOutQuantityAdjuster_12bEt:0000000000000000 _ZN2IO26pwmOutQuantityAdjuster_12bEt
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:206    .text._ZN2IO26pwmOutQuantityAdjuster_12bEt:0000000000000008 $d
+.ARM.exidx.text._ZN2IO26pwmOutQuantityAdjuster_12bEt:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:211    .text._ZN2IO15pwmOutTiming_8bEh:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:217    .text._ZN2IO15pwmOutTiming_8bEh:0000000000000000 _ZN2IO15pwmOutTiming_8bEh
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:230    .text._ZN2IO15pwmOutTiming_8bEh:0000000000000008 $d
+.ARM.exidx.text._ZN2IO15pwmOutTiming_8bEh:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:235    .text._ZN2IO22pwmOutBoostSolenoid_8bEh:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:241    .text._ZN2IO22pwmOutBoostSolenoid_8bEh:0000000000000000 _ZN2IO22pwmOutBoostSolenoid_8bEh
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:254    .text._ZN2IO22pwmOutBoostSolenoid_8bEh:0000000000000008 $d
+.ARM.exidx.text._ZN2IO22pwmOutBoostSolenoid_8bEh:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:259    .text._ZN2IO11pwmOutAux_8Eh:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:265    .text._ZN2IO11pwmOutAux_8Eh:0000000000000000 _ZN2IO11pwmOutAux_8Eh
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:278    .text._ZN2IO11pwmOutAux_8Eh:0000000000000008 $d
+.ARM.exidx.text._ZN2IO11pwmOutAux_8Eh:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:283    .text._ZN2IO11inputTPSWotEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:289    .text._ZN2IO11inputTPSWotEv:0000000000000000 _ZN2IO11inputTPSWotEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:306    .text._ZN2IO11inputTPSWotEv:0000000000000014 $d
+.ARM.extab.text._ZN2IO11inputTPSWotEv:0000000000000000 $d
+.ARM.exidx.text._ZN2IO11inputTPSWotEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:310    .text._ZN2IO12inputTPSIdleEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:316    .text._ZN2IO12inputTPSIdleEv:0000000000000000 _ZN2IO12inputTPSIdleEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:333    .text._ZN2IO12inputTPSIdleEv:0000000000000014 $d
+.ARM.extab.text._ZN2IO12inputTPSIdleEv:0000000000000000 $d
+.ARM.exidx.text._ZN2IO12inputTPSIdleEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:337    .text._ZN2IO10inputBrakeEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:343    .text._ZN2IO10inputBrakeEv:0000000000000000 _ZN2IO10inputBrakeEv
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 13
+
+
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:360    .text._ZN2IO10inputBrakeEv:0000000000000014 $d
+.ARM.extab.text._ZN2IO10inputBrakeEv:0000000000000000 $d
+.ARM.exidx.text._ZN2IO10inputBrakeEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:364    .text._ZN2IO14inputCruiseSetEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:370    .text._ZN2IO14inputCruiseSetEv:0000000000000000 _ZN2IO14inputCruiseSetEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:387    .text._ZN2IO14inputCruiseSetEv:0000000000000014 $d
+.ARM.extab.text._ZN2IO14inputCruiseSetEv:0000000000000000 $d
+.ARM.exidx.text._ZN2IO14inputCruiseSetEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:391    .text._ZN2IO16inputCruiseDecelEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:397    .text._ZN2IO16inputCruiseDecelEv:0000000000000000 _ZN2IO16inputCruiseDecelEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:414    .text._ZN2IO16inputCruiseDecelEv:0000000000000014 $d
+.ARM.extab.text._ZN2IO16inputCruiseDecelEv:0000000000000000 $d
+.ARM.exidx.text._ZN2IO16inputCruiseDecelEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:418    .text._ZN2IO8inputAuxEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:424    .text._ZN2IO8inputAuxEv:0000000000000000 _ZN2IO8inputAuxEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:441    .text._ZN2IO8inputAuxEv:0000000000000014 $d
+.ARM.extab.text._ZN2IO8inputAuxEv:0000000000000000 $d
+.ARM.exidx.text._ZN2IO8inputAuxEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:445    .text._ZN2IO22analogInBatteryVoltageEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:451    .text._ZN2IO22analogInBatteryVoltageEv:0000000000000000 _ZN2IO22analogInBatteryVoltageEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:464    .text._ZN2IO22analogInBatteryVoltageEv:0000000000000008 $d
+.ARM.exidx.text._ZN2IO22analogInBatteryVoltageEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:469    .text._ZN2IO23analogInManifoldPressreEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:475    .text._ZN2IO23analogInManifoldPressreEv:0000000000000000 _ZN2IO23analogInManifoldPressreEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:488    .text._ZN2IO23analogInManifoldPressreEv:0000000000000008 $d
+.ARM.exidx.text._ZN2IO23analogInManifoldPressreEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:493    .text._ZN2IO11analogInTPSEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:499    .text._ZN2IO11analogInTPSEv:0000000000000000 _ZN2IO11analogInTPSEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:512    .text._ZN2IO11analogInTPSEv:0000000000000008 $d
+.ARM.exidx.text._ZN2IO11analogInTPSEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:517    .text._ZN2IO16analogInFuelTempEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:523    .text._ZN2IO16analogInFuelTempEv:0000000000000000 _ZN2IO16analogInFuelTempEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:536    .text._ZN2IO16analogInFuelTempEv:0000000000000008 $d
+.ARM.exidx.text._ZN2IO16analogInFuelTempEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:541    .text._ZN2IO19analogInCoolantTempEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:547    .text._ZN2IO19analogInCoolantTempEv:0000000000000000 _ZN2IO19analogInCoolantTempEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:560    .text._ZN2IO19analogInCoolantTempEv:0000000000000008 $d
+.ARM.exidx.text._ZN2IO19analogInCoolantTempEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:565    .text._ZN2IO15analogInAuxTempEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:571    .text._ZN2IO15analogInAuxTempEv:0000000000000000 _ZN2IO15analogInAuxTempEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:584    .text._ZN2IO15analogInAuxTempEv:0000000000000008 $d
+.ARM.exidx.text._ZN2IO15analogInAuxTempEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:589    .text._ZN2IO14analogInAuxIn1Ev:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:595    .text._ZN2IO14analogInAuxIn1Ev:0000000000000000 _ZN2IO14analogInAuxIn1Ev
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:608    .text._ZN2IO14analogInAuxIn1Ev:0000000000000008 $d
+.ARM.exidx.text._ZN2IO14analogInAuxIn1Ev:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:613    .text._ZN2IO15analogInIntTempEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:619    .text._ZN2IO15analogInIntTempEv:0000000000000000 _ZN2IO15analogInIntTempEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:632    .text._ZN2IO15analogInIntTempEv:0000000000000008 $d
+.ARM.exidx.text._ZN2IO15analogInIntTempEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:637    .text._ZN2IO16analogQAPositionEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:643    .text._ZN2IO16analogQAPositionEv:0000000000000000 _ZN2IO16analogQAPositionEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:656    .text._ZN2IO16analogQAPositionEv:0000000000000008 $d
+.ARM.exidx.text._ZN2IO16analogQAPositionEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:664    .bss.io:0000000000000000 io
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s:665    .bss.io:0000000000000000 $d
+
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccZX4XQk.s 			page 14
+
+
+UNDEFINED SYMBOLS
+HAL_GPIO_WritePin
+htim17
+htim1
+htim2
+HAL_GPIO_ReadPin
+__aeabi_unwind_cpp_pr1
+adc1buf
+adc2buf

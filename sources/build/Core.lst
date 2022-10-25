@@ -1,0 +1,3322 @@
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 4
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"Core.cpp"
+  16              		.text
+  17              		.section	.rodata._ZN4CoreC2Ev.str1.1,"aMS",%progbits,1
+  18              	.LC204:
+  19 0000 42617369 		.ascii	"Basic Injection Map\000"
+  19      6320496E 
+  19      6A656374 
+  19      696F6E20 
+  19      4D617000 
+  20              	.LC205:
+  21 0014 41646469 		.ascii	"Additive Injection Map (Boost)\000"
+  21      74697665 
+  21      20496E6A 
+  21      65637469 
+  21      6F6E204D 
+  22              	.LC206:
+  23 0033 496E6A65 		.ascii	"Injection quantity when starting / idling\000"
+  23      6374696F 
+  23      6E207175 
+  23      616E7469 
+  23      74792077 
+  24              	.LC207:
+  25 005d 4F70656E 		.ascii	"Open Loop advance\000"
+  25      204C6F6F 
+  25      70206164 
+  25      76616E63 
+  25      6500
+  26              	.LC208:
+  27 006f 436C6F73 		.ascii	"Closed Loop advance\000"
+  27      6564204C 
+  27      6F6F7020 
+  27      61647661 
+  27      6E636500 
+  28              	.LC209:
+  29 0083 54757262 		.ascii	"Turbo actuator; duty cycle base map\000"
+  29      6F206163 
+  29      74756174 
+  29      6F723B20 
+  29      64757479 
+  30              	.LC210:
+  31 00a7 54757262 		.ascii	"Turbo actuator; target pressure\000"
+  31      6F206163 
+  31      74756174 
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 2
+
+
+  31      6F723B20 
+  31      74617267 
+  32              	.LC211:
+  33 00c7 476C6F77 		.ascii	"Glow period (seconds)\000"
+  33      20706572 
+  33      696F6420 
+  33      28736563 
+  33      6F6E6473 
+  34              	.LC212:
+  35 00dd 456E6769 		.ascii	"Engine temp. sensor calibration\000"
+  35      6E652074 
+  35      656D702E 
+  35      2073656E 
+  35      736F7220 
+  36              	.LC213:
+  37 00fd 4675656C 		.ascii	"Fuel temp. sensor calibration\000"
+  37      2074656D 
+  37      702E2073 
+  37      656E736F 
+  37      72206361 
+  38              	.LC214:
+  39 011b 496E7461 		.ascii	"Intake air temp. sensor calibration\000"
+  39      6B652061 
+  39      69722074 
+  39      656D702E 
+  39      2073656E 
+  40              	.LC215:
+  41 013f 45637520 		.ascii	"Ecu temp. sensor calibration\000"
+  41      74656D70 
+  41      2E207365 
+  41      6E736F72 
+  41      2063616C 
+  42              	.LC216:
+  43 015c 4675656C 		.ascii	"Fuel Trim amount vs. Fuel Temp.\000"
+  43      20547269 
+  43      6D20616D 
+  43      6F756E74 
+  43      2076732E 
+  44              	.LC217:
+  45 017c 4675656C 		.ascii	"Fuel Trim amount vs. Air Temp.\000"
+  45      20547269 
+  45      6D20616D 
+  45      6F756E74 
+  45      2076732E 
+  46              	.LC218:
+  47 019b 54757262 		.ascii	"Turbo Actuator Operating Curve\000"
+  47      6F204163 
+  47      74756174 
+  47      6F72204F 
+  47      70657261 
+  48              	.LC219:
+  49 01ba 49646C65 		.ascii	"Idle PID P-parameter during idle\000"
+  49      20504944 
+  49      20502D70 
+  49      6172616D 
+  49      65746572 
+  50              		.section	.text._ZN4CoreC2Ev,"ax",%progbits
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 3
+
+
+  51              		.align	1
+  52              		.global	_ZN4CoreC2Ev
+  53              		.syntax unified
+  54              		.thumb
+  55              		.thumb_func
+  57              	_ZN4CoreC2Ev:
+  58              		.fnstart
+  59              	.LFB1048:
+  60              		@ args = 0, pretend = 0, frame = 0
+  61              		@ frame_needed = 0, uses_anonymous_args = 0
+  62 0000 BF4A     		ldr	r2, .L138
+  63 0002 70B5     		push	{r4, r5, r6, lr}
+  64 0004 0346     		mov	r3, r0
+  65 0006 00F1E804 		add	r4, r0, #232
+  66 000a 02F11006 		add	r6, r2, #16
+  67              	.L2:
+  68 000e 1068     		ldr	r0, [r2]	@ unaligned
+  69 0010 5168     		ldr	r1, [r2, #4]	@ unaligned
+  70 0012 2546     		mov	r5, r4
+  71 0014 03C5     		stmia	r5!, {r0, r1}
+  72 0016 0832     		adds	r2, r2, #8
+  73 0018 B242     		cmp	r2, r6
+  74 001a 2C46     		mov	r4, r5
+  75 001c F7D1     		bne	.L2
+  76 001e 1068     		ldr	r0, [r2]	@ unaligned
+  77 0020 B84A     		ldr	r2, .L138+4
+  78 0022 2860     		str	r0, [r5]
+  79 0024 03F1FC04 		add	r4, r3, #252
+  80 0028 02F11006 		add	r6, r2, #16
+  81              	.L3:
+  82 002c 1068     		ldr	r0, [r2]	@ unaligned
+  83 002e 5168     		ldr	r1, [r2, #4]	@ unaligned
+  84 0030 2546     		mov	r5, r4
+  85 0032 03C5     		stmia	r5!, {r0, r1}
+  86 0034 0832     		adds	r2, r2, #8
+  87 0036 B242     		cmp	r2, r6
+  88 0038 2C46     		mov	r4, r5
+  89 003a F7D1     		bne	.L3
+  90 003c 1068     		ldr	r0, [r2]	@ unaligned
+  91 003e B24A     		ldr	r2, .L138+8
+  92 0040 2860     		str	r0, [r5]
+  93 0042 03F58874 		add	r4, r3, #272
+  94 0046 02F11006 		add	r6, r2, #16
+  95              	.L4:
+  96 004a 1068     		ldr	r0, [r2]	@ unaligned
+  97 004c 5168     		ldr	r1, [r2, #4]	@ unaligned
+  98 004e 2546     		mov	r5, r4
+  99 0050 03C5     		stmia	r5!, {r0, r1}
+ 100 0052 0832     		adds	r2, r2, #8
+ 101 0054 B242     		cmp	r2, r6
+ 102 0056 2C46     		mov	r4, r5
+ 103 0058 F7D1     		bne	.L4
+ 104 005a 1068     		ldr	r0, [r2]	@ unaligned
+ 105 005c AB4A     		ldr	r2, .L138+12
+ 106 005e 2860     		str	r0, [r5]
+ 107 0060 03F59274 		add	r4, r3, #292
+ 108 0064 02F11006 		add	r6, r2, #16
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 4
+
+
+ 109              	.L5:
+ 110 0068 1068     		ldr	r0, [r2]	@ unaligned
+ 111 006a 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 112 006c 2546     		mov	r5, r4
+ 113 006e 03C5     		stmia	r5!, {r0, r1}
+ 114 0070 0832     		adds	r2, r2, #8
+ 115 0072 B242     		cmp	r2, r6
+ 116 0074 2C46     		mov	r4, r5
+ 117 0076 F7D1     		bne	.L5
+ 118 0078 1068     		ldr	r0, [r2]	@ unaligned
+ 119 007a A54A     		ldr	r2, .L138+16
+ 120 007c 2860     		str	r0, [r5]
+ 121 007e 03F59C74 		add	r4, r3, #312
+ 122 0082 02F11006 		add	r6, r2, #16
+ 123              	.L6:
+ 124 0086 1068     		ldr	r0, [r2]	@ unaligned
+ 125 0088 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 126 008a 2546     		mov	r5, r4
+ 127 008c 03C5     		stmia	r5!, {r0, r1}
+ 128 008e 0832     		adds	r2, r2, #8
+ 129 0090 B242     		cmp	r2, r6
+ 130 0092 2C46     		mov	r4, r5
+ 131 0094 F7D1     		bne	.L6
+ 132 0096 1068     		ldr	r0, [r2]	@ unaligned
+ 133 0098 9E4A     		ldr	r2, .L138+20
+ 134 009a 2860     		str	r0, [r5]
+ 135 009c 03F5A674 		add	r4, r3, #332
+ 136 00a0 02F11006 		add	r6, r2, #16
+ 137              	.L7:
+ 138 00a4 1068     		ldr	r0, [r2]	@ unaligned
+ 139 00a6 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 140 00a8 2546     		mov	r5, r4
+ 141 00aa 03C5     		stmia	r5!, {r0, r1}
+ 142 00ac 0832     		adds	r2, r2, #8
+ 143 00ae B242     		cmp	r2, r6
+ 144 00b0 2C46     		mov	r4, r5
+ 145 00b2 F7D1     		bne	.L7
+ 146 00b4 1068     		ldr	r0, [r2]	@ unaligned
+ 147 00b6 984A     		ldr	r2, .L138+24
+ 148 00b8 2860     		str	r0, [r5]
+ 149 00ba 03F5B074 		add	r4, r3, #352
+ 150 00be 02F11006 		add	r6, r2, #16
+ 151              	.L8:
+ 152 00c2 1068     		ldr	r0, [r2]	@ unaligned
+ 153 00c4 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 154 00c6 2546     		mov	r5, r4
+ 155 00c8 03C5     		stmia	r5!, {r0, r1}
+ 156 00ca 0832     		adds	r2, r2, #8
+ 157 00cc B242     		cmp	r2, r6
+ 158 00ce 2C46     		mov	r4, r5
+ 159 00d0 F7D1     		bne	.L8
+ 160 00d2 1068     		ldr	r0, [r2]	@ unaligned
+ 161 00d4 914A     		ldr	r2, .L138+28
+ 162 00d6 2860     		str	r0, [r5]
+ 163 00d8 03F5BA74 		add	r4, r3, #372
+ 164 00dc 02F11006 		add	r6, r2, #16
+ 165              	.L9:
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 5
+
+
+ 166 00e0 1068     		ldr	r0, [r2]	@ unaligned
+ 167 00e2 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 168 00e4 2546     		mov	r5, r4
+ 169 00e6 03C5     		stmia	r5!, {r0, r1}
+ 170 00e8 0832     		adds	r2, r2, #8
+ 171 00ea B242     		cmp	r2, r6
+ 172 00ec 2C46     		mov	r4, r5
+ 173 00ee F7D1     		bne	.L9
+ 174 00f0 1068     		ldr	r0, [r2]	@ unaligned
+ 175 00f2 8B4A     		ldr	r2, .L138+32
+ 176 00f4 2860     		str	r0, [r5]
+ 177 00f6 03F5C474 		add	r4, r3, #392
+ 178 00fa 02F11006 		add	r6, r2, #16
+ 179              	.L10:
+ 180 00fe 1068     		ldr	r0, [r2]	@ unaligned
+ 181 0100 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 182 0102 2546     		mov	r5, r4
+ 183 0104 03C5     		stmia	r5!, {r0, r1}
+ 184 0106 0832     		adds	r2, r2, #8
+ 185 0108 B242     		cmp	r2, r6
+ 186 010a 2C46     		mov	r4, r5
+ 187 010c F7D1     		bne	.L10
+ 188 010e 1068     		ldr	r0, [r2]	@ unaligned
+ 189 0110 844A     		ldr	r2, .L138+36
+ 190 0112 2860     		str	r0, [r5]
+ 191 0114 03F5CE74 		add	r4, r3, #412
+ 192 0118 02F11006 		add	r6, r2, #16
+ 193              	.L11:
+ 194 011c 1068     		ldr	r0, [r2]	@ unaligned
+ 195 011e 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 196 0120 2546     		mov	r5, r4
+ 197 0122 03C5     		stmia	r5!, {r0, r1}
+ 198 0124 0832     		adds	r2, r2, #8
+ 199 0126 B242     		cmp	r2, r6
+ 200 0128 2C46     		mov	r4, r5
+ 201 012a F7D1     		bne	.L11
+ 202 012c 1068     		ldr	r0, [r2]	@ unaligned
+ 203 012e 7E4A     		ldr	r2, .L138+40
+ 204 0130 2860     		str	r0, [r5]
+ 205 0132 03F5D874 		add	r4, r3, #432
+ 206 0136 02F11006 		add	r6, r2, #16
+ 207              	.L12:
+ 208 013a 1068     		ldr	r0, [r2]	@ unaligned
+ 209 013c 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 210 013e 2546     		mov	r5, r4
+ 211 0140 03C5     		stmia	r5!, {r0, r1}
+ 212 0142 0832     		adds	r2, r2, #8
+ 213 0144 B242     		cmp	r2, r6
+ 214 0146 2C46     		mov	r4, r5
+ 215 0148 F7D1     		bne	.L12
+ 216 014a 1068     		ldr	r0, [r2]	@ unaligned
+ 217 014c 774A     		ldr	r2, .L138+44
+ 218 014e 2860     		str	r0, [r5]
+ 219 0150 03F5E274 		add	r4, r3, #452
+ 220 0154 02F11006 		add	r6, r2, #16
+ 221              	.L13:
+ 222 0158 1068     		ldr	r0, [r2]	@ unaligned
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 6
+
+
+ 223 015a 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 224 015c 2546     		mov	r5, r4
+ 225 015e 03C5     		stmia	r5!, {r0, r1}
+ 226 0160 0832     		adds	r2, r2, #8
+ 227 0162 B242     		cmp	r2, r6
+ 228 0164 2C46     		mov	r4, r5
+ 229 0166 F7D1     		bne	.L13
+ 230 0168 1068     		ldr	r0, [r2]	@ unaligned
+ 231 016a 714A     		ldr	r2, .L138+48
+ 232 016c 2860     		str	r0, [r5]
+ 233 016e 03F50F74 		add	r4, r3, #572
+ 234 0172 02F11006 		add	r6, r2, #16
+ 235              	.L14:
+ 236 0176 1068     		ldr	r0, [r2]	@ unaligned
+ 237 0178 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 238 017a 2546     		mov	r5, r4
+ 239 017c 03C5     		stmia	r5!, {r0, r1}
+ 240 017e 0832     		adds	r2, r2, #8
+ 241 0180 B242     		cmp	r2, r6
+ 242 0182 2C46     		mov	r4, r5
+ 243 0184 F7D1     		bne	.L14
+ 244 0186 1068     		ldr	r0, [r2]	@ unaligned
+ 245 0188 6A4A     		ldr	r2, .L138+52
+ 246 018a 2860     		str	r0, [r5]
+ 247 018c 03F51474 		add	r4, r3, #592
+ 248 0190 02F11006 		add	r6, r2, #16
+ 249              	.L15:
+ 250 0194 1068     		ldr	r0, [r2]	@ unaligned
+ 251 0196 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 252 0198 2546     		mov	r5, r4
+ 253 019a 03C5     		stmia	r5!, {r0, r1}
+ 254 019c 0832     		adds	r2, r2, #8
+ 255 019e B242     		cmp	r2, r6
+ 256 01a0 2C46     		mov	r4, r5
+ 257 01a2 F7D1     		bne	.L15
+ 258 01a4 1068     		ldr	r0, [r2]	@ unaligned
+ 259 01a6 644A     		ldr	r2, .L138+56
+ 260 01a8 2860     		str	r0, [r5]
+ 261 01aa 03F51974 		add	r4, r3, #612
+ 262 01ae 02F11006 		add	r6, r2, #16
+ 263              	.L16:
+ 264 01b2 1068     		ldr	r0, [r2]	@ unaligned
+ 265 01b4 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 266 01b6 2546     		mov	r5, r4
+ 267 01b8 03C5     		stmia	r5!, {r0, r1}
+ 268 01ba 0832     		adds	r2, r2, #8
+ 269 01bc B242     		cmp	r2, r6
+ 270 01be 2C46     		mov	r4, r5
+ 271 01c0 F7D1     		bne	.L16
+ 272 01c2 1068     		ldr	r0, [r2]	@ unaligned
+ 273 01c4 5D4A     		ldr	r2, .L138+60
+ 274 01c6 2860     		str	r0, [r5]
+ 275 01c8 03F54174 		add	r4, r3, #772
+ 276 01cc 02F11006 		add	r6, r2, #16
+ 277              	.L17:
+ 278 01d0 1068     		ldr	r0, [r2]	@ unaligned
+ 279 01d2 5168     		ldr	r1, [r2, #4]	@ unaligned
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 7
+
+
+ 280 01d4 2546     		mov	r5, r4
+ 281 01d6 03C5     		stmia	r5!, {r0, r1}
+ 282 01d8 0832     		adds	r2, r2, #8
+ 283 01da B242     		cmp	r2, r6
+ 284 01dc 2C46     		mov	r4, r5
+ 285 01de F7D1     		bne	.L17
+ 286 01e0 1068     		ldr	r0, [r2]	@ unaligned
+ 287 01e2 574A     		ldr	r2, .L138+64
+ 288 01e4 2860     		str	r0, [r5]
+ 289 01e6 03F54B74 		add	r4, r3, #812
+ 290 01ea 02F11006 		add	r6, r2, #16
+ 291              	.L18:
+ 292 01ee 1068     		ldr	r0, [r2]	@ unaligned
+ 293 01f0 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 294 01f2 2546     		mov	r5, r4
+ 295 01f4 03C5     		stmia	r5!, {r0, r1}
+ 296 01f6 0832     		adds	r2, r2, #8
+ 297 01f8 B242     		cmp	r2, r6
+ 298 01fa 2C46     		mov	r4, r5
+ 299 01fc F7D1     		bne	.L18
+ 300 01fe 1068     		ldr	r0, [r2]	@ unaligned
+ 301 0200 504A     		ldr	r2, .L138+68
+ 302 0202 2860     		str	r0, [r5]
+ 303 0204 03F54674 		add	r4, r3, #792
+ 304 0208 02F11006 		add	r6, r2, #16
+ 305              	.L19:
+ 306 020c 1068     		ldr	r0, [r2]	@ unaligned
+ 307 020e 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 308 0210 2546     		mov	r5, r4
+ 309 0212 03C5     		stmia	r5!, {r0, r1}
+ 310 0214 0832     		adds	r2, r2, #8
+ 311 0216 B242     		cmp	r2, r6
+ 312 0218 2C46     		mov	r4, r5
+ 313 021a F7D1     		bne	.L19
+ 314 021c 1068     		ldr	r0, [r2]	@ unaligned
+ 315 021e 4A4A     		ldr	r2, .L138+72
+ 316 0220 2860     		str	r0, [r5]
+ 317 0222 03F53774 		add	r4, r3, #732
+ 318 0226 02F11006 		add	r6, r2, #16
+ 319              	.L20:
+ 320 022a 1068     		ldr	r0, [r2]	@ unaligned
+ 321 022c 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 322 022e 2546     		mov	r5, r4
+ 323 0230 03C5     		stmia	r5!, {r0, r1}
+ 324 0232 0832     		adds	r2, r2, #8
+ 325 0234 B242     		cmp	r2, r6
+ 326 0236 2C46     		mov	r4, r5
+ 327 0238 F7D1     		bne	.L20
+ 328 023a 1068     		ldr	r0, [r2]	@ unaligned
+ 329 023c 434A     		ldr	r2, .L138+76
+ 330 023e 2860     		str	r0, [r5]
+ 331 0240 03F53C74 		add	r4, r3, #752
+ 332 0244 02F11006 		add	r6, r2, #16
+ 333              	.L21:
+ 334 0248 1068     		ldr	r0, [r2]	@ unaligned
+ 335 024a 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 336 024c 2546     		mov	r5, r4
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 8
+
+
+ 337 024e 03C5     		stmia	r5!, {r0, r1}
+ 338 0250 0832     		adds	r2, r2, #8
+ 339 0252 B242     		cmp	r2, r6
+ 340 0254 2C46     		mov	r4, r5
+ 341 0256 F7D1     		bne	.L21
+ 342 0258 1068     		ldr	r0, [r2]	@ unaligned
+ 343 025a 3D4A     		ldr	r2, .L138+80
+ 344 025c 2860     		str	r0, [r5]
+ 345 025e 03F55074 		add	r4, r3, #832
+ 346 0262 02F11006 		add	r6, r2, #16
+ 347              	.L22:
+ 348 0266 1068     		ldr	r0, [r2]	@ unaligned
+ 349 0268 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 350 026a 2546     		mov	r5, r4
+ 351 026c 03C5     		stmia	r5!, {r0, r1}
+ 352 026e 0832     		adds	r2, r2, #8
+ 353 0270 B242     		cmp	r2, r6
+ 354 0272 2C46     		mov	r4, r5
+ 355 0274 F7D1     		bne	.L22
+ 356 0276 1068     		ldr	r0, [r2]	@ unaligned
+ 357 0278 364A     		ldr	r2, .L138+84
+ 358 027a 2860     		str	r0, [r5]
+ 359 027c 03F55574 		add	r4, r3, #852
+ 360 0280 02F11006 		add	r6, r2, #16
+ 361              	.L23:
+ 362 0284 1068     		ldr	r0, [r2]	@ unaligned
+ 363 0286 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 364 0288 2546     		mov	r5, r4
+ 365 028a 03C5     		stmia	r5!, {r0, r1}
+ 366 028c 0832     		adds	r2, r2, #8
+ 367 028e B242     		cmp	r2, r6
+ 368 0290 2C46     		mov	r4, r5
+ 369 0292 F7D1     		bne	.L23
+ 370 0294 1068     		ldr	r0, [r2]	@ unaligned
+ 371 0296 304A     		ldr	r2, .L138+88
+ 372 0298 2860     		str	r0, [r5]
+ 373 029a 03F55A74 		add	r4, r3, #872
+ 374 029e 02F11006 		add	r6, r2, #16
+ 375              	.L24:
+ 376 02a2 1068     		ldr	r0, [r2]	@ unaligned
+ 377 02a4 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 378 02a6 2546     		mov	r5, r4
+ 379 02a8 03C5     		stmia	r5!, {r0, r1}
+ 380 02aa 0832     		adds	r2, r2, #8
+ 381 02ac B242     		cmp	r2, r6
+ 382 02ae 2C46     		mov	r4, r5
+ 383 02b0 F7D1     		bne	.L24
+ 384 02b2 1068     		ldr	r0, [r2]	@ unaligned
+ 385 02b4 294A     		ldr	r2, .L138+92
+ 386 02b6 2860     		str	r0, [r5]
+ 387 02b8 03F55F74 		add	r4, r3, #892
+ 388 02bc 02F11006 		add	r6, r2, #16
+ 389              	.L25:
+ 390 02c0 1068     		ldr	r0, [r2]	@ unaligned
+ 391 02c2 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 392 02c4 2546     		mov	r5, r4
+ 393 02c6 03C5     		stmia	r5!, {r0, r1}
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 9
+
+
+ 394 02c8 0832     		adds	r2, r2, #8
+ 395 02ca B242     		cmp	r2, r6
+ 396 02cc 2C46     		mov	r4, r5
+ 397 02ce F7D1     		bne	.L25
+ 398 02d0 1068     		ldr	r0, [r2]	@ unaligned
+ 399 02d2 234A     		ldr	r2, .L138+96
+ 400 02d4 2860     		str	r0, [r5]
+ 401 02d6 03F56474 		add	r4, r3, #912
+ 402 02da 02F11006 		add	r6, r2, #16
+ 403              	.L26:
+ 404 02de 1068     		ldr	r0, [r2]	@ unaligned
+ 405 02e0 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 406 02e2 2546     		mov	r5, r4
+ 407 02e4 03C5     		stmia	r5!, {r0, r1}
+ 408 02e6 0832     		adds	r2, r2, #8
+ 409 02e8 B242     		cmp	r2, r6
+ 410 02ea 2C46     		mov	r4, r5
+ 411 02ec F7D1     		bne	.L26
+ 412 02ee 1068     		ldr	r0, [r2]	@ unaligned
+ 413 02f0 1C4A     		ldr	r2, .L138+100
+ 414 02f2 2860     		str	r0, [r5]
+ 415 02f4 03F56974 		add	r4, r3, #932
+ 416 02f8 02F11006 		add	r6, r2, #16
+ 417 02fc 34E0     		b	.L139
+ 418              	.L140:
+ 419 02fe 00BF     		.align	2
+ 420              	.L138:
+ 421 0300 00000000 		.word	.LANCHOR0
+ 422 0304 14000000 		.word	.LANCHOR0+20
+ 423 0308 28000000 		.word	.LANCHOR0+40
+ 424 030c 3C000000 		.word	.LANCHOR0+60
+ 425 0310 50000000 		.word	.LANCHOR0+80
+ 426 0314 64000000 		.word	.LANCHOR0+100
+ 427 0318 78000000 		.word	.LANCHOR0+120
+ 428 031c 8C000000 		.word	.LANCHOR0+140
+ 429 0320 A0000000 		.word	.LANCHOR0+160
+ 430 0324 B4000000 		.word	.LANCHOR0+180
+ 431 0328 C8000000 		.word	.LANCHOR0+200
+ 432 032c DC000000 		.word	.LANCHOR0+220
+ 433 0330 F0000000 		.word	.LANCHOR0+240
+ 434 0334 04010000 		.word	.LANCHOR0+260
+ 435 0338 18010000 		.word	.LANCHOR0+280
+ 436 033c 2C010000 		.word	.LANCHOR0+300
+ 437 0340 40010000 		.word	.LANCHOR0+320
+ 438 0344 54010000 		.word	.LANCHOR0+340
+ 439 0348 68010000 		.word	.LANCHOR0+360
+ 440 034c 7C010000 		.word	.LANCHOR0+380
+ 441 0350 90010000 		.word	.LANCHOR0+400
+ 442 0354 A4010000 		.word	.LANCHOR0+420
+ 443 0358 B8010000 		.word	.LANCHOR0+440
+ 444 035c CC010000 		.word	.LANCHOR0+460
+ 445 0360 E0010000 		.word	.LANCHOR0+480
+ 446 0364 F4010000 		.word	.LANCHOR0+500
+ 447              	.L139:
+ 448              	.L27:
+ 449 0368 1068     		ldr	r0, [r2]	@ unaligned
+ 450 036a 5168     		ldr	r1, [r2, #4]	@ unaligned
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 10
+
+
+ 451 036c 2546     		mov	r5, r4
+ 452 036e 03C5     		stmia	r5!, {r0, r1}
+ 453 0370 0832     		adds	r2, r2, #8
+ 454 0372 B242     		cmp	r2, r6
+ 455 0374 2C46     		mov	r4, r5
+ 456 0376 F7D1     		bne	.L27
+ 457 0378 1068     		ldr	r0, [r2]	@ unaligned
+ 458 037a BF4A     		ldr	r2, .L141
+ 459 037c 2860     		str	r0, [r5]
+ 460 037e 03F56E74 		add	r4, r3, #952
+ 461 0382 02F11006 		add	r6, r2, #16
+ 462              	.L28:
+ 463 0386 1068     		ldr	r0, [r2]	@ unaligned
+ 464 0388 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 465 038a 2546     		mov	r5, r4
+ 466 038c 03C5     		stmia	r5!, {r0, r1}
+ 467 038e 0832     		adds	r2, r2, #8
+ 468 0390 B242     		cmp	r2, r6
+ 469 0392 2C46     		mov	r4, r5
+ 470 0394 F7D1     		bne	.L28
+ 471 0396 1068     		ldr	r0, [r2]	@ unaligned
+ 472 0398 B84A     		ldr	r2, .L141+4
+ 473 039a 2860     		str	r0, [r5]
+ 474 039c 03F57374 		add	r4, r3, #972
+ 475 03a0 02F11006 		add	r6, r2, #16
+ 476              	.L29:
+ 477 03a4 1068     		ldr	r0, [r2]	@ unaligned
+ 478 03a6 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 479 03a8 2546     		mov	r5, r4
+ 480 03aa 03C5     		stmia	r5!, {r0, r1}
+ 481 03ac 0832     		adds	r2, r2, #8
+ 482 03ae B242     		cmp	r2, r6
+ 483 03b0 2C46     		mov	r4, r5
+ 484 03b2 F7D1     		bne	.L29
+ 485 03b4 1068     		ldr	r0, [r2]	@ unaligned
+ 486 03b6 B24A     		ldr	r2, .L141+8
+ 487 03b8 2860     		str	r0, [r5]
+ 488 03ba 03F57874 		add	r4, r3, #992
+ 489 03be 02F11006 		add	r6, r2, #16
+ 490              	.L30:
+ 491 03c2 1068     		ldr	r0, [r2]	@ unaligned
+ 492 03c4 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 493 03c6 2546     		mov	r5, r4
+ 494 03c8 03C5     		stmia	r5!, {r0, r1}
+ 495 03ca 0832     		adds	r2, r2, #8
+ 496 03cc B242     		cmp	r2, r6
+ 497 03ce 2C46     		mov	r4, r5
+ 498 03d0 F7D1     		bne	.L30
+ 499 03d2 1068     		ldr	r0, [r2]	@ unaligned
+ 500 03d4 AB4A     		ldr	r2, .L141+12
+ 501 03d6 2860     		str	r0, [r5]
+ 502 03d8 03F53274 		add	r4, r3, #712
+ 503 03dc 02F11006 		add	r6, r2, #16
+ 504              	.L31:
+ 505 03e0 1068     		ldr	r0, [r2]	@ unaligned
+ 506 03e2 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 507 03e4 2546     		mov	r5, r4
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 11
+
+
+ 508 03e6 03C5     		stmia	r5!, {r0, r1}
+ 509 03e8 0832     		adds	r2, r2, #8
+ 510 03ea B242     		cmp	r2, r6
+ 511 03ec 2C46     		mov	r4, r5
+ 512 03ee F7D1     		bne	.L31
+ 513 03f0 1068     		ldr	r0, [r2]	@ unaligned
+ 514 03f2 A54A     		ldr	r2, .L141+16
+ 515 03f4 2860     		str	r0, [r5]
+ 516 03f6 03F57D74 		add	r4, r3, #1012
+ 517 03fa 02F11006 		add	r6, r2, #16
+ 518              	.L32:
+ 519 03fe 1068     		ldr	r0, [r2]	@ unaligned
+ 520 0400 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 521 0402 2546     		mov	r5, r4
+ 522 0404 03C5     		stmia	r5!, {r0, r1}
+ 523 0406 0832     		adds	r2, r2, #8
+ 524 0408 B242     		cmp	r2, r6
+ 525 040a 2C46     		mov	r4, r5
+ 526 040c F7D1     		bne	.L32
+ 527 040e 1068     		ldr	r0, [r2]	@ unaligned
+ 528 0410 9E4A     		ldr	r2, .L141+20
+ 529 0412 2860     		str	r0, [r5]
+ 530 0414 03F58164 		add	r4, r3, #1032
+ 531 0418 02F11006 		add	r6, r2, #16
+ 532              	.L33:
+ 533 041c 1068     		ldr	r0, [r2]	@ unaligned
+ 534 041e 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 535 0420 2546     		mov	r5, r4
+ 536 0422 03C5     		stmia	r5!, {r0, r1}
+ 537 0424 0832     		adds	r2, r2, #8
+ 538 0426 B242     		cmp	r2, r6
+ 539 0428 2C46     		mov	r4, r5
+ 540 042a F7D1     		bne	.L33
+ 541 042c 1068     		ldr	r0, [r2]	@ unaligned
+ 542 042e 984A     		ldr	r2, .L141+24
+ 543 0430 2860     		str	r0, [r5]
+ 544 0432 03F21C44 		addw	r4, r3, #1052
+ 545 0436 02F11006 		add	r6, r2, #16
+ 546              	.L34:
+ 547 043a 1068     		ldr	r0, [r2]	@ unaligned
+ 548 043c 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 549 043e 2546     		mov	r5, r4
+ 550 0440 03C5     		stmia	r5!, {r0, r1}
+ 551 0442 0832     		adds	r2, r2, #8
+ 552 0444 B242     		cmp	r2, r6
+ 553 0446 2C46     		mov	r4, r5
+ 554 0448 F7D1     		bne	.L34
+ 555 044a 1068     		ldr	r0, [r2]	@ unaligned
+ 556 044c 914A     		ldr	r2, .L141+28
+ 557 044e 2860     		str	r0, [r5]
+ 558 0450 03F58B64 		add	r4, r3, #1112
+ 559 0454 02F11006 		add	r6, r2, #16
+ 560              	.L35:
+ 561 0458 1068     		ldr	r0, [r2]	@ unaligned
+ 562 045a 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 563 045c 2546     		mov	r5, r4
+ 564 045e 03C5     		stmia	r5!, {r0, r1}
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 12
+
+
+ 565 0460 0832     		adds	r2, r2, #8
+ 566 0462 B242     		cmp	r2, r6
+ 567 0464 2C46     		mov	r4, r5
+ 568 0466 F7D1     		bne	.L35
+ 569 0468 1068     		ldr	r0, [r2]	@ unaligned
+ 570 046a 8B4A     		ldr	r2, .L141+32
+ 571 046c 2860     		str	r0, [r5]
+ 572 046e 03F58664 		add	r4, r3, #1072
+ 573 0472 02F11006 		add	r6, r2, #16
+ 574              	.L36:
+ 575 0476 1068     		ldr	r0, [r2]	@ unaligned
+ 576 0478 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 577 047a 2546     		mov	r5, r4
+ 578 047c 03C5     		stmia	r5!, {r0, r1}
+ 579 047e 0832     		adds	r2, r2, #8
+ 580 0480 B242     		cmp	r2, r6
+ 581 0482 2C46     		mov	r4, r5
+ 582 0484 F7D1     		bne	.L36
+ 583 0486 1068     		ldr	r0, [r2]	@ unaligned
+ 584 0488 844A     		ldr	r2, .L141+36
+ 585 048a 2860     		str	r0, [r5]
+ 586 048c 03F24444 		addw	r4, r3, #1092
+ 587 0490 02F11006 		add	r6, r2, #16
+ 588              	.L37:
+ 589 0494 1068     		ldr	r0, [r2]	@ unaligned
+ 590 0496 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 591 0498 2546     		mov	r5, r4
+ 592 049a 03C5     		stmia	r5!, {r0, r1}
+ 593 049c 0832     		adds	r2, r2, #8
+ 594 049e B242     		cmp	r2, r6
+ 595 04a0 2C46     		mov	r4, r5
+ 596 04a2 F7D1     		bne	.L37
+ 597 04a4 1068     		ldr	r0, [r2]	@ unaligned
+ 598 04a6 7E4A     		ldr	r2, .L141+40
+ 599 04a8 2860     		str	r0, [r5]
+ 600 04aa 03F51E74 		add	r4, r3, #632
+ 601 04ae 02F11006 		add	r6, r2, #16
+ 602              	.L38:
+ 603 04b2 1068     		ldr	r0, [r2]	@ unaligned
+ 604 04b4 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 605 04b6 2546     		mov	r5, r4
+ 606 04b8 03C5     		stmia	r5!, {r0, r1}
+ 607 04ba 0832     		adds	r2, r2, #8
+ 608 04bc B242     		cmp	r2, r6
+ 609 04be 2C46     		mov	r4, r5
+ 610 04c0 F7D1     		bne	.L38
+ 611 04c2 1068     		ldr	r0, [r2]	@ unaligned
+ 612 04c4 774A     		ldr	r2, .L141+44
+ 613 04c6 2860     		str	r0, [r5]
+ 614 04c8 03F52374 		add	r4, r3, #652
+ 615 04cc 02F11006 		add	r6, r2, #16
+ 616              	.L39:
+ 617 04d0 1068     		ldr	r0, [r2]	@ unaligned
+ 618 04d2 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 619 04d4 2546     		mov	r5, r4
+ 620 04d6 03C5     		stmia	r5!, {r0, r1}
+ 621 04d8 0832     		adds	r2, r2, #8
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 13
+
+
+ 622 04da B242     		cmp	r2, r6
+ 623 04dc 2C46     		mov	r4, r5
+ 624 04de F7D1     		bne	.L39
+ 625 04e0 1068     		ldr	r0, [r2]	@ unaligned
+ 626 04e2 714A     		ldr	r2, .L141+48
+ 627 04e4 2860     		str	r0, [r5]
+ 628 04e6 03F52874 		add	r4, r3, #672
+ 629 04ea 02F11006 		add	r6, r2, #16
+ 630              	.L40:
+ 631 04ee 1068     		ldr	r0, [r2]	@ unaligned
+ 632 04f0 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 633 04f2 2546     		mov	r5, r4
+ 634 04f4 03C5     		stmia	r5!, {r0, r1}
+ 635 04f6 0832     		adds	r2, r2, #8
+ 636 04f8 B242     		cmp	r2, r6
+ 637 04fa 2C46     		mov	r4, r5
+ 638 04fc F7D1     		bne	.L40
+ 639 04fe 1068     		ldr	r0, [r2]	@ unaligned
+ 640 0500 6A4A     		ldr	r2, .L141+52
+ 641 0502 2860     		str	r0, [r5]
+ 642 0504 03F52D74 		add	r4, r3, #692
+ 643 0508 02F11006 		add	r6, r2, #16
+ 644              	.L41:
+ 645 050c 1068     		ldr	r0, [r2]	@ unaligned
+ 646 050e 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 647 0510 2546     		mov	r5, r4
+ 648 0512 03C5     		stmia	r5!, {r0, r1}
+ 649 0514 0832     		adds	r2, r2, #8
+ 650 0516 B242     		cmp	r2, r6
+ 651 0518 2C46     		mov	r4, r5
+ 652 051a F7D1     		bne	.L41
+ 653 051c 1068     		ldr	r0, [r2]	@ unaligned
+ 654 051e 644A     		ldr	r2, .L141+56
+ 655 0520 2860     		str	r0, [r5]
+ 656 0522 03F26C44 		addw	r4, r3, #1132
+ 657 0526 02F11006 		add	r6, r2, #16
+ 658              	.L42:
+ 659 052a 1068     		ldr	r0, [r2]	@ unaligned
+ 660 052c 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 661 052e 2546     		mov	r5, r4
+ 662 0530 03C5     		stmia	r5!, {r0, r1}
+ 663 0532 0832     		adds	r2, r2, #8
+ 664 0534 B242     		cmp	r2, r6
+ 665 0536 2C46     		mov	r4, r5
+ 666 0538 F7D1     		bne	.L42
+ 667 053a 1068     		ldr	r0, [r2]	@ unaligned
+ 668 053c 5D4A     		ldr	r2, .L141+60
+ 669 053e 2860     		str	r0, [r5]
+ 670 0540 03F59064 		add	r4, r3, #1152
+ 671 0544 02F11006 		add	r6, r2, #16
+ 672              	.L43:
+ 673 0548 1068     		ldr	r0, [r2]	@ unaligned
+ 674 054a 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 675 054c 2546     		mov	r5, r4
+ 676 054e 03C5     		stmia	r5!, {r0, r1}
+ 677 0550 0832     		adds	r2, r2, #8
+ 678 0552 B242     		cmp	r2, r6
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 14
+
+
+ 679 0554 2C46     		mov	r4, r5
+ 680 0556 F7D1     		bne	.L43
+ 681 0558 1068     		ldr	r0, [r2]	@ unaligned
+ 682 055a 574A     		ldr	r2, .L141+64
+ 683 055c 2860     		str	r0, [r5]
+ 684 055e 03F29444 		addw	r4, r3, #1172
+ 685 0562 02F11006 		add	r6, r2, #16
+ 686              	.L44:
+ 687 0566 1068     		ldr	r0, [r2]	@ unaligned
+ 688 0568 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 689 056a 2546     		mov	r5, r4
+ 690 056c 03C5     		stmia	r5!, {r0, r1}
+ 691 056e 0832     		adds	r2, r2, #8
+ 692 0570 B242     		cmp	r2, r6
+ 693 0572 2C46     		mov	r4, r5
+ 694 0574 F7D1     		bne	.L44
+ 695 0576 1068     		ldr	r0, [r2]	@ unaligned
+ 696 0578 504A     		ldr	r2, .L141+68
+ 697 057a 2860     		str	r0, [r5]
+ 698 057c 03F59564 		add	r4, r3, #1192
+ 699 0580 02F11006 		add	r6, r2, #16
+ 700              	.L45:
+ 701 0584 1068     		ldr	r0, [r2]	@ unaligned
+ 702 0586 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 703 0588 2546     		mov	r5, r4
+ 704 058a 03C5     		stmia	r5!, {r0, r1}
+ 705 058c 0832     		adds	r2, r2, #8
+ 706 058e B242     		cmp	r2, r6
+ 707 0590 2C46     		mov	r4, r5
+ 708 0592 F7D1     		bne	.L45
+ 709 0594 1068     		ldr	r0, [r2]	@ unaligned
+ 710 0596 4A4A     		ldr	r2, .L141+72
+ 711 0598 2860     		str	r0, [r5]
+ 712 059a 03F2BC44 		addw	r4, r3, #1212
+ 713 059e 02F11006 		add	r6, r2, #16
+ 714              	.L46:
+ 715 05a2 1068     		ldr	r0, [r2]	@ unaligned
+ 716 05a4 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 717 05a6 2546     		mov	r5, r4
+ 718 05a8 03C5     		stmia	r5!, {r0, r1}
+ 719 05aa 0832     		adds	r2, r2, #8
+ 720 05ac B242     		cmp	r2, r6
+ 721 05ae 2C46     		mov	r4, r5
+ 722 05b0 F7D1     		bne	.L46
+ 723 05b2 1068     		ldr	r0, [r2]	@ unaligned
+ 724 05b4 434A     		ldr	r2, .L141+76
+ 725 05b6 2860     		str	r0, [r5]
+ 726 05b8 03F59A64 		add	r4, r3, #1232
+ 727 05bc 02F11006 		add	r6, r2, #16
+ 728              	.L47:
+ 729 05c0 1068     		ldr	r0, [r2]	@ unaligned
+ 730 05c2 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 731 05c4 2546     		mov	r5, r4
+ 732 05c6 03C5     		stmia	r5!, {r0, r1}
+ 733 05c8 0832     		adds	r2, r2, #8
+ 734 05ca B242     		cmp	r2, r6
+ 735 05cc 2C46     		mov	r4, r5
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 15
+
+
+ 736 05ce F7D1     		bne	.L47
+ 737 05d0 1068     		ldr	r0, [r2]	@ unaligned
+ 738 05d2 3D4A     		ldr	r2, .L141+80
+ 739 05d4 2860     		str	r0, [r5]
+ 740 05d6 03F2E444 		addw	r4, r3, #1252
+ 741 05da 02F11006 		add	r6, r2, #16
+ 742              	.L48:
+ 743 05de 1068     		ldr	r0, [r2]	@ unaligned
+ 744 05e0 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 745 05e2 2546     		mov	r5, r4
+ 746 05e4 03C5     		stmia	r5!, {r0, r1}
+ 747 05e6 0832     		adds	r2, r2, #8
+ 748 05e8 B242     		cmp	r2, r6
+ 749 05ea 2C46     		mov	r4, r5
+ 750 05ec F7D1     		bne	.L48
+ 751 05ee 1068     		ldr	r0, [r2]	@ unaligned
+ 752 05f0 364A     		ldr	r2, .L141+84
+ 753 05f2 2860     		str	r0, [r5]
+ 754 05f4 03F59F64 		add	r4, r3, #1272
+ 755 05f8 02F11006 		add	r6, r2, #16
+ 756              	.L49:
+ 757 05fc 1068     		ldr	r0, [r2]	@ unaligned
+ 758 05fe 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 759 0600 2546     		mov	r5, r4
+ 760 0602 03C5     		stmia	r5!, {r0, r1}
+ 761 0604 0832     		adds	r2, r2, #8
+ 762 0606 B242     		cmp	r2, r6
+ 763 0608 2C46     		mov	r4, r5
+ 764 060a F7D1     		bne	.L49
+ 765 060c 1068     		ldr	r0, [r2]	@ unaligned
+ 766 060e 304A     		ldr	r2, .L141+88
+ 767 0610 2860     		str	r0, [r5]
+ 768 0612 03F20C54 		addw	r4, r3, #1292
+ 769 0616 02F11006 		add	r6, r2, #16
+ 770              	.L50:
+ 771 061a 1068     		ldr	r0, [r2]	@ unaligned
+ 772 061c 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 773 061e 2546     		mov	r5, r4
+ 774 0620 03C5     		stmia	r5!, {r0, r1}
+ 775 0622 0832     		adds	r2, r2, #8
+ 776 0624 B242     		cmp	r2, r6
+ 777 0626 2C46     		mov	r4, r5
+ 778 0628 F7D1     		bne	.L50
+ 779 062a 1068     		ldr	r0, [r2]	@ unaligned
+ 780 062c 294A     		ldr	r2, .L141+92
+ 781 062e 2860     		str	r0, [r5]
+ 782 0630 03F5A464 		add	r4, r3, #1312
+ 783 0634 02F11006 		add	r6, r2, #16
+ 784              	.L51:
+ 785 0638 1068     		ldr	r0, [r2]	@ unaligned
+ 786 063a 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 787 063c 2546     		mov	r5, r4
+ 788 063e 03C5     		stmia	r5!, {r0, r1}
+ 789 0640 0832     		adds	r2, r2, #8
+ 790 0642 B242     		cmp	r2, r6
+ 791 0644 2C46     		mov	r4, r5
+ 792 0646 F7D1     		bne	.L51
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 16
+
+
+ 793 0648 1068     		ldr	r0, [r2]	@ unaligned
+ 794 064a 234A     		ldr	r2, .L141+96
+ 795 064c 2860     		str	r0, [r5]
+ 796 064e 03F23454 		addw	r4, r3, #1332
+ 797 0652 02F11006 		add	r6, r2, #16
+ 798              	.L52:
+ 799 0656 1068     		ldr	r0, [r2]	@ unaligned
+ 800 0658 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 801 065a 2546     		mov	r5, r4
+ 802 065c 03C5     		stmia	r5!, {r0, r1}
+ 803 065e 0832     		adds	r2, r2, #8
+ 804 0660 B242     		cmp	r2, r6
+ 805 0662 2C46     		mov	r4, r5
+ 806 0664 F7D1     		bne	.L52
+ 807 0666 1068     		ldr	r0, [r2]	@ unaligned
+ 808 0668 1C4A     		ldr	r2, .L141+100
+ 809 066a 2860     		str	r0, [r5]
+ 810 066c 03F5A964 		add	r4, r3, #1352
+ 811 0670 02F11006 		add	r6, r2, #16
+ 812 0674 34E0     		b	.L142
+ 813              	.L143:
+ 814 0676 00BF     		.align	2
+ 815              	.L141:
+ 816 0678 08020000 		.word	.LANCHOR0+520
+ 817 067c 1C020000 		.word	.LANCHOR0+540
+ 818 0680 30020000 		.word	.LANCHOR0+560
+ 819 0684 44020000 		.word	.LANCHOR0+580
+ 820 0688 58020000 		.word	.LANCHOR0+600
+ 821 068c 6C020000 		.word	.LANCHOR0+620
+ 822 0690 80020000 		.word	.LANCHOR0+640
+ 823 0694 94020000 		.word	.LANCHOR0+660
+ 824 0698 A8020000 		.word	.LANCHOR0+680
+ 825 069c BC020000 		.word	.LANCHOR0+700
+ 826 06a0 D0020000 		.word	.LANCHOR0+720
+ 827 06a4 E4020000 		.word	.LANCHOR0+740
+ 828 06a8 F8020000 		.word	.LANCHOR0+760
+ 829 06ac 0C030000 		.word	.LANCHOR0+780
+ 830 06b0 20030000 		.word	.LANCHOR0+800
+ 831 06b4 34030000 		.word	.LANCHOR0+820
+ 832 06b8 48030000 		.word	.LANCHOR0+840
+ 833 06bc 5C030000 		.word	.LANCHOR0+860
+ 834 06c0 70030000 		.word	.LANCHOR0+880
+ 835 06c4 84030000 		.word	.LANCHOR0+900
+ 836 06c8 98030000 		.word	.LANCHOR0+920
+ 837 06cc AC030000 		.word	.LANCHOR0+940
+ 838 06d0 C0030000 		.word	.LANCHOR0+960
+ 839 06d4 D4030000 		.word	.LANCHOR0+980
+ 840 06d8 E8030000 		.word	.LANCHOR0+1000
+ 841 06dc FC030000 		.word	.LANCHOR0+1020
+ 842              	.L142:
+ 843              	.L53:
+ 844 06e0 1068     		ldr	r0, [r2]	@ unaligned
+ 845 06e2 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 846 06e4 2546     		mov	r5, r4
+ 847 06e6 03C5     		stmia	r5!, {r0, r1}
+ 848 06e8 0832     		adds	r2, r2, #8
+ 849 06ea B242     		cmp	r2, r6
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 17
+
+
+ 850 06ec 2C46     		mov	r4, r5
+ 851 06ee F7D1     		bne	.L53
+ 852 06f0 1068     		ldr	r0, [r2]	@ unaligned
+ 853 06f2 AC4A     		ldr	r2, .L144
+ 854 06f4 2860     		str	r0, [r5]
+ 855 06f6 03F25C54 		addw	r4, r3, #1372
+ 856 06fa 02F11006 		add	r6, r2, #16
+ 857              	.L54:
+ 858 06fe 1068     		ldr	r0, [r2]	@ unaligned
+ 859 0700 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 860 0702 2546     		mov	r5, r4
+ 861 0704 03C5     		stmia	r5!, {r0, r1}
+ 862 0706 0832     		adds	r2, r2, #8
+ 863 0708 B242     		cmp	r2, r6
+ 864 070a 2C46     		mov	r4, r5
+ 865 070c F7D1     		bne	.L54
+ 866 070e 1068     		ldr	r0, [r2]	@ unaligned
+ 867 0710 A54A     		ldr	r2, .L144+4
+ 868 0712 2860     		str	r0, [r5]
+ 869 0714 03F5AE64 		add	r4, r3, #1392
+ 870 0718 02F11006 		add	r6, r2, #16
+ 871              	.L55:
+ 872 071c 1068     		ldr	r0, [r2]	@ unaligned
+ 873 071e 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 874 0720 2546     		mov	r5, r4
+ 875 0722 03C5     		stmia	r5!, {r0, r1}
+ 876 0724 0832     		adds	r2, r2, #8
+ 877 0726 B242     		cmp	r2, r6
+ 878 0728 2C46     		mov	r4, r5
+ 879 072a F7D1     		bne	.L55
+ 880 072c 1068     		ldr	r0, [r2]	@ unaligned
+ 881 072e 9F4A     		ldr	r2, .L144+8
+ 882 0730 2860     		str	r0, [r5]
+ 883 0732 03F5B364 		add	r4, r3, #1432
+ 884 0736 02F11006 		add	r6, r2, #16
+ 885              	.L56:
+ 886 073a 1068     		ldr	r0, [r2]	@ unaligned
+ 887 073c 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 888 073e 2546     		mov	r5, r4
+ 889 0740 03C5     		stmia	r5!, {r0, r1}
+ 890 0742 0832     		adds	r2, r2, #8
+ 891 0744 B242     		cmp	r2, r6
+ 892 0746 2C46     		mov	r4, r5
+ 893 0748 F7D1     		bne	.L56
+ 894 074a 1068     		ldr	r0, [r2]	@ unaligned
+ 895 074c 984A     		ldr	r2, .L144+12
+ 896 074e 2860     		str	r0, [r5]
+ 897 0750 03F28454 		addw	r4, r3, #1412
+ 898 0754 02F11006 		add	r6, r2, #16
+ 899              	.L57:
+ 900 0758 1068     		ldr	r0, [r2]	@ unaligned
+ 901 075a 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 902 075c 2546     		mov	r5, r4
+ 903 075e 03C5     		stmia	r5!, {r0, r1}
+ 904 0760 0832     		adds	r2, r2, #8
+ 905 0762 B242     		cmp	r2, r6
+ 906 0764 2C46     		mov	r4, r5
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 18
+
+
+ 907 0766 F7D1     		bne	.L57
+ 908 0768 1068     		ldr	r0, [r2]	@ unaligned
+ 909 076a 924A     		ldr	r2, .L144+16
+ 910 076c 2860     		str	r0, [r5]
+ 911 076e 03F2AC54 		addw	r4, r3, #1452
+ 912 0772 02F11006 		add	r6, r2, #16
+ 913              	.L58:
+ 914 0776 1068     		ldr	r0, [r2]	@ unaligned
+ 915 0778 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 916 077a 2546     		mov	r5, r4
+ 917 077c 03C5     		stmia	r5!, {r0, r1}
+ 918 077e 0832     		adds	r2, r2, #8
+ 919 0780 B242     		cmp	r2, r6
+ 920 0782 2C46     		mov	r4, r5
+ 921 0784 F7D1     		bne	.L58
+ 922 0786 1068     		ldr	r0, [r2]	@ unaligned
+ 923 0788 8B4A     		ldr	r2, .L144+20
+ 924 078a 2860     		str	r0, [r5]
+ 925 078c 03F5B864 		add	r4, r3, #1472
+ 926 0790 02F11006 		add	r6, r2, #16
+ 927              	.L59:
+ 928 0794 1068     		ldr	r0, [r2]	@ unaligned
+ 929 0796 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 930 0798 2546     		mov	r5, r4
+ 931 079a 03C5     		stmia	r5!, {r0, r1}
+ 932 079c 0832     		adds	r2, r2, #8
+ 933 079e B242     		cmp	r2, r6
+ 934 07a0 2C46     		mov	r4, r5
+ 935 07a2 F7D1     		bne	.L59
+ 936 07a4 1068     		ldr	r0, [r2]	@ unaligned
+ 937 07a6 854A     		ldr	r2, .L144+24
+ 938 07a8 2860     		str	r0, [r5]
+ 939 07aa 03F2D454 		addw	r4, r3, #1492
+ 940 07ae 02F11006 		add	r6, r2, #16
+ 941              	.L60:
+ 942 07b2 1068     		ldr	r0, [r2]	@ unaligned
+ 943 07b4 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 944 07b6 2546     		mov	r5, r4
+ 945 07b8 03C5     		stmia	r5!, {r0, r1}
+ 946 07ba 0832     		adds	r2, r2, #8
+ 947 07bc B242     		cmp	r2, r6
+ 948 07be 2C46     		mov	r4, r5
+ 949 07c0 F7D1     		bne	.L60
+ 950 07c2 1068     		ldr	r0, [r2]	@ unaligned
+ 951 07c4 7E4A     		ldr	r2, .L144+28
+ 952 07c6 2860     		str	r0, [r5]
+ 953 07c8 03F5BD64 		add	r4, r3, #1512
+ 954 07cc 02F11006 		add	r6, r2, #16
+ 955              	.L61:
+ 956 07d0 1068     		ldr	r0, [r2]	@ unaligned
+ 957 07d2 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 958 07d4 2546     		mov	r5, r4
+ 959 07d6 03C5     		stmia	r5!, {r0, r1}
+ 960 07d8 0832     		adds	r2, r2, #8
+ 961 07da B242     		cmp	r2, r6
+ 962 07dc 2C46     		mov	r4, r5
+ 963 07de F7D1     		bne	.L61
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 19
+
+
+ 964 07e0 1068     		ldr	r0, [r2]	@ unaligned
+ 965 07e2 784A     		ldr	r2, .L144+32
+ 966 07e4 2860     		str	r0, [r5]
+ 967 07e6 03F2FC54 		addw	r4, r3, #1532
+ 968 07ea 02F11006 		add	r6, r2, #16
+ 969              	.L62:
+ 970 07ee 1068     		ldr	r0, [r2]	@ unaligned
+ 971 07f0 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 972 07f2 2546     		mov	r5, r4
+ 973 07f4 03C5     		stmia	r5!, {r0, r1}
+ 974 07f6 0832     		adds	r2, r2, #8
+ 975 07f8 B242     		cmp	r2, r6
+ 976 07fa 2C46     		mov	r4, r5
+ 977 07fc F7D1     		bne	.L62
+ 978 07fe 1068     		ldr	r0, [r2]	@ unaligned
+ 979 0800 714A     		ldr	r2, .L144+36
+ 980 0802 2860     		str	r0, [r5]
+ 981 0804 03F24C64 		addw	r4, r3, #1612
+ 982 0808 02F11006 		add	r6, r2, #16
+ 983              	.L63:
+ 984 080c 1068     		ldr	r0, [r2]	@ unaligned
+ 985 080e 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 986 0810 2546     		mov	r5, r4
+ 987 0812 03C5     		stmia	r5!, {r0, r1}
+ 988 0814 0832     		adds	r2, r2, #8
+ 989 0816 B242     		cmp	r2, r6
+ 990 0818 2C46     		mov	r4, r5
+ 991 081a F7D1     		bne	.L63
+ 992 081c 1068     		ldr	r0, [r2]	@ unaligned
+ 993 081e 6B4A     		ldr	r2, .L144+40
+ 994 0820 2860     		str	r0, [r5]
+ 995 0822 03F5C264 		add	r4, r3, #1552
+ 996 0826 02F11006 		add	r6, r2, #16
+ 997              	.L64:
+ 998 082a 1068     		ldr	r0, [r2]	@ unaligned
+ 999 082c 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 1000 082e 2546     		mov	r5, r4
+ 1001 0830 03C5     		stmia	r5!, {r0, r1}
+ 1002 0832 0832     		adds	r2, r2, #8
+ 1003 0834 B242     		cmp	r2, r6
+ 1004 0836 2C46     		mov	r4, r5
+ 1005 0838 F7D1     		bne	.L64
+ 1006 083a 1068     		ldr	r0, [r2]	@ unaligned
+ 1007 083c 644A     		ldr	r2, .L144+44
+ 1008 083e 2860     		str	r0, [r5]
+ 1009 0840 03F22464 		addw	r4, r3, #1572
+ 1010 0844 02F11006 		add	r6, r2, #16
+ 1011              	.L65:
+ 1012 0848 1068     		ldr	r0, [r2]	@ unaligned
+ 1013 084a 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 1014 084c 2546     		mov	r5, r4
+ 1015 084e 03C5     		stmia	r5!, {r0, r1}
+ 1016 0850 0832     		adds	r2, r2, #8
+ 1017 0852 B242     		cmp	r2, r6
+ 1018 0854 2C46     		mov	r4, r5
+ 1019 0856 F7D1     		bne	.L65
+ 1020 0858 1068     		ldr	r0, [r2]	@ unaligned
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 20
+
+
+ 1021 085a 5E4A     		ldr	r2, .L144+48
+ 1022 085c 2860     		str	r0, [r5]
+ 1023 085e 03F5C764 		add	r4, r3, #1592
+ 1024 0862 02F11006 		add	r6, r2, #16
+ 1025              	.L66:
+ 1026 0866 1068     		ldr	r0, [r2]	@ unaligned
+ 1027 0868 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 1028 086a 2546     		mov	r5, r4
+ 1029 086c 03C5     		stmia	r5!, {r0, r1}
+ 1030 086e 0832     		adds	r2, r2, #8
+ 1031 0870 B242     		cmp	r2, r6
+ 1032 0872 2C46     		mov	r4, r5
+ 1033 0874 F7D1     		bne	.L66
+ 1034 0876 1068     		ldr	r0, [r2]	@ unaligned
+ 1035 0878 574A     		ldr	r2, .L144+52
+ 1036 087a 2860     		str	r0, [r5]
+ 1037 087c 03F5CC64 		add	r4, r3, #1632
+ 1038 0880 02F11006 		add	r6, r2, #16
+ 1039              	.L67:
+ 1040 0884 1068     		ldr	r0, [r2]	@ unaligned
+ 1041 0886 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 1042 0888 2546     		mov	r5, r4
+ 1043 088a 03C5     		stmia	r5!, {r0, r1}
+ 1044 088c 0832     		adds	r2, r2, #8
+ 1045 088e B242     		cmp	r2, r6
+ 1046 0890 2C46     		mov	r4, r5
+ 1047 0892 F7D1     		bne	.L67
+ 1048 0894 1068     		ldr	r0, [r2]	@ unaligned
+ 1049 0896 514A     		ldr	r2, .L144+56
+ 1050 0898 2860     		str	r0, [r5]
+ 1051 089a 03F27464 		addw	r4, r3, #1652
+ 1052 089e 02F11006 		add	r6, r2, #16
+ 1053              	.L68:
+ 1054 08a2 1068     		ldr	r0, [r2]	@ unaligned
+ 1055 08a4 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 1056 08a6 2546     		mov	r5, r4
+ 1057 08a8 03C5     		stmia	r5!, {r0, r1}
+ 1058 08aa 0832     		adds	r2, r2, #8
+ 1059 08ac B242     		cmp	r2, r6
+ 1060 08ae 2C46     		mov	r4, r5
+ 1061 08b0 F7D1     		bne	.L68
+ 1062 08b2 1068     		ldr	r0, [r2]	@ unaligned
+ 1063 08b4 4A4A     		ldr	r2, .L144+60
+ 1064 08b6 2860     		str	r0, [r5]
+ 1065 08b8 03F5D164 		add	r4, r3, #1672
+ 1066 08bc 02F11006 		add	r6, r2, #16
+ 1067              	.L69:
+ 1068 08c0 1068     		ldr	r0, [r2]	@ unaligned
+ 1069 08c2 5168     		ldr	r1, [r2, #4]	@ unaligned
+ 1070 08c4 2546     		mov	r5, r4
+ 1071 08c6 03C5     		stmia	r5!, {r0, r1}
+ 1072 08c8 0832     		adds	r2, r2, #8
+ 1073 08ca B242     		cmp	r2, r6
+ 1074 08cc 2C46     		mov	r4, r5
+ 1075 08ce F7D1     		bne	.L69
+ 1076 08d0 1068     		ldr	r0, [r2]	@ unaligned
+ 1077 08d2 2860     		str	r0, [r5]
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 21
+
+
+ 1078 08d4 FF22     		movs	r2, #255
+ 1079 08d6 C3F8B427 		str	r2, [r3, #1972]
+ 1080 08da 424A     		ldr	r2, .L144+64
+ 1081 08dc C3F83027 		str	r2, [r3, #1840]
+ 1082 08e0 414A     		ldr	r2, .L144+68
+ 1083 08e2 C3F83427 		str	r2, [r3, #1844]
+ 1084 08e6 414A     		ldr	r2, .L144+72
+ 1085 08e8 C3F83827 		str	r2, [r3, #1848]
+ 1086 08ec 404A     		ldr	r2, .L144+76
+ 1087 08ee C3F84027 		str	r2, [r3, #1856]
+ 1088 08f2 404A     		ldr	r2, .L144+80
+ 1089 08f4 C3F84427 		str	r2, [r3, #1860]
+ 1090 08f8 3F4A     		ldr	r2, .L144+84
+ 1091 08fa C3F84827 		str	r2, [r3, #1864]
+ 1092 08fe 3F4A     		ldr	r2, .L144+88
+ 1093 0900 C3F84C27 		str	r2, [r3, #1868]
+ 1094 0904 3E4A     		ldr	r2, .L144+92
+ 1095 0906 C3F85027 		str	r2, [r3, #1872]
+ 1096 090a 3E4A     		ldr	r2, .L144+96
+ 1097 090c C3F85C27 		str	r2, [r3, #1884]
+ 1098 0910 3D4A     		ldr	r2, .L144+100
+ 1099 0912 C3F86027 		str	r2, [r3, #1888]
+ 1100 0916 3D4A     		ldr	r2, .L144+104
+ 1101 0918 C3F86427 		str	r2, [r3, #1892]
+ 1102 091c 3C4A     		ldr	r2, .L144+108
+ 1103 091e C3F86827 		str	r2, [r3, #1896]
+ 1104 0922 3C4A     		ldr	r2, .L144+112
+ 1105 0924 C3F85427 		str	r2, [r3, #1876]
+ 1106 0928 3B4A     		ldr	r2, .L144+116
+ 1107 092a C3F85827 		str	r2, [r3, #1880]
+ 1108 092e 3B4A     		ldr	r2, .L144+120
+ 1109 0930 C3F86C27 		str	r2, [r3, #1900]
+ 1110 0934 3A4A     		ldr	r2, .L144+124
+ 1111 0936 C3F83C27 		str	r2, [r3, #1852]
+ 1112 093a 3A4A     		ldr	r2, .L144+128
+ 1113 093c C3F8B026 		str	r2, [r3, #1712]
+ 1114 0940 394A     		ldr	r2, .L144+132
+ 1115 0942 C3F8B826 		str	r2, [r3, #1720]
+ 1116 0946 394A     		ldr	r2, .L144+136
+ 1117 0948 C3F8B426 		str	r2, [r3, #1716]
+ 1118 094c 384A     		ldr	r2, .L144+140
+ 1119 094e C3F8C026 		str	r2, [r3, #1728]
+ 1120 0952 384A     		ldr	r2, .L144+144
+ 1121 0954 C3F8C426 		str	r2, [r3, #1732]
+ 1122 0958 374A     		ldr	r2, .L144+148
+ 1123 095a C3F8C826 		str	r2, [r3, #1736]
+ 1124 095e 374A     		ldr	r2, .L144+152
+ 1125 0960 C3F8CC26 		str	r2, [r3, #1740]
+ 1126 0964 364A     		ldr	r2, .L144+156
+ 1127 0966 C3F8D026 		str	r2, [r3, #1744]
+ 1128 096a 364A     		ldr	r2, .L144+160
+ 1129 096c C3F8DC26 		str	r2, [r3, #1756]
+ 1130 0970 354A     		ldr	r2, .L144+164
+ 1131 0972 C3F8E026 		str	r2, [r3, #1760]
+ 1132 0976 354A     		ldr	r2, .L144+168
+ 1133 0978 C3F8E426 		str	r2, [r3, #1764]
+ 1134 097c 344A     		ldr	r2, .L144+172
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 22
+
+
+ 1135 097e C3F8E826 		str	r2, [r3, #1768]
+ 1136 0982 344A     		ldr	r2, .L144+176
+ 1137 0984 C3F8D426 		str	r2, [r3, #1748]
+ 1138 0988 334A     		ldr	r2, .L144+180
+ 1139 098a C3F8D826 		str	r2, [r3, #1752]
+ 1140 098e 334A     		ldr	r2, .L144+184
+ 1141 0990 C3F8EC26 		str	r2, [r3, #1772]
+ 1142 0994 324A     		ldr	r2, .L144+188
+ 1143 0996 C3F8BC26 		str	r2, [r3, #1724]
+ 1144 099a 0F22     		movs	r2, #15
+ 1145 099c 83F8B027 		strb	r2, [r3, #1968]
+ 1146 09a0 1846     		mov	r0, r3
+ 1147 09a2 70BD     		pop	{r4, r5, r6, pc}
+ 1148              	.L145:
+ 1149              		.align	2
+ 1150              	.L144:
+ 1151 09a4 10040000 		.word	.LANCHOR0+1040
+ 1152 09a8 24040000 		.word	.LANCHOR0+1060
+ 1153 09ac 38040000 		.word	.LANCHOR0+1080
+ 1154 09b0 4C040000 		.word	.LANCHOR0+1100
+ 1155 09b4 60040000 		.word	.LANCHOR0+1120
+ 1156 09b8 74040000 		.word	.LANCHOR0+1140
+ 1157 09bc 88040000 		.word	.LANCHOR0+1160
+ 1158 09c0 9C040000 		.word	.LANCHOR0+1180
+ 1159 09c4 B0040000 		.word	.LANCHOR0+1200
+ 1160 09c8 C4040000 		.word	.LANCHOR0+1220
+ 1161 09cc D8040000 		.word	.LANCHOR0+1240
+ 1162 09d0 EC040000 		.word	.LANCHOR0+1260
+ 1163 09d4 00050000 		.word	.LANCHOR0+1280
+ 1164 09d8 14050000 		.word	.LANCHOR0+1300
+ 1165 09dc 28050000 		.word	.LANCHOR0+1320
+ 1166 09e0 3C050000 		.word	.LANCHOR0+1340
+ 1167 09e4 00000000 		.word	.LC204
+ 1168 09e8 14000000 		.word	.LC205
+ 1169 09ec 33000000 		.word	.LC206
+ 1170 09f0 5D000000 		.word	.LC207
+ 1171 09f4 6F000000 		.word	.LC208
+ 1172 09f8 83000000 		.word	.LC209
+ 1173 09fc A7000000 		.word	.LC210
+ 1174 0a00 C7000000 		.word	.LC211
+ 1175 0a04 DD000000 		.word	.LC212
+ 1176 0a08 FD000000 		.word	.LC213
+ 1177 0a0c 1B010000 		.word	.LC214
+ 1178 0a10 3F010000 		.word	.LC215
+ 1179 0a14 5C010000 		.word	.LC216
+ 1180 0a18 7C010000 		.word	.LC217
+ 1181 0a1c 9B010000 		.word	.LC218
+ 1182 0a20 BA010000 		.word	.LC219
+ 1183 0a24 00000000 		.word	.LANCHOR1
+ 1184 0a28 00000000 		.word	.LANCHOR2
+ 1185 0a2c 00000000 		.word	.LANCHOR3
+ 1186 0a30 00000000 		.word	.LANCHOR4
+ 1187 0a34 00000000 		.word	.LANCHOR5
+ 1188 0a38 00000000 		.word	.LANCHOR6
+ 1189 0a3c 00000000 		.word	.LANCHOR7
+ 1190 0a40 00000000 		.word	.LANCHOR8
+ 1191 0a44 00000000 		.word	.LANCHOR9
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 23
+
+
+ 1192 0a48 00000000 		.word	.LANCHOR10
+ 1193 0a4c 00000000 		.word	.LANCHOR11
+ 1194 0a50 00000000 		.word	.LANCHOR12
+ 1195 0a54 00000000 		.word	.LANCHOR13
+ 1196 0a58 00000000 		.word	.LANCHOR14
+ 1197 0a5c 00000000 		.word	.LANCHOR15
+ 1198 0a60 00000000 		.word	.LANCHOR16
+ 1199              		.cantunwind
+ 1200              		.fnend
+ 1202              		.global	_ZN4CoreC1Ev
+ 1203              		.thumb_set _ZN4CoreC1Ev,_ZN4CoreC2Ev
+ 1204              		.section	.rodata._ZN4Core4saveEv.str1.1,"aMS",%progbits,1
+ 1205              	.LC220:
+ 1206 0000 53617665 		.ascii	"Saved!\000"
+ 1206      642100
+ 1207              		.section	.text._ZN4Core4saveEv,"ax",%progbits
+ 1208              		.align	1
+ 1209              		.global	_ZN4Core4saveEv
+ 1210              		.syntax unified
+ 1211              		.thumb
+ 1212              		.thumb_func
+ 1214              	_ZN4Core4saveEv:
+ 1215              		.fnstart
+ 1216              	.LFB1050:
+ 1217              		@ args = 0, pretend = 0, frame = 16
+ 1218              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1219 0000 2DE9FF47 		push	{r0, r1, r2, r3, r4, r5, r6, r7, r8, r9, r10, lr}
+ 1220              		.save {r4, r5, r6, r7, r8, r9, r10, lr}
+ 1221              		.pad #16
+ 1222 0004 3A4C     		ldr	r4, .L153
+ 1223 0006 3B4F     		ldr	r7, .L153+4
+ 1224 0008 0023     		movs	r3, #0
+ 1225 000a CDE90134 		strd	r3, r4, [sp, #4]
+ 1226 000e 0223     		movs	r3, #2
+ 1227 0010 0393     		str	r3, [sp, #12]
+ 1228 0012 0646     		mov	r6, r0
+ 1229 0014 FFF7FEFF 		bl	HAL_FLASH_Unlock
+ 1230 0018 6946     		mov	r1, sp
+ 1231 001a 01A8     		add	r0, sp, #4
+ 1232 001c FFF7FEFF 		bl	HAL_FLASHEx_Erase
+ 1233 0020 2146     		mov	r1, r4
+ 1234 0022 46F66602 		movw	r2, #26726
+ 1235 0026 0023     		movs	r3, #0
+ 1236 0028 0120     		movs	r0, #1
+ 1237 002a FFF7FEFF 		bl	HAL_FLASH_Program
+ 1238 002e 3546     		mov	r5, r6
+ 1239 0030 0234     		adds	r4, r4, #2
+ 1240              	.L147:
+ 1241 0032 B5F8E820 		ldrh	r2, [r5, #232]
+ 1242 0036 2146     		mov	r1, r4
+ 1243 0038 0023     		movs	r3, #0
+ 1244 003a 0120     		movs	r0, #1
+ 1245 003c FFF7FEFF 		bl	HAL_FLASH_Program
+ 1246 0040 A11C     		adds	r1, r4, #2
+ 1247 0042 0222     		movs	r2, #2
+ 1248 0044 0023     		movs	r3, #0
+ 1249 0046 0120     		movs	r0, #1
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 24
+
+
+ 1250 0048 FFF7FEFF 		bl	HAL_FLASH_Program
+ 1251 004c B5F8EC20 		ldrh	r2, [r5, #236]
+ 1252 0050 211D     		adds	r1, r4, #4
+ 1253 0052 0023     		movs	r3, #0
+ 1254 0054 0120     		movs	r0, #1
+ 1255 0056 0634     		adds	r4, r4, #6
+ 1256 0058 FFF7FEFF 		bl	HAL_FLASH_Program
+ 1257 005c BC42     		cmp	r4, r7
+ 1258 005e 05F11405 		add	r5, r5, #20
+ 1259 0062 E6D1     		bne	.L147
+ 1260 0064 DFF89880 		ldr	r8, .L153+16
+ 1261 0068 0027     		movs	r7, #0
+ 1262              	.L148:
+ 1263 006a 96F8B037 		ldrb	r3, [r6, #1968]	@ zero_extendqisi2
+ 1264 006e 5FFA87F9 		uxtb	r9, r7
+ 1265 0072 4B45     		cmp	r3, r9
+ 1266 0074 0FD8     		bhi	.L150
+ 1267 0076 4FF6FF72 		movw	r2, #65535
+ 1268 007a 0023     		movs	r3, #0
+ 1269 007c 2146     		mov	r1, r4
+ 1270 007e 0120     		movs	r0, #1
+ 1271 0080 FFF7FEFF 		bl	HAL_FLASH_Program
+ 1272 0084 FFF7FEFF 		bl	HAL_FLASH_Lock
+ 1273 0088 1B49     		ldr	r1, .L153+8
+ 1274 008a 1C48     		ldr	r0, .L153+12
+ 1275 008c FFF7FEFF 		bl	_ZN10ConfEditor22setSystemStatusMessageEPKc
+ 1276 0090 04B0     		add	sp, sp, #16
+ 1277              		@ sp needed
+ 1278 0092 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
+ 1279              	.L150:
+ 1280 0096 09F5D679 		add	r9, r9, #428
+ 1281 009a 2146     		mov	r1, r4
+ 1282 009c 58F82930 		ldr	r3, [r8, r9, lsl #2]
+ 1283 00a0 9A79     		ldrb	r2, [r3, #6]	@ zero_extendqisi2
+ 1284 00a2 5D79     		ldrb	r5, [r3, #5]	@ zero_extendqisi2
+ 1285 00a4 15FB02F5 		smulbb	r5, r5, r2
+ 1286 00a8 0F35     		adds	r5, r5, #15
+ 1287 00aa 1A88     		ldrh	r2, [r3]
+ 1288 00ac ADB2     		uxth	r5, r5
+ 1289 00ae 0023     		movs	r3, #0
+ 1290 00b0 0120     		movs	r0, #1
+ 1291 00b2 FFF7FEFF 		bl	HAL_FLASH_Program
+ 1292 00b6 2A46     		mov	r2, r5
+ 1293 00b8 A11C     		adds	r1, r4, #2
+ 1294 00ba 0023     		movs	r3, #0
+ 1295 00bc 0120     		movs	r0, #1
+ 1296 00be FFF7FEFF 		bl	HAL_FLASH_Program
+ 1297 00c2 0434     		adds	r4, r4, #4
+ 1298 00c4 58F829A0 		ldr	r10, [r8, r9, lsl #2]
+ 1299 00c8 6D08     		lsrs	r5, r5, #1
+ 1300 00ca 4FF00009 		mov	r9, #0
+ 1301              	.L149:
+ 1302 00ce 3AF81920 		ldrh	r2, [r10, r9, lsl #1]
+ 1303 00d2 09F10109 		add	r9, r9, #1
+ 1304 00d6 2146     		mov	r1, r4
+ 1305 00d8 0023     		movs	r3, #0
+ 1306 00da 0120     		movs	r0, #1
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 25
+
+
+ 1307 00dc 5FFA89F9 		uxtb	r9, r9
+ 1308 00e0 FFF7FEFF 		bl	HAL_FLASH_Program
+ 1309 00e4 A945     		cmp	r9, r5
+ 1310 00e6 04F10204 		add	r4, r4, #2
+ 1311 00ea F0DB     		blt	.L149
+ 1312 00ec 0137     		adds	r7, r7, #1
+ 1313 00ee BCE7     		b	.L148
+ 1314              	.L154:
+ 1315              		.align	2
+ 1316              	.L153:
+ 1317 00f0 00E80008 		.word	134277120
+ 1318 00f4 B8E90008 		.word	134277560
+ 1319 00f8 00000000 		.word	.LC220
+ 1320 00fc 00000000 		.word	confeditor
+ 1321 0100 00000000 		.word	.LANCHOR17
+ 1322              		.fnend
+ 1324              		.section	.rodata._ZN4Core4loadEv.str1.1,"aMS",%progbits,1
+ 1325              	.LC221:
+ 1326 0000 4C6F6164 		.ascii	"Loaded %d nodes and %d maps.\015\012\000"
+ 1326      65642025 
+ 1326      64206E6F 
+ 1326      64657320 
+ 1326      616E6420 
+ 1327              		.section	.text._ZN4Core4loadEv,"ax",%progbits
+ 1328              		.align	1
+ 1329              		.global	_ZN4Core4loadEv
+ 1330              		.syntax unified
+ 1331              		.thumb
+ 1332              		.thumb_func
+ 1334              	_ZN4Core4loadEv:
+ 1335              		.fnstart
+ 1336              	.LFB1051:
+ 1337              		@ args = 0, pretend = 0, frame = 8
+ 1338              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1339 0000 404B     		ldr	r3, .L171
+ 1340 0002 2DE9F74F 		push	{r0, r1, r2, r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1341              		.save {r4, r5, r6, r7, r8, r9, r10, fp, lr}
+ 1342              		.pad #12
+ 1343 0006 1A88     		ldrh	r2, [r3]
+ 1344 0008 46F66603 		movw	r3, #26726
+ 1345 000c 9A42     		cmp	r2, r3
+ 1346 000e 0746     		mov	r7, r0
+ 1347 0010 70D1     		bne	.L156
+ 1348 0012 0024     		movs	r4, #0
+ 1349 0014 DFF800A1 		ldr	r10, .L171+20
+ 1350 0018 2646     		mov	r6, r4
+ 1351 001a 0125     		movs	r5, #1
+ 1352              	.L167:
+ 1353 001c 6900     		lsls	r1, r5, #1
+ 1354 001e 01F10063 		add	r3, r1, #134217728
+ 1355 0022 03F56043 		add	r3, r3, #57344
+ 1356 0026 4FF6FF72 		movw	r2, #65535
+ 1357 002a B3F80088 		ldrh	r8, [r3, #2048]
+ 1358 002e 9045     		cmp	r8, r2
+ 1359 0030 4ED0     		beq	.L157
+ 1360 0032 B3F802B8 		ldrh	fp, [r3, #2050]
+ 1361 0036 AB1C     		adds	r3, r5, #2
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 26
+
+
+ 1362 0038 0193     		str	r3, [sp, #4]
+ 1363 003a 08F47F43 		and	r3, r8, #65280
+ 1364 003e B3F5805F 		cmp	r3, #4096
+ 1365 0042 29D0     		beq	.L158
+ 1366 0044 B3F5704F 		cmp	r3, #61440
+ 1367 0048 3CD1     		bne	.L159
+ 1368 004a 2F4D     		ldr	r5, .L171+4
+ 1369 004c 4FF00009 		mov	r9, #0
+ 1370 0050 0D44     		add	r5, r5, r1
+ 1371              	.L160:
+ 1372 0052 97F8B007 		ldrb	r0, [r7, #1968]	@ zero_extendqisi2
+ 1373 0056 5FFA89F1 		uxtb	r1, r9
+ 1374 005a 8842     		cmp	r0, r1
+ 1375 005c 32D9     		bls	.L159
+ 1376 005e 01F5D671 		add	r1, r1, #428
+ 1377 0062 2A4B     		ldr	r3, .L171+8
+ 1378 0064 53F82100 		ldr	r0, [r3, r1, lsl #2]
+ 1379 0068 90F801C0 		ldrb	ip, [r0, #1]	@ zero_extendqisi2
+ 1380 006c 0178     		ldrb	r1, [r0]	@ zero_extendqisi2
+ 1381 006e 01EB0C21 		add	r1, r1, ip, lsl #8
+ 1382 0072 8845     		cmp	r8, r1
+ 1383 0074 0DD1     		bne	.L164
+ 1384 0076 4179     		ldrb	r1, [r0, #5]	@ zero_extendqisi2
+ 1385 0078 90F806C0 		ldrb	ip, [r0, #6]	@ zero_extendqisi2
+ 1386 007c 11FB0CF1 		smulbb	r1, r1, ip
+ 1387 0080 0F31     		adds	r1, r1, #15
+ 1388 0082 8B45     		cmp	fp, r1
+ 1389 0084 31D1     		bne	.L165
+ 1390 0086 0134     		adds	r4, r4, #1
+ 1391 0088 5A46     		mov	r2, fp
+ 1392 008a 2946     		mov	r1, r5
+ 1393 008c E4B2     		uxtb	r4, r4
+ 1394 008e FFF7FEFF 		bl	memcpy
+ 1395              	.L164:
+ 1396 0092 09F10109 		add	r9, r9, #1
+ 1397 0096 DCE7     		b	.L160
+ 1398              	.L158:
+ 1399 0098 BBF1020F 		cmp	fp, #2
+ 1400 009c 20D1     		bne	.L161
+ 1401 009e 1A48     		ldr	r0, .L171+4
+ 1402 00a0 3B46     		mov	r3, r7
+ 1403 00a2 0844     		add	r0, r0, r1
+ 1404 00a4 07F2B45C 		addw	ip, r7, #1460
+ 1405              	.L163:
+ 1406 00a8 D3F8E810 		ldr	r1, [r3, #232]
+ 1407 00ac 4145     		cmp	r1, r8
+ 1408 00ae 02BF     		ittt	eq
+ 1409 00b0 0188     		ldrheq	r1, [r0]	@ unaligned
+ 1410 00b2 A3F8EC10 		strheq	r1, [r3, #236]	@ movhi
+ 1411 00b6 0136     		addeq	r6, r6, #1
+ 1412 00b8 03F11403 		add	r3, r3, #20
+ 1413 00bc 08BF     		it	eq
+ 1414 00be F6B2     		uxtbeq	r6, r6
+ 1415 00c0 9C45     		cmp	ip, r3
+ 1416 00c2 F1D1     		bne	.L163
+ 1417              	.L159:
+ 1418 00c4 019B     		ldr	r3, [sp, #4]
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 27
+
+
+ 1419 00c6 03EB5B05 		add	r5, r3, fp, lsr #1
+ 1420 00ca B5F5805F 		cmp	r5, #4096
+ 1421 00ce A5DB     		blt	.L167
+ 1422              	.L157:
+ 1423 00d0 0F48     		ldr	r0, .L171+12
+ 1424 00d2 1049     		ldr	r1, .L171+16
+ 1425 00d4 2346     		mov	r3, r4
+ 1426 00d6 3246     		mov	r2, r6
+ 1427 00d8 FFF7FEFF 		bl	_ZN6Serial6printfEPKcz
+ 1428 00dc 0120     		movs	r0, #1
+ 1429 00de 0EE0     		b	.L168
+ 1430              	.L161:
+ 1431 00e0 1521     		movs	r1, #21
+ 1432 00e2 5046     		mov	r0, r10
+ 1433 00e4 FFF7FEFF 		bl	_ZN3DTC8setErrorEj
+ 1434 00e8 ECE7     		b	.L159
+ 1435              	.L165:
+ 1436 00ea 1521     		movs	r1, #21
+ 1437 00ec 5046     		mov	r0, r10
+ 1438 00ee FFF7FEFF 		bl	_ZN3DTC8setErrorEj
+ 1439 00f2 CEE7     		b	.L164
+ 1440              	.L156:
+ 1441 00f4 0848     		ldr	r0, .L171+20
+ 1442 00f6 1421     		movs	r1, #20
+ 1443 00f8 FFF7FEFF 		bl	_ZN3DTC8setErrorEj
+ 1444 00fc 0020     		movs	r0, #0
+ 1445              	.L168:
+ 1446 00fe 03B0     		add	sp, sp, #12
+ 1447              		@ sp needed
+ 1448 0100 BDE8F08F 		pop	{r4, r5, r6, r7, r8, r9, r10, fp, pc}
+ 1449              	.L172:
+ 1450              		.align	2
+ 1451              	.L171:
+ 1452 0104 00E80008 		.word	134277120
+ 1453 0108 04E80008 		.word	134277124
+ 1454 010c 00000000 		.word	.LANCHOR17
+ 1455 0110 00000000 		.word	serial
+ 1456 0114 00000000 		.word	.LC221
+ 1457 0118 00000000 		.word	dtc
+ 1458              		.fnend
+ 1460              		.section	.text._ZN4Core14setCurrentNodeEi,"ax",%progbits
+ 1461              		.align	1
+ 1462              		.global	_ZN4Core14setCurrentNodeEi
+ 1463              		.syntax unified
+ 1464              		.thumb
+ 1465              		.thumb_func
+ 1467              	_ZN4Core14setCurrentNodeEi:
+ 1468              		.fnstart
+ 1469              	.LFB1052:
+ 1470              		@ args = 0, pretend = 0, frame = 0
+ 1471              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1472              		@ link register save eliminated.
+ 1473 0000 4A29     		cmp	r1, #74
+ 1474 0002 A8BF     		it	ge
+ 1475 0004 FF21     		movge	r1, #255
+ 1476 0006 C0F8B417 		str	r1, [r0, #1972]
+ 1477 000a 7047     		bx	lr
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 28
+
+
+ 1478              		.cantunwind
+ 1479              		.fnend
+ 1481              		.section	.text._ZN4Core12seekNextNodeEv,"ax",%progbits
+ 1482              		.align	1
+ 1483              		.global	_ZN4Core12seekNextNodeEv
+ 1484              		.syntax unified
+ 1485              		.thumb
+ 1486              		.thumb_func
+ 1488              	_ZN4Core12seekNextNodeEv:
+ 1489              		.fnstart
+ 1490              	.LFB1053:
+ 1491              		@ args = 0, pretend = 0, frame = 0
+ 1492              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1493              		@ link register save eliminated.
+ 1494 0000 D0F8B437 		ldr	r3, [r0, #1972]
+ 1495 0004 0133     		adds	r3, r3, #1
+ 1496 0006 4A2B     		cmp	r3, #74
+ 1497 0008 28BF     		it	cs
+ 1498 000a FF23     		movcs	r3, #255
+ 1499 000c C0F8B437 		str	r3, [r0, #1972]
+ 1500 0010 1846     		mov	r0, r3
+ 1501 0012 7047     		bx	lr
+ 1502              		.cantunwind
+ 1503              		.fnend
+ 1505              		.section	.text._ZN4Core11getNextNodeEv,"ax",%progbits
+ 1506              		.align	1
+ 1507              		.global	_ZN4Core11getNextNodeEv
+ 1508              		.syntax unified
+ 1509              		.thumb
+ 1510              		.thumb_func
+ 1512              	_ZN4Core11getNextNodeEv:
+ 1513              		.fnstart
+ 1514              	.LFB1054:
+ 1515              		@ args = 0, pretend = 0, frame = 0
+ 1516              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1517 0000 0246     		mov	r2, r0
+ 1518 0002 08B5     		push	{r3, lr}
+ 1519 0004 FFF7FEFF 		bl	_ZN4Core12seekNextNodeEv
+ 1520 0008 D2F8B407 		ldr	r0, [r2, #1972]
+ 1521 000c FF28     		cmp	r0, #255
+ 1522 000e 1DBF     		ittte	ne
+ 1523 0010 1421     		movne	r1, #20
+ 1524 0012 01FB0020 		mlane	r0, r1, r0, r2
+ 1525 0016 E830     		addne	r0, r0, #232
+ 1526 0018 0020     		moveq	r0, #0
+ 1527 001a 08BD     		pop	{r3, pc}
+ 1528              		.cantunwind
+ 1529              		.fnend
+ 1531              		.section	.text._ZN4Core11getNodeDataEv,"ax",%progbits
+ 1532              		.align	1
+ 1533              		.global	_ZN4Core11getNodeDataEv
+ 1534              		.syntax unified
+ 1535              		.thumb
+ 1536              		.thumb_func
+ 1538              	_ZN4Core11getNodeDataEv:
+ 1539              		.fnstart
+ 1540              	.LFB1055:
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 29
+
+
+ 1541              		@ args = 0, pretend = 0, frame = 0
+ 1542              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1543              		@ link register save eliminated.
+ 1544 0000 D0F8B437 		ldr	r3, [r0, #1972]
+ 1545 0004 FF2B     		cmp	r3, #255
+ 1546 0006 1DBF     		ittte	ne
+ 1547 0008 1422     		movne	r2, #20
+ 1548 000a 02FB0300 		mlane	r0, r2, r3, r0
+ 1549 000e E830     		addne	r0, r0, #232
+ 1550 0010 0020     		moveq	r0, #0
+ 1551 0012 7047     		bx	lr
+ 1552              		.cantunwind
+ 1553              		.fnend
+ 1555              		.section	.text._ZN4Core8setValueEi,"ax",%progbits
+ 1556              		.align	1
+ 1557              		.global	_ZN4Core8setValueEi
+ 1558              		.syntax unified
+ 1559              		.thumb
+ 1560              		.thumb_func
+ 1562              	_ZN4Core8setValueEi:
+ 1563              		.fnstart
+ 1564              	.LFB1058:
+ 1565              		@ args = 0, pretend = 0, frame = 0
+ 1566              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1567              		@ link register save eliminated.
+ 1568 0000 D0F8B427 		ldr	r2, [r0, #1972]
+ 1569 0004 0B46     		mov	r3, r1
+ 1570 0006 1421     		movs	r1, #20
+ 1571 0008 01FB0200 		mla	r0, r1, r2, r0
+ 1572 000c 90F8F620 		ldrb	r2, [r0, #246]	@ zero_extendqisi2
+ 1573 0010 022A     		cmp	r2, #2
+ 1574 0012 0BD0     		beq	.L184
+ 1575 0014 B0F8EE10 		ldrh	r1, [r0, #238]
+ 1576 0018 9942     		cmp	r1, r3
+ 1577 001a B8BF     		it	lt
+ 1578 001c 1946     		movlt	r1, r3
+ 1579 001e B0F8F030 		ldrh	r3, [r0, #240]
+ 1580 0022 9942     		cmp	r1, r3
+ 1581 0024 A8BF     		it	ge
+ 1582 0026 1946     		movge	r1, r3
+ 1583 0028 A0F8EC10 		strh	r1, [r0, #236]	@ movhi
+ 1584              	.L184:
+ 1585 002c 7047     		bx	lr
+ 1586              		.cantunwind
+ 1587              		.fnend
+ 1589              		.section	.text._ZN4Core8incValueEv,"ax",%progbits
+ 1590              		.align	1
+ 1591              		.global	_ZN4Core8incValueEv
+ 1592              		.syntax unified
+ 1593              		.thumb
+ 1594              		.thumb_func
+ 1596              	_ZN4Core8incValueEv:
+ 1597              		.fnstart
+ 1598              	.LFB1056:
+ 1599              		@ args = 0, pretend = 0, frame = 0
+ 1600              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1601              		@ link register save eliminated.
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 30
+
+
+ 1602 0000 D0F8B427 		ldr	r2, [r0, #1972]
+ 1603 0004 1421     		movs	r1, #20
+ 1604 0006 01FB0203 		mla	r3, r1, r2, r0
+ 1605 000a B3F8EC10 		ldrh	r1, [r3, #236]
+ 1606 000e B3F8F230 		ldrh	r3, [r3, #242]
+ 1607 0012 1944     		add	r1, r1, r3
+ 1608 0014 FFF7FEBF 		b	_ZN4Core8setValueEi
+ 1609              		.cantunwind
+ 1610              		.fnend
+ 1612              		.section	.text._ZN4Core8decValueEv,"ax",%progbits
+ 1613              		.align	1
+ 1614              		.global	_ZN4Core8decValueEv
+ 1615              		.syntax unified
+ 1616              		.thumb
+ 1617              		.thumb_func
+ 1619              	_ZN4Core8decValueEv:
+ 1620              		.fnstart
+ 1621              	.LFB1057:
+ 1622              		@ args = 0, pretend = 0, frame = 0
+ 1623              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1624              		@ link register save eliminated.
+ 1625 0000 D0F8B427 		ldr	r2, [r0, #1972]
+ 1626 0004 1421     		movs	r1, #20
+ 1627 0006 01FB0203 		mla	r3, r1, r2, r0
+ 1628 000a B3F8EC10 		ldrh	r1, [r3, #236]
+ 1629 000e B3F8F230 		ldrh	r3, [r3, #242]
+ 1630 0012 C91A     		subs	r1, r1, r3
+ 1631 0014 FFF7FEBF 		b	_ZN4Core8setValueEi
+ 1632              		.cantunwind
+ 1633              		.fnend
+ 1635              		.section	.text.startup._GLOBAL__sub_I_core,"ax",%progbits
+ 1636              		.align	1
+ 1637              		.syntax unified
+ 1638              		.thumb
+ 1639              		.thumb_func
+ 1641              	_GLOBAL__sub_I_core:
+ 1642              		.fnstart
+ 1643              	.LFB1210:
+ 1644              		@ args = 0, pretend = 0, frame = 0
+ 1645              		@ frame_needed = 0, uses_anonymous_args = 0
+ 1646              		@ link register save eliminated.
+ 1647 0000 0148     		ldr	r0, .L192
+ 1648 0002 FFF7FEBF 		b	_ZN4CoreC1Ev
+ 1649              	.L193:
+ 1650 0006 00BF     		.align	2
+ 1651              	.L192:
+ 1652 0008 00000000 		.word	.LANCHOR17
+ 1653              		.cantunwind
+ 1654              		.fnend
+ 1656              		.section	.init_array,"aw",%init_array
+ 1657              		.align	2
+ 1658 0000 00000000 		.word	_GLOBAL__sub_I_core(target1)
+ 1659              		.section	.rodata.str1.1,"aMS",%progbits,1
+ 1660              	.LC134:
+ 1661 0000 41637475 		.ascii	"Actuator: stepping delay (0=continuous loop)\000"
+ 1661      61746F72 
+ 1661      3A207374 
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 31
+
+
+ 1661      65707069 
+ 1661      6E672064 
+ 1662              	.LC132:
+ 1663 002d 41637475 		.ascii	"Actuator: motor direction\000"
+ 1663      61746F72 
+ 1663      3A206D6F 
+ 1663      746F7220 
+ 1663      64697265 
+ 1664              	.LC130:
+ 1665 0047 41637475 		.ascii	"Actuator: hysteresis\000"
+ 1665      61746F72 
+ 1665      3A206879 
+ 1665      73746572 
+ 1665      65736973 
+ 1666              	.LC128:
+ 1667 005c 41637475 		.ascii	"Actuator: Max PWM\000"
+ 1667      61746F72 
+ 1667      3A204D61 
+ 1667      78205057 
+ 1667      4D00
+ 1668              	.LC126:
+ 1669 006e 41637475 		.ascii	"Actuator: calculated current PWM\000"
+ 1669      61746F72 
+ 1669      3A206361 
+ 1669      6C63756C 
+ 1669      61746564 
+ 1670              	.LC124:
+ 1671 008f 41637475 		.ascii	"Actuator: I-value (stability)\000"
+ 1671      61746F72 
+ 1671      3A20492D 
+ 1671      76616C75 
+ 1671      65202873 
+ 1672              	.LC122:
+ 1673 00ad 41637475 		.ascii	"Actuator: P-value (responsiveness, speed)\000"
+ 1673      61746F72 
+ 1673      3A20502D 
+ 1673      76616C75 
+ 1673      65202872 
+ 1674              	.LC120:
+ 1675 00d7 41637475 		.ascii	"Actuator: high position stop\000"
+ 1675      61746F72 
+ 1675      3A206869 
+ 1675      67682070 
+ 1675      6F736974 
+ 1676              	.LC118:
+ 1677 00f4 41637475 		.ascii	"Actuator: low position stop\000"
+ 1677      61746F72 
+ 1677      3A206C6F 
+ 1677      7720706F 
+ 1677      73697469 
+ 1678              	.LC116:
+ 1679 0110 41637475 		.ascii	"Actuator: Target position\000"
+ 1679      61746F72 
+ 1679      3A205461 
+ 1679      72676574 
+ 1679      20706F73 
+ 1680              	.LC114:
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 32
+
+
+ 1681 012a 41647661 		.ascii	"Advance Control: PID Ki factor\000"
+ 1681      6E636520 
+ 1681      436F6E74 
+ 1681      726F6C3A 
+ 1681      20504944 
+ 1682              	.LC112:
+ 1683 0149 41647661 		.ascii	"Advance Control: PID Kp factor\000"
+ 1683      6E636520 
+ 1683      436F6E74 
+ 1683      726F6C3A 
+ 1683      20504944 
+ 1684              	.LC110:
+ 1685 0168 426F6F73 		.ascii	"Boost Control: Current Pressure\000"
+ 1685      7420436F 
+ 1685      6E74726F 
+ 1685      6C3A2043 
+ 1685      75727265 
+ 1686              	.LC108:
+ 1687 0188 426F6F73 		.ascii	"Boost Control: Target Pressure\000"
+ 1687      7420436F 
+ 1687      6E74726F 
+ 1687      6C3A2054 
+ 1687      61726765 
+ 1688              	.LC106:
+ 1689 01a7 426F6F73 		.ascii	"Boost Control: PID Range\000"
+ 1689      7420436F 
+ 1689      6E74726F 
+ 1689      6C3A2050 
+ 1689      49442052 
+ 1690              	.LC104:
+ 1691 01c0 426F6F73 		.ascii	"Boost Control: PID Control Bias\000"
+ 1691      7420436F 
+ 1691      6E74726F 
+ 1691      6C3A2050 
+ 1691      49442043 
+ 1692              	.LC102:
+ 1693 01e0 426F6F73 		.ascii	"Boost Control: PID Kd factor\000"
+ 1693      7420436F 
+ 1693      6E74726F 
+ 1693      6C3A2050 
+ 1693      4944204B 
+ 1694              	.LC100:
+ 1695 01fd 426F6F73 		.ascii	"Boost Control: PID Ki factor\000"
+ 1695      7420436F 
+ 1695      6E74726F 
+ 1695      6C3A2050 
+ 1695      4944204B 
+ 1696              	.LC98:
+ 1697 021a 426F6F73 		.ascii	"Boost Control: PID Kp factor\000"
+ 1697      7420436F 
+ 1697      6E74726F 
+ 1697      6C3A2050 
+ 1697      4944204B 
+ 1698              	.LC96:
+ 1699 0237 426F6F73 		.ascii	"Boost Control: PID Speed\000"
+ 1699      7420436F 
+ 1699      6E74726F 
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 33
+
+
+ 1699      6C3A2050 
+ 1699      49442053 
+ 1700              	.LC94:
+ 1701 0250 426F6F73 		.ascii	"Boost Control (0=off/1=open/2=closed/3/4)\000"
+ 1701      7420436F 
+ 1701      6E74726F 
+ 1701      6C202830 
+ 1701      3D6F6666 
+ 1702              	.LC92:
+ 1703 027a 51412050 		.ascii	"QA PID Control: Bias\000"
+ 1703      49442043 
+ 1703      6F6E7472 
+ 1703      6F6C3A20 
+ 1703      42696173 
+ 1704              	.LC90:
+ 1705 028f 51412050 		.ascii	"QA PID Control: Speed\000"
+ 1705      49442043 
+ 1705      6F6E7472 
+ 1705      6F6C3A20 
+ 1705      53706565 
+ 1706              	.LC88:
+ 1707 02a5 51412050 		.ascii	"QA PID Control: Kd factor\000"
+ 1707      49442043 
+ 1707      6F6E7472 
+ 1707      6F6C3A20 
+ 1707      4B642066 
+ 1708              	.LC86:
+ 1709 02bf 51412050 		.ascii	"QA PID Control: Ki factor\000"
+ 1709      49442043 
+ 1709      6F6E7472 
+ 1709      6F6C3A20 
+ 1709      4B692066 
+ 1710              	.LC84:
+ 1711 02d9 51412050 		.ascii	"QA PID Control: Kp factor\000"
+ 1711      49442043 
+ 1711      6F6E7472 
+ 1711      6F6C3A20 
+ 1711      4B702066 
+ 1712              	.LC82:
+ 1713 02f3 51412044 		.ascii	"QA Debug: setPoint diff / FB Jitter\000"
+ 1713      65627567 
+ 1713      3A207365 
+ 1713      74506F69 
+ 1713      6E742064 
+ 1714              	.LC80:
+ 1715 0317 47656E65 		.ascii	"Generic variable for debug\000"
+ 1715      72696320 
+ 1715      76617269 
+ 1715      61626C65 
+ 1715      20666F72 
+ 1716              	.LC78:
+ 1717 0332 52504D3A 		.ascii	"RPM: engine max RPM (control-map scale)\000"
+ 1717      20656E67 
+ 1717      696E6520 
+ 1717      6D617820 
+ 1717      52504D20 
+ 1718              	.LC76:
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 34
+
+
+ 1719 035a 4D41503A 		.ascii	"MAP: sensor max pressure (control-map scale)\000"
+ 1719      2073656E 
+ 1719      736F7220 
+ 1719      6D617820 
+ 1719      70726573 
+ 1720              	.LC74:
+ 1721 0387 4D41503A 		.ascii	"MAP: signal max limit\000"
+ 1721      20736967 
+ 1721      6E616C20 
+ 1721      6D617820 
+ 1721      6C696D69 
+ 1722              	.LC72:
+ 1723 039d 4D41503A 		.ascii	"MAP: signal min limit (at 100kPa)\000"
+ 1723      20736967 
+ 1723      6E616C20 
+ 1723      6D696E20 
+ 1723      6C696D69 
+ 1724              	.LC70:
+ 1725 03bf 51412073 		.ascii	"QA servo: max PWM cycle (x/1024)\000"
+ 1725      6572766F 
+ 1725      3A206D61 
+ 1725      78205057 
+ 1725      4D206379 
+ 1726              	.LC68:
+ 1727 03e0 51412073 		.ascii	"QA servo: min PWM cycle (x/1024)\000"
+ 1727      6572766F 
+ 1727      3A206D69 
+ 1727      6E205057 
+ 1727      4D206379 
+ 1728              	.LC66:
+ 1729 0401 51412073 		.ascii	"QA servo: setPoint\000"
+ 1729      6572766F 
+ 1729      3A207365 
+ 1729      74506F69 
+ 1729      6E7400
+ 1730              	.LC64:
+ 1731 0414 51412046 		.ascii	"QA Feedback: HDK reference enabled\000"
+ 1731      65656462 
+ 1731      61636B3A 
+ 1731      2048444B 
+ 1731      20726566 
+ 1732              	.LC62:
+ 1733 0437 51412046 		.ascii	"QA Feedback: signal max limit\000"
+ 1733      65656462 
+ 1733      61636B3A 
+ 1733      20736967 
+ 1733      6E616C20 
+ 1734              	.LC60:
+ 1735 0455 51412046 		.ascii	"QA Feedback: signal min limit\000"
+ 1735      65656462 
+ 1735      61636B3A 
+ 1735      20736967 
+ 1735      6E616C20 
+ 1736              	.LC58:
+ 1737 0473 52504D3A 		.ascii	"RPM: DSP (0=direct/1=avg/2=2xteeth)\000"
+ 1737      20445350 
+ 1737      2028303D 
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 35
+
+
+ 1737      64697265 
+ 1737      63742F31 
+ 1738              	.LC56:
+ 1739 0497 49646C65 		.ascii	"Idle: PID Control Min Fuel\000"
+ 1739      3A205049 
+ 1739      4420436F 
+ 1739      6E74726F 
+ 1739      6C204D69 
+ 1740              	.LC54:
+ 1741 04b2 49646C65 		.ascii	"Idle: PID Control Max Fuel\000"
+ 1741      3A205049 
+ 1741      4420436F 
+ 1741      6E74726F 
+ 1741      6C204D61 
+ 1742              	.LC52:
+ 1743 04cd 49646C65 		.ascii	"Idle: PID Control Bias\000"
+ 1743      3A205049 
+ 1743      4420436F 
+ 1743      6E74726F 
+ 1743      6C204269 
+ 1744              	.LC50:
+ 1745 04e4 49646C65 		.ascii	"Idle: PID Control Speed\000"
+ 1745      3A205049 
+ 1745      4420436F 
+ 1745      6E74726F 
+ 1745      6C205370 
+ 1746              	.LC48:
+ 1747 04fc 49646C65 		.ascii	"Idle: PID Control Kd\000"
+ 1747      3A205049 
+ 1747      4420436F 
+ 1747      6E74726F 
+ 1747      6C204B64 
+ 1748              	.LC46:
+ 1749 0511 49646C65 		.ascii	"Idle: PID Control Ki\000"
+ 1749      3A205049 
+ 1749      4420436F 
+ 1749      6E74726F 
+ 1749      6C204B69 
+ 1750              	.LC44:
+ 1751 0526 49646C65 		.ascii	"Idle: PID Control Kp\000"
+ 1751      3A205049 
+ 1751      4420436F 
+ 1751      6E74726F 
+ 1751      6C204B70 
+ 1752              	.LC42:
+ 1753 053b 49646C65 		.ascii	"Idle: speed target\000"
+ 1753      3A207370 
+ 1753      65656420 
+ 1753      74617267 
+ 1753      657400
+ 1754              	.LC40:
+ 1755 054e 49646C65 		.ascii	"Idle: adjusting enabled\000"
+ 1755      3A206164 
+ 1755      6A757374 
+ 1755      696E6720 
+ 1755      656E6162 
+ 1756              	.LC38:
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 36
+
+
+ 1757 0566 6E6F6465 		.ascii	"nodeFreqConvRatio\000"
+ 1757      46726571 
+ 1757      436F6E76 
+ 1757      52617469 
+ 1757      6F00
+ 1758              	.LC36:
+ 1759 0578 6E6F6465 		.ascii	"nodeProbeSignalOutput\000"
+ 1759      50726F62 
+ 1759      65536967 
+ 1759      6E616C4F 
+ 1759      75747075 
+ 1760              	.LC34:
+ 1761 058e 496E6A65 		.ascii	"Injection: advance (0=off/1=open/2=closed)\000"
+ 1761      6374696F 
+ 1761      6E3A2061 
+ 1761      6476616E 
+ 1761      63652028 
+ 1762              	.LC32:
+ 1763 05b9 496E6A65 		.ascii	"Injection: automatic balance\000"
+ 1763      6374696F 
+ 1763      6E3A2061 
+ 1763      75746F6D 
+ 1763      61746963 
+ 1764              	.LC30:
+ 1765 05d6 496E6A65 		.ascii	"Injection: fuel cut when engine is stopped\000"
+ 1765      6374696F 
+ 1765      6E3A2066 
+ 1765      75656C20 
+ 1765      63757420 
+ 1766              	.LC28:
+ 1767 0601 5450533A 		.ascii	"TPS: safety bits (0=off, 1=idleSw/WotSW)\000"
+ 1767      20736166 
+ 1767      65747920 
+ 1767      62697473 
+ 1767      2028303D 
+ 1768              	.LC26:
+ 1769 062a 5450533A 		.ascii	"TPS: signal max limit\000"
+ 1769      20736967 
+ 1769      6E616C20 
+ 1769      6D617820 
+ 1769      6C696D69 
+ 1770              	.LC24:
+ 1771 0640 5450533A 		.ascii	"TPS: signal min limit\000"
+ 1771      20736967 
+ 1771      6E616C20 
+ 1771      6D696E20 
+ 1771      6C696D69 
+ 1772              	.LC22:
+ 1773 0656 4675656C 		.ascii	"Fuel trim enable\000"
+ 1773      20747269 
+ 1773      6D20656E 
+ 1773      61626C65 
+ 1773      00
+ 1774              	.LC20:
+ 1775 0667 52756E6E 		.ascii	"Running State\000"
+ 1775      696E6720 
+ 1775      53746174 
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 37
+
+
+ 1775      6500
+ 1776              	.LC18:
+ 1777 0675 42617474 		.ascii	"Battery Voltage\000"
+ 1777      65727920 
+ 1777      566F6C74 
+ 1777      61676500 
+ 1778              	.LC16:
+ 1779 0685 496E6A65 		.ascii	"Injection trigger voltage ref.\000"
+ 1779      6374696F 
+ 1779      6E207472 
+ 1779      69676765 
+ 1779      7220766F 
+ 1780              	.LC14:
+ 1781 06a4 48656172 		.ascii	"Heartbeat\000"
+ 1781      74626561 
+ 1781      7400
+ 1782              	.LC12:
+ 1783 06ae 426F6F73 		.ascii	"Boost pressure\000"
+ 1783      74207072 
+ 1783      65737375 
+ 1783      726500
+ 1784              	.LC10:
+ 1785 06bd 41697220 		.ascii	"Air temperature\000"
+ 1785      74656D70 
+ 1785      65726174 
+ 1785      75726500 
+ 1786              	.LC8:
+ 1787 06cd 4675656C 		.ascii	"Fuel temperature\000"
+ 1787      2074656D 
+ 1787      70657261 
+ 1787      74757265 
+ 1787      00
+ 1788              	.LC6:
+ 1789 06de 456E6769 		.ascii	"Engine temperature\000"
+ 1789      6E652074 
+ 1789      656D7065 
+ 1789      72617475 
+ 1789      726500
+ 1790              	.LC4:
+ 1791 06f1 496E6A65 		.ascii	"Injection Advance\000"
+ 1791      6374696F 
+ 1791      6E204164 
+ 1791      76616E63 
+ 1791      6500
+ 1792              	.LC2:
+ 1793 0703 456E6769 		.ascii	"Engine RPM\000"
+ 1793      6E652052 
+ 1793      504D00
+ 1794              	.LC0:
+ 1795 070e 536F6674 		.ascii	"Software version\000"
+ 1795      77617265 
+ 1795      20766572 
+ 1795      73696F6E 
+ 1795      00
+ 1796              		.global	core
+ 1797              		.section	.rodata
+ 1798              		.set	.LANCHOR0,. + 0
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 38
+
+
+ 1799              	.LC136:
+ 1800 0000 01000000 		.4byte	1
+ 1801 0004 0301     		.2byte	259
+ 1802 0006 0301     		.2byte	259
+ 1803 0008 0F27     		.2byte	9999
+ 1804 000a 0100     		.2byte	1
+ 1805 000c 1A       		.byte	26
+ 1806 000d 1B       		.byte	27
+ 1807 000e 02       		.byte	2
+ 1808 000f 00       		.byte	0
+ 1809 0010 0E070000 		.4byte	.LC0
+ 1810              	.LC137:
+ 1811 0014 01100000 		.4byte	4097
+ 1812 0018 0000     		.2byte	0
+ 1813 001a 0000     		.2byte	0
+ 1814 001c 0000     		.2byte	0
+ 1815 001e 0100     		.2byte	1
+ 1816 0020 19       		.byte	25
+ 1817 0021 12       		.byte	18
+ 1818 0022 02       		.byte	2
+ 1819 0023 00       		.byte	0
+ 1820 0024 03070000 		.4byte	.LC2
+ 1821              	.LC138:
+ 1822 0028 02100000 		.4byte	4098
+ 1823 002c 0000     		.2byte	0
+ 1824 002e 0000     		.2byte	0
+ 1825 0030 0000     		.2byte	0
+ 1826 0032 0100     		.2byte	1
+ 1827 0034 09       		.byte	9
+ 1828 0035 00       		.byte	0
+ 1829 0036 02       		.byte	2
+ 1830 0037 08       		.byte	8
+ 1831 0038 F1060000 		.4byte	.LC4
+ 1832              	.LC139:
+ 1833 003c 03100000 		.4byte	4099
+ 1834 0040 9700     		.2byte	151
+ 1835 0042 FF00     		.2byte	255
+ 1836 0044 0000     		.2byte	0
+ 1837 0046 0100     		.2byte	1
+ 1838 0048 03       		.byte	3
+ 1839 0049 00       		.byte	0
+ 1840 004a 01       		.byte	1
+ 1841 004b 02       		.byte	2
+ 1842 004c DE060000 		.4byte	.LC6
+ 1843              	.LC140:
+ 1844 0050 04100000 		.4byte	4100
+ 1845 0054 6D00     		.2byte	109
+ 1846 0056 0000     		.2byte	0
+ 1847 0058 FF00     		.2byte	255
+ 1848 005a 0100     		.2byte	1
+ 1849 005c 04       		.byte	4
+ 1850 005d 00       		.byte	0
+ 1851 005e 01       		.byte	1
+ 1852 005f 02       		.byte	2
+ 1853 0060 CD060000 		.4byte	.LC8
+ 1854              	.LC141:
+ 1855 0064 05100000 		.4byte	4101
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 39
+
+
+ 1856 0068 6D00     		.2byte	109
+ 1857 006a 0000     		.2byte	0
+ 1858 006c FF00     		.2byte	255
+ 1859 006e 0100     		.2byte	1
+ 1860 0070 05       		.byte	5
+ 1861 0071 00       		.byte	0
+ 1862 0072 01       		.byte	1
+ 1863 0073 02       		.byte	2
+ 1864 0074 BD060000 		.4byte	.LC10
+ 1865              	.LC142:
+ 1866 0078 06100000 		.4byte	4102
+ 1867 007c 0000     		.2byte	0
+ 1868 007e 0000     		.2byte	0
+ 1869 0080 0000     		.2byte	0
+ 1870 0082 0100     		.2byte	1
+ 1871 0084 06       		.byte	6
+ 1872 0085 00       		.byte	0
+ 1873 0086 02       		.byte	2
+ 1874 0087 05       		.byte	5
+ 1875 0088 AE060000 		.4byte	.LC12
+ 1876              	.LC143:
+ 1877 008c 07100000 		.4byte	4103
+ 1878 0090 0000     		.2byte	0
+ 1879 0092 0100     		.2byte	1
+ 1880 0094 0300     		.2byte	3
+ 1881 0096 0100     		.2byte	1
+ 1882 0098 39       		.byte	57
+ 1883 0099 00       		.byte	0
+ 1884 009a 01       		.byte	1
+ 1885 009b 00       		.byte	0
+ 1886 009c A4060000 		.4byte	.LC14
+ 1887              	.LC144:
+ 1888 00a0 00100000 		.4byte	4096
+ 1889 00a4 0000     		.2byte	0
+ 1890 00a6 0000     		.2byte	0
+ 1891 00a8 0100     		.2byte	1
+ 1892 00aa 0100     		.2byte	1
+ 1893 00ac 1C       		.byte	28
+ 1894 00ad 00       		.byte	0
+ 1895 00ae 02       		.byte	2
+ 1896 00af 06       		.byte	6
+ 1897 00b0 85060000 		.4byte	.LC16
+ 1898              	.LC145:
+ 1899 00b4 08100000 		.4byte	4104
+ 1900 00b8 0000     		.2byte	0
+ 1901 00ba 0000     		.2byte	0
+ 1902 00bc 0100     		.2byte	1
+ 1903 00be 0100     		.2byte	1
+ 1904 00c0 16       		.byte	22
+ 1905 00c1 00       		.byte	0
+ 1906 00c2 02       		.byte	2
+ 1907 00c3 09       		.byte	9
+ 1908 00c4 75060000 		.4byte	.LC18
+ 1909              	.LC146:
+ 1910 00c8 09100000 		.4byte	4105
+ 1911 00cc 0000     		.2byte	0
+ 1912 00ce 0000     		.2byte	0
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 40
+
+
+ 1913 00d0 0100     		.2byte	1
+ 1914 00d2 0100     		.2byte	1
+ 1915 00d4 18       		.byte	24
+ 1916 00d5 00       		.byte	0
+ 1917 00d6 02       		.byte	2
+ 1918 00d7 00       		.byte	0
+ 1919 00d8 67060000 		.4byte	.LC20
+ 1920              	.LC147:
+ 1921 00dc 0A100000 		.4byte	4106
+ 1922 00e0 0000     		.2byte	0
+ 1923 00e2 0000     		.2byte	0
+ 1924 00e4 0100     		.2byte	1
+ 1925 00e6 0100     		.2byte	1
+ 1926 00e8 00       		.byte	0
+ 1927 00e9 2C       		.byte	44
+ 1928 00ea 01       		.byte	1
+ 1929 00eb 07       		.byte	7
+ 1930 00ec 56060000 		.4byte	.LC22
+ 1931              	.LC148:
+ 1932 00f0 10100000 		.4byte	4112
+ 1933 00f4 C900     		.2byte	201
+ 1934 00f6 1900     		.2byte	25
+ 1935 00f8 E803     		.2byte	1000
+ 1936 00fa 0100     		.2byte	1
+ 1937 00fc 01       		.byte	1
+ 1938 00fd 02       		.byte	2
+ 1939 00fe 01       		.byte	1
+ 1940 00ff 06       		.byte	6
+ 1941 0100 40060000 		.4byte	.LC24
+ 1942              	.LC149:
+ 1943 0104 11100000 		.4byte	4113
+ 1944 0108 7503     		.2byte	885
+ 1945 010a 1900     		.2byte	25
+ 1946 010c E803     		.2byte	1000
+ 1947 010e 0100     		.2byte	1
+ 1948 0110 01       		.byte	1
+ 1949 0111 02       		.byte	2
+ 1950 0112 01       		.byte	1
+ 1951 0113 06       		.byte	6
+ 1952 0114 2A060000 		.4byte	.LC26
+ 1953              	.LC150:
+ 1954 0118 12100000 		.4byte	4114
+ 1955 011c 0000     		.2byte	0
+ 1956 011e 0000     		.2byte	0
+ 1957 0120 FF00     		.2byte	255
+ 1958 0122 0100     		.2byte	1
+ 1959 0124 00       		.byte	0
+ 1960 0125 00       		.byte	0
+ 1961 0126 01       		.byte	1
+ 1962 0127 00       		.byte	0
+ 1963 0128 01060000 		.4byte	.LC28
+ 1964              	.LC151:
+ 1965 012c 13100000 		.4byte	4115
+ 1966 0130 0100     		.2byte	1
+ 1967 0132 0000     		.2byte	0
+ 1968 0134 0100     		.2byte	1
+ 1969 0136 0100     		.2byte	1
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 41
+
+
+ 1970 0138 00       		.byte	0
+ 1971 0139 00       		.byte	0
+ 1972 013a 01       		.byte	1
+ 1973 013b 07       		.byte	7
+ 1974 013c D6050000 		.4byte	.LC30
+ 1975              	.LC152:
+ 1976 0140 15100000 		.4byte	4117
+ 1977 0144 0000     		.2byte	0
+ 1978 0146 0000     		.2byte	0
+ 1979 0148 0100     		.2byte	1
+ 1980 014a 0100     		.2byte	1
+ 1981 014c 00       		.byte	0
+ 1982 014d 00       		.byte	0
+ 1983 014e 01       		.byte	1
+ 1984 014f 07       		.byte	7
+ 1985 0150 B9050000 		.4byte	.LC32
+ 1986              	.LC153:
+ 1987 0154 14100000 		.4byte	4116
+ 1988 0158 0000     		.2byte	0
+ 1989 015a 0000     		.2byte	0
+ 1990 015c 0200     		.2byte	2
+ 1991 015e 0100     		.2byte	1
+ 1992 0160 00       		.byte	0
+ 1993 0161 2F       		.byte	47
+ 1994 0162 01       		.byte	1
+ 1995 0163 00       		.byte	0
+ 1996 0164 8E050000 		.4byte	.LC34
+ 1997              	.LC154:
+ 1998 0168 16100000 		.4byte	4118
+ 1999 016c 0000     		.2byte	0
+ 2000 016e 0000     		.2byte	0
+ 2001 0170 0A00     		.2byte	10
+ 2002 0172 0100     		.2byte	1
+ 2003 0174 00       		.byte	0
+ 2004 0175 00       		.byte	0
+ 2005 0176 01       		.byte	1
+ 2006 0177 00       		.byte	0
+ 2007 0178 78050000 		.4byte	.LC36
+ 2008              	.LC155:
+ 2009 017c 17100000 		.4byte	4119
+ 2010 0180 6400     		.2byte	100
+ 2011 0182 0100     		.2byte	1
+ 2012 0184 E803     		.2byte	1000
+ 2013 0186 0100     		.2byte	1
+ 2014 0188 00       		.byte	0
+ 2015 0189 00       		.byte	0
+ 2016 018a 01       		.byte	1
+ 2017 018b 00       		.byte	0
+ 2018 018c 66050000 		.4byte	.LC38
+ 2019              	.LC156:
+ 2020 0190 18100000 		.4byte	4120
+ 2021 0194 0000     		.2byte	0
+ 2022 0196 0000     		.2byte	0
+ 2023 0198 0100     		.2byte	1
+ 2024 019a 0100     		.2byte	1
+ 2025 019c 00       		.byte	0
+ 2026 019d 2D       		.byte	45
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 42
+
+
+ 2027 019e 01       		.byte	1
+ 2028 019f 07       		.byte	7
+ 2029 01a0 4E050000 		.4byte	.LC40
+ 2030              	.LC157:
+ 2031 01a4 19100000 		.4byte	4121
+ 2032 01a8 3E03     		.2byte	830
+ 2033 01aa 5E01     		.2byte	350
+ 2034 01ac 4006     		.2byte	1600
+ 2035 01ae 0100     		.2byte	1
+ 2036 01b0 19       		.byte	25
+ 2037 01b1 00       		.byte	0
+ 2038 01b2 01       		.byte	1
+ 2039 01b3 00       		.byte	0
+ 2040 01b4 3B050000 		.4byte	.LC42
+ 2041              	.LC158:
+ 2042 01b8 1A100000 		.4byte	4122
+ 2043 01bc 0900     		.2byte	9
+ 2044 01be 0000     		.2byte	0
+ 2045 01c0 2C01     		.2byte	300
+ 2046 01c2 0100     		.2byte	1
+ 2047 01c4 00       		.byte	0
+ 2048 01c5 00       		.byte	0
+ 2049 01c6 01       		.byte	1
+ 2050 01c7 00       		.byte	0
+ 2051 01c8 26050000 		.4byte	.LC44
+ 2052              	.LC159:
+ 2053 01cc 1B100000 		.4byte	4123
+ 2054 01d0 0100     		.2byte	1
+ 2055 01d2 0000     		.2byte	0
+ 2056 01d4 2C01     		.2byte	300
+ 2057 01d6 0100     		.2byte	1
+ 2058 01d8 00       		.byte	0
+ 2059 01d9 00       		.byte	0
+ 2060 01da 01       		.byte	1
+ 2061 01db 00       		.byte	0
+ 2062 01dc 11050000 		.4byte	.LC46
+ 2063              	.LC160:
+ 2064 01e0 32100000 		.4byte	4146
+ 2065 01e4 0D00     		.2byte	13
+ 2066 01e6 0000     		.2byte	0
+ 2067 01e8 2C01     		.2byte	300
+ 2068 01ea 0100     		.2byte	1
+ 2069 01ec 00       		.byte	0
+ 2070 01ed 00       		.byte	0
+ 2071 01ee 01       		.byte	1
+ 2072 01ef 00       		.byte	0
+ 2073 01f0 FC040000 		.4byte	.LC48
+ 2074              	.LC161:
+ 2075 01f4 35100000 		.4byte	4149
+ 2076 01f8 0F00     		.2byte	15
+ 2077 01fa 0100     		.2byte	1
+ 2078 01fc 8C00     		.2byte	140
+ 2079 01fe 0100     		.2byte	1
+ 2080 0200 00       		.byte	0
+ 2081 0201 00       		.byte	0
+ 2082 0202 01       		.byte	1
+ 2083 0203 00       		.byte	0
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 43
+
+
+ 2084 0204 E4040000 		.4byte	.LC50
+ 2085              	.LC162:
+ 2086 0208 36100000 		.4byte	4150
+ 2087 020c 2100     		.2byte	33
+ 2088 020e 0100     		.2byte	1
+ 2089 0210 C800     		.2byte	200
+ 2090 0212 0100     		.2byte	1
+ 2091 0214 00       		.byte	0
+ 2092 0215 00       		.byte	0
+ 2093 0216 01       		.byte	1
+ 2094 0217 00       		.byte	0
+ 2095 0218 CD040000 		.4byte	.LC52
+ 2096              	.LC163:
+ 2097 021c 33100000 		.4byte	4147
+ 2098 0220 0802     		.2byte	520
+ 2099 0222 0000     		.2byte	0
+ 2100 0224 0004     		.2byte	1024
+ 2101 0226 0500     		.2byte	5
+ 2102 0228 00       		.byte	0
+ 2103 0229 00       		.byte	0
+ 2104 022a 01       		.byte	1
+ 2105 022b 00       		.byte	0
+ 2106 022c B2040000 		.4byte	.LC54
+ 2107              	.LC164:
+ 2108 0230 34100000 		.4byte	4148
+ 2109 0234 8C00     		.2byte	140
+ 2110 0236 0000     		.2byte	0
+ 2111 0238 0004     		.2byte	1024
+ 2112 023a 0500     		.2byte	5
+ 2113 023c 00       		.byte	0
+ 2114 023d 00       		.byte	0
+ 2115 023e 01       		.byte	1
+ 2116 023f 00       		.byte	0
+ 2117 0240 97040000 		.4byte	.LC56
+ 2118              	.LC165:
+ 2119 0244 1C100000 		.4byte	4124
+ 2120 0248 0000     		.2byte	0
+ 2121 024a 0000     		.2byte	0
+ 2122 024c 0300     		.2byte	3
+ 2123 024e 0100     		.2byte	1
+ 2124 0250 00       		.byte	0
+ 2125 0251 00       		.byte	0
+ 2126 0252 01       		.byte	1
+ 2127 0253 00       		.byte	0
+ 2128 0254 73040000 		.4byte	.LC58
+ 2129              	.LC166:
+ 2130 0258 1D100000 		.4byte	4125
+ 2131 025c CD00     		.2byte	205
+ 2132 025e 0100     		.2byte	1
+ 2133 0260 FE03     		.2byte	1022
+ 2134 0262 0100     		.2byte	1
+ 2135 0264 0A       		.byte	10
+ 2136 0265 0B       		.byte	11
+ 2137 0266 01       		.byte	1
+ 2138 0267 06       		.byte	6
+ 2139 0268 55040000 		.4byte	.LC60
+ 2140              	.LC167:
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 44
+
+
+ 2141 026c 1E100000 		.4byte	4126
+ 2142 0270 7103     		.2byte	881
+ 2143 0272 0100     		.2byte	1
+ 2144 0274 FF03     		.2byte	1023
+ 2145 0276 0100     		.2byte	1
+ 2146 0278 0A       		.byte	10
+ 2147 0279 0B       		.byte	11
+ 2148 027a 01       		.byte	1
+ 2149 027b 06       		.byte	6
+ 2150 027c 37040000 		.4byte	.LC62
+ 2151              	.LC168:
+ 2152 0280 1F100000 		.4byte	4127
+ 2153 0284 0000     		.2byte	0
+ 2154 0286 0000     		.2byte	0
+ 2155 0288 0100     		.2byte	1
+ 2156 028a 0100     		.2byte	1
+ 2157 028c 00       		.byte	0
+ 2158 028d 00       		.byte	0
+ 2159 028e 01       		.byte	1
+ 2160 028f 07       		.byte	7
+ 2161 0290 14040000 		.4byte	.LC64
+ 2162              	.LC169:
+ 2163 0294 20100000 		.4byte	4128
+ 2164 0298 0000     		.2byte	0
+ 2165 029a 0000     		.2byte	0
+ 2166 029c FF03     		.2byte	1023
+ 2167 029e 0100     		.2byte	1
+ 2168 02a0 00       		.byte	0
+ 2169 02a1 0C       		.byte	12
+ 2170 02a2 02       		.byte	2
+ 2171 02a3 00       		.byte	0
+ 2172 02a4 01040000 		.4byte	.LC66
+ 2173              	.LC170:
+ 2174 02a8 21100000 		.4byte	4129
+ 2175 02ac 6400     		.2byte	100
+ 2176 02ae 0100     		.2byte	1
+ 2177 02b0 BC02     		.2byte	700
+ 2178 02b2 0100     		.2byte	1
+ 2179 02b4 00       		.byte	0
+ 2180 02b5 0D       		.byte	13
+ 2181 02b6 01       		.byte	1
+ 2182 02b7 00       		.byte	0
+ 2183 02b8 E0030000 		.4byte	.LC68
+ 2184              	.LC171:
+ 2185 02bc 22100000 		.4byte	4130
+ 2186 02c0 8A02     		.2byte	650
+ 2187 02c2 0100     		.2byte	1
+ 2188 02c4 2003     		.2byte	800
+ 2189 02c6 0100     		.2byte	1
+ 2190 02c8 00       		.byte	0
+ 2191 02c9 0D       		.byte	13
+ 2192 02ca 01       		.byte	1
+ 2193 02cb 00       		.byte	0
+ 2194 02cc BF030000 		.4byte	.LC70
+ 2195              	.LC172:
+ 2196 02d0 23100000 		.4byte	4131
+ 2197 02d4 8A00     		.2byte	138
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 45
+
+
+ 2198 02d6 1900     		.2byte	25
+ 2199 02d8 E803     		.2byte	1000
+ 2200 02da 0100     		.2byte	1
+ 2201 02dc 0E       		.byte	14
+ 2202 02dd 0F       		.byte	15
+ 2203 02de 01       		.byte	1
+ 2204 02df 06       		.byte	6
+ 2205 02e0 9D030000 		.4byte	.LC72
+ 2206              	.LC173:
+ 2207 02e4 24100000 		.4byte	4132
+ 2208 02e8 B301     		.2byte	435
+ 2209 02ea 1900     		.2byte	25
+ 2210 02ec E803     		.2byte	1000
+ 2211 02ee 0100     		.2byte	1
+ 2212 02f0 0E       		.byte	14
+ 2213 02f1 0F       		.byte	15
+ 2214 02f2 01       		.byte	1
+ 2215 02f3 06       		.byte	6
+ 2216 02f4 87030000 		.4byte	.LC74
+ 2217              	.LC174:
+ 2218 02f8 25100000 		.4byte	4133
+ 2219 02fc FA00     		.2byte	250
+ 2220 02fe 6400     		.2byte	100
+ 2221 0300 E803     		.2byte	1000
+ 2222 0302 0500     		.2byte	5
+ 2223 0304 06       		.byte	6
+ 2224 0305 00       		.byte	0
+ 2225 0306 01       		.byte	1
+ 2226 0307 05       		.byte	5
+ 2227 0308 5A030000 		.4byte	.LC76
+ 2228              	.LC175:
+ 2229 030c 26100000 		.4byte	4134
+ 2230 0310 8813     		.2byte	5000
+ 2231 0312 6400     		.2byte	100
+ 2232 0314 1027     		.2byte	10000
+ 2233 0316 6400     		.2byte	100
+ 2234 0318 00       		.byte	0
+ 2235 0319 00       		.byte	0
+ 2236 031a 01       		.byte	1
+ 2237 031b 00       		.byte	0
+ 2238 031c 32030000 		.4byte	.LC78
+ 2239              	.LC176:
+ 2240 0320 27100000 		.4byte	4135
+ 2241 0324 0000     		.2byte	0
+ 2242 0326 0000     		.2byte	0
+ 2243 0328 FF03     		.2byte	1023
+ 2244 032a 1000     		.2byte	16
+ 2245 032c 00       		.byte	0
+ 2246 032d 00       		.byte	0
+ 2247 032e 01       		.byte	1
+ 2248 032f 05       		.byte	5
+ 2249 0330 17030000 		.4byte	.LC80
+ 2250              	.LC177:
+ 2251 0334 28100000 		.4byte	4136
+ 2252 0338 0000     		.2byte	0
+ 2253 033a 0000     		.2byte	0
+ 2254 033c 0004     		.2byte	1024
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 46
+
+
+ 2255 033e 0100     		.2byte	1
+ 2256 0340 00       		.byte	0
+ 2257 0341 17       		.byte	23
+ 2258 0342 02       		.byte	2
+ 2259 0343 00       		.byte	0
+ 2260 0344 F3020000 		.4byte	.LC82
+ 2261              	.LC178:
+ 2262 0348 29100000 		.4byte	4137
+ 2263 034c 5000     		.2byte	80
+ 2264 034e 0000     		.2byte	0
+ 2265 0350 E803     		.2byte	1000
+ 2266 0352 0100     		.2byte	1
+ 2267 0354 00       		.byte	0
+ 2268 0355 13       		.byte	19
+ 2269 0356 01       		.byte	1
+ 2270 0357 00       		.byte	0
+ 2271 0358 D9020000 		.4byte	.LC84
+ 2272              	.LC179:
+ 2273 035c 2A100000 		.4byte	4138
+ 2274 0360 0300     		.2byte	3
+ 2275 0362 0000     		.2byte	0
+ 2276 0364 E803     		.2byte	1000
+ 2277 0366 0100     		.2byte	1
+ 2278 0368 00       		.byte	0
+ 2279 0369 14       		.byte	20
+ 2280 036a 01       		.byte	1
+ 2281 036b 00       		.byte	0
+ 2282 036c BF020000 		.4byte	.LC86
+ 2283              	.LC180:
+ 2284 0370 2B100000 		.4byte	4139
+ 2285 0374 0300     		.2byte	3
+ 2286 0376 0000     		.2byte	0
+ 2287 0378 E803     		.2byte	1000
+ 2288 037a 0100     		.2byte	1
+ 2289 037c 00       		.byte	0
+ 2290 037d 15       		.byte	21
+ 2291 037e 01       		.byte	1
+ 2292 037f 00       		.byte	0
+ 2293 0380 A5020000 		.4byte	.LC88
+ 2294              	.LC181:
+ 2295 0384 2C100000 		.4byte	4140
+ 2296 0388 1900     		.2byte	25
+ 2297 038a 0100     		.2byte	1
+ 2298 038c 8000     		.2byte	128
+ 2299 038e 0100     		.2byte	1
+ 2300 0390 00       		.byte	0
+ 2301 0391 00       		.byte	0
+ 2302 0392 01       		.byte	1
+ 2303 0393 00       		.byte	0
+ 2304 0394 8F020000 		.4byte	.LC90
+ 2305              	.LC182:
+ 2306 0398 2D100000 		.4byte	4141
+ 2307 039c 3700     		.2byte	55
+ 2308 039e 0100     		.2byte	1
+ 2309 03a0 C800     		.2byte	200
+ 2310 03a2 0500     		.2byte	5
+ 2311 03a4 00       		.byte	0
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 47
+
+
+ 2312 03a5 00       		.byte	0
+ 2313 03a6 01       		.byte	1
+ 2314 03a7 00       		.byte	0
+ 2315 03a8 7A020000 		.4byte	.LC92
+ 2316              	.LC183:
+ 2317 03ac 2E100000 		.4byte	4142
+ 2318 03b0 0000     		.2byte	0
+ 2319 03b2 0000     		.2byte	0
+ 2320 03b4 0400     		.2byte	4
+ 2321 03b6 0100     		.2byte	1
+ 2322 03b8 31       		.byte	49
+ 2323 03b9 2E       		.byte	46
+ 2324 03ba 01       		.byte	1
+ 2325 03bb 00       		.byte	0
+ 2326 03bc 50020000 		.4byte	.LC94
+ 2327              	.LC184:
+ 2328 03c0 2F100000 		.4byte	4143
+ 2329 03c4 0500     		.2byte	5
+ 2330 03c6 0100     		.2byte	1
+ 2331 03c8 C800     		.2byte	200
+ 2332 03ca 0A00     		.2byte	10
+ 2333 03cc 00       		.byte	0
+ 2334 03cd 00       		.byte	0
+ 2335 03ce 01       		.byte	1
+ 2336 03cf 00       		.byte	0
+ 2337 03d0 37020000 		.4byte	.LC96
+ 2338              	.LC185:
+ 2339 03d4 30100000 		.4byte	4144
+ 2340 03d8 0500     		.2byte	5
+ 2341 03da 0100     		.2byte	1
+ 2342 03dc D007     		.2byte	2000
+ 2343 03de 0100     		.2byte	1
+ 2344 03e0 00       		.byte	0
+ 2345 03e1 00       		.byte	0
+ 2346 03e2 01       		.byte	1
+ 2347 03e3 00       		.byte	0
+ 2348 03e4 1A020000 		.4byte	.LC98
+ 2349              	.LC186:
+ 2350 03e8 31100000 		.4byte	4145
+ 2351 03ec 0500     		.2byte	5
+ 2352 03ee 0100     		.2byte	1
+ 2353 03f0 D007     		.2byte	2000
+ 2354 03f2 0100     		.2byte	1
+ 2355 03f4 00       		.byte	0
+ 2356 03f5 00       		.byte	0
+ 2357 03f6 01       		.byte	1
+ 2358 03f7 00       		.byte	0
+ 2359 03f8 FD010000 		.4byte	.LC100
+ 2360              	.LC187:
+ 2361 03fc 32100000 		.4byte	4146
+ 2362 0400 0000     		.2byte	0
+ 2363 0402 0000     		.2byte	0
+ 2364 0404 D007     		.2byte	2000
+ 2365 0406 0100     		.2byte	1
+ 2366 0408 00       		.byte	0
+ 2367 0409 00       		.byte	0
+ 2368 040a 01       		.byte	1
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 48
+
+
+ 2369 040b 00       		.byte	0
+ 2370 040c E0010000 		.4byte	.LC102
+ 2371              	.LC188:
+ 2372 0410 38100000 		.4byte	4152
+ 2373 0414 6400     		.2byte	100
+ 2374 0416 0100     		.2byte	1
+ 2375 0418 C800     		.2byte	200
+ 2376 041a 0100     		.2byte	1
+ 2377 041c 00       		.byte	0
+ 2378 041d 00       		.byte	0
+ 2379 041e 01       		.byte	1
+ 2380 041f 00       		.byte	0
+ 2381 0420 C0010000 		.4byte	.LC104
+ 2382              	.LC189:
+ 2383 0424 39100000 		.4byte	4153
+ 2384 0428 1400     		.2byte	20
+ 2385 042a 0100     		.2byte	1
+ 2386 042c C800     		.2byte	200
+ 2387 042e 0100     		.2byte	1
+ 2388 0430 00       		.byte	0
+ 2389 0431 2E       		.byte	46
+ 2390 0432 01       		.byte	1
+ 2391 0433 00       		.byte	0
+ 2392 0434 A7010000 		.4byte	.LC106
+ 2393              	.LC190:
+ 2394 0438 00000000 		.4byte	0
+ 2395 043c 0000     		.2byte	0
+ 2396 043e 0100     		.2byte	1
+ 2397 0440 C800     		.2byte	200
+ 2398 0442 0100     		.2byte	1
+ 2399 0444 30       		.byte	48
+ 2400 0445 00       		.byte	0
+ 2401 0446 02       		.byte	2
+ 2402 0447 05       		.byte	5
+ 2403 0448 88010000 		.4byte	.LC108
+ 2404              	.LC191:
+ 2405 044c 00000000 		.4byte	0
+ 2406 0450 0000     		.2byte	0
+ 2407 0452 0100     		.2byte	1
+ 2408 0454 C800     		.2byte	200
+ 2409 0456 0100     		.2byte	1
+ 2410 0458 06       		.byte	6
+ 2411 0459 00       		.byte	0
+ 2412 045a 02       		.byte	2
+ 2413 045b 05       		.byte	5
+ 2414 045c 68010000 		.4byte	.LC110
+ 2415              	.LC192:
+ 2416 0460 3A100000 		.4byte	4154
+ 2417 0464 0A00     		.2byte	10
+ 2418 0466 0100     		.2byte	1
+ 2419 0468 C800     		.2byte	200
+ 2420 046a 0100     		.2byte	1
+ 2421 046c 00       		.byte	0
+ 2422 046d 00       		.byte	0
+ 2423 046e 01       		.byte	1
+ 2424 046f 00       		.byte	0
+ 2425 0470 49010000 		.4byte	.LC112
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 49
+
+
+ 2426              	.LC193:
+ 2427 0474 3B100000 		.4byte	4155
+ 2428 0478 0200     		.2byte	2
+ 2429 047a 0100     		.2byte	1
+ 2430 047c C800     		.2byte	200
+ 2431 047e 0100     		.2byte	1
+ 2432 0480 00       		.byte	0
+ 2433 0481 00       		.byte	0
+ 2434 0482 01       		.byte	1
+ 2435 0483 00       		.byte	0
+ 2436 0484 2A010000 		.4byte	.LC114
+ 2437              	.LC194:
+ 2438 0488 00500000 		.4byte	20480
+ 2439 048c 2003     		.2byte	800
+ 2440 048e 5000     		.2byte	80
+ 2441 0490 9803     		.2byte	920
+ 2442 0492 0500     		.2byte	5
+ 2443 0494 00       		.byte	0
+ 2444 0495 38       		.byte	56
+ 2445 0496 01       		.byte	1
+ 2446 0497 00       		.byte	0
+ 2447 0498 10010000 		.4byte	.LC116
+ 2448              	.LC195:
+ 2449 049c 01500000 		.4byte	20481
+ 2450 04a0 C800     		.2byte	200
+ 2451 04a2 5000     		.2byte	80
+ 2452 04a4 9803     		.2byte	920
+ 2453 04a6 0500     		.2byte	5
+ 2454 04a8 00       		.byte	0
+ 2455 04a9 37       		.byte	55
+ 2456 04aa 01       		.byte	1
+ 2457 04ab 00       		.byte	0
+ 2458 04ac F4000000 		.4byte	.LC118
+ 2459              	.LC196:
+ 2460 04b0 02500000 		.4byte	20482
+ 2461 04b4 2003     		.2byte	800
+ 2462 04b6 5000     		.2byte	80
+ 2463 04b8 9803     		.2byte	920
+ 2464 04ba 0500     		.2byte	5
+ 2465 04bc 00       		.byte	0
+ 2466 04bd 37       		.byte	55
+ 2467 04be 01       		.byte	1
+ 2468 04bf 00       		.byte	0
+ 2469 04c0 D7000000 		.4byte	.LC120
+ 2470              	.LC197:
+ 2471 04c4 03500000 		.4byte	20483
+ 2472 04c8 C800     		.2byte	200
+ 2473 04ca 0500     		.2byte	5
+ 2474 04cc FF00     		.2byte	255
+ 2475 04ce 0500     		.2byte	5
+ 2476 04d0 00       		.byte	0
+ 2477 04d1 00       		.byte	0
+ 2478 04d2 01       		.byte	1
+ 2479 04d3 0B       		.byte	11
+ 2480 04d4 AD000000 		.4byte	.LC122
+ 2481              	.LC198:
+ 2482 04d8 04500000 		.4byte	20484
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 50
+
+
+ 2483 04dc 8700     		.2byte	135
+ 2484 04de 0000     		.2byte	0
+ 2485 04e0 A00F     		.2byte	4000
+ 2486 04e2 0500     		.2byte	5
+ 2487 04e4 00       		.byte	0
+ 2488 04e5 00       		.byte	0
+ 2489 04e6 01       		.byte	1
+ 2490 04e7 00       		.byte	0
+ 2491 04e8 8F000000 		.4byte	.LC124
+ 2492              	.LC199:
+ 2493 04ec 05500000 		.4byte	20485
+ 2494 04f0 1400     		.2byte	20
+ 2495 04f2 0000     		.2byte	0
+ 2496 04f4 A00F     		.2byte	4000
+ 2497 04f6 0500     		.2byte	5
+ 2498 04f8 00       		.byte	0
+ 2499 04f9 00       		.byte	0
+ 2500 04fa 01       		.byte	1
+ 2501 04fb 00       		.byte	0
+ 2502 04fc 6E000000 		.4byte	.LC126
+ 2503              	.LC200:
+ 2504 0500 06500000 		.4byte	20486
+ 2505 0504 0000     		.2byte	0
+ 2506 0506 0000     		.2byte	0
+ 2507 0508 0000     		.2byte	0
+ 2508 050a 0100     		.2byte	1
+ 2509 050c 00       		.byte	0
+ 2510 050d 00       		.byte	0
+ 2511 050e 02       		.byte	2
+ 2512 050f 0B       		.byte	11
+ 2513 0510 5C000000 		.4byte	.LC128
+ 2514              	.LC201:
+ 2515 0514 07500000 		.4byte	20487
+ 2516 0518 0B00     		.2byte	11
+ 2517 051a 0000     		.2byte	0
+ 2518 051c 6400     		.2byte	100
+ 2519 051e 0100     		.2byte	1
+ 2520 0520 00       		.byte	0
+ 2521 0521 00       		.byte	0
+ 2522 0522 01       		.byte	1
+ 2523 0523 00       		.byte	0
+ 2524 0524 47000000 		.4byte	.LC130
+ 2525              	.LC202:
+ 2526 0528 08500000 		.4byte	20488
+ 2527 052c 0000     		.2byte	0
+ 2528 052e 0000     		.2byte	0
+ 2529 0530 C800     		.2byte	200
+ 2530 0532 0100     		.2byte	1
+ 2531 0534 00       		.byte	0
+ 2532 0535 37       		.byte	55
+ 2533 0536 02       		.byte	2
+ 2534 0537 00       		.byte	0
+ 2535 0538 2D000000 		.4byte	.LC132
+ 2536              	.LC203:
+ 2537 053c 09500000 		.4byte	20489
+ 2538 0540 0000     		.2byte	0
+ 2539 0542 0000     		.2byte	0
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 51
+
+
+ 2540 0544 C800     		.2byte	200
+ 2541 0546 0100     		.2byte	1
+ 2542 0548 00       		.byte	0
+ 2543 0549 00       		.byte	0
+ 2544 054a 01       		.byte	1
+ 2545 054b 0A       		.byte	10
+ 2546 054c 00000000 		.4byte	.LC134
+ 2547              		.section	.bss.core,"aw",%nobits
+ 2548              		.align	2
+ 2549              		.set	.LANCHOR17,. + 0
+ 2552              	core:
+ 2553 0000 00000000 		.space	1976
+ 2553      00000000 
+ 2553      00000000 
+ 2553      00000000 
+ 2553      00000000 
+ 2554              		.section	.data._ZZN4CoreC4EvE13glowPeriodMap,"aw"
+ 2555              		.set	.LANCHOR8,. + 0
+ 2558              	_ZZN4CoreC4EvE13glowPeriodMap:
+ 2559 0000 C0F04D31 		.ascii	"\300\360M1D\006\001\004\377\020\036\036\024\012\000"
+ 2559      44060104 
+ 2559      FF101E1E 
+ 2559      140A00
+ 2560 000f 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 2560      00000000 
+ 2561              		.section	.data._ZZN4CoreC4EvE15actuatorTension,"aw"
+ 2562              		.set	.LANCHOR15,. + 0
+ 2565              	_ZZN4CoreC4EvE15actuatorTension:
+ 2566 0000 D2F04D31 		.ascii	"\322\360M1D\010\001\000\377\000\377\327\300\217Z7\027"
+ 2566      44080100 
+ 2566      FF00FFD7 
+ 2566      C08F5A37 
+ 2566      17
+ 2567 0011 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 2567      00000000 
+ 2568              		.section	.data._ZZN4CoreC4EvE15fuelTrimAirTemp,"aw"
+ 2569              		.set	.LANCHOR14,. + 0
+ 2572              	_ZZN4CoreC4EvE15fuelTrimAirTemp:
+ 2573 0000 F4F04D31 		.ascii	"\364\360M1D\010\001\004\377\021\200\200\200\200\200"
+ 2573      44080104 
+ 2573      FF118080 
+ 2573      808080
+ 2574 000f 80808000 		.ascii	"\200\200\200\000\000\000\000\000\000\000"
+ 2574      00000000 
+ 2574      0000
+ 2575              		.section	.data._ZZN4CoreC4EvE15turboControlMap,"aw"
+ 2576              		.set	.LANCHOR6,. + 0
+ 2579              	_ZZN4CoreC4EvE15turboControlMap:
+ 2580 0000 D0F04D32 		.ascii	"\320\360M2D\006\006\001\011\006\311\343\322\311\253"
+ 2580      44060601 
+ 2580      0906C9E3 
+ 2580      D2C9AB
+ 2581 000f 9EC9E3D0 		.ascii	"\236\311\343\320\300\251\236\311\266\306\264\242\236"
+ 2581      C0A99EC9 
+ 2581      B6C6B4A2 
+ 2581      9E
+ 2582 001c C9C9C3A6 		.ascii	"\311\311\303\246\231\214\311\266v\227\227\034\311\266"
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 52
+
+
+ 2582      998CC9B6 
+ 2582      7697971C 
+ 2582      C9B6
+ 2583 002a 9C673B1C 		.ascii	"\234g;\034\000\000\000\000\000\000\000"
+ 2583      00000000 
+ 2583      000000
+ 2584              		.section	.data._ZZN4CoreC4EvE16airTempSensorMap,"aw"
+ 2585              		.set	.LANCHOR11,. + 0
+ 2588              	_ZZN4CoreC4EvE16airTempSensorMap:
+ 2589 0000 B2F04D31 		.ascii	"\262\360M1D\006\001\005\377\004\036\036\024\012\000"
+ 2589      44060105 
+ 2589      FF041E1E 
+ 2589      140A00
+ 2590 000f 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 2590      00000000 
+ 2591              		.section	.data._ZZN4CoreC4EvE16ecuTempSensorMap,"aw"
+ 2592              		.set	.LANCHOR12,. + 0
+ 2595              	_ZZN4CoreC4EvE16ecuTempSensorMap:
+ 2596 0000 B3F04D31 		.ascii	"\263\360M1D\006\001\005\377\004\036\036\024\012\000"
+ 2596      44060105 
+ 2596      FF041E1E 
+ 2596      140A00
+ 2597 000f 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 2597      00000000 
+ 2598              		.section	.data._ZZN4CoreC4EvE16fuelTrimFuelTemp,"aw"
+ 2599              		.set	.LANCHOR13,. + 0
+ 2602              	_ZZN4CoreC4EvE16fuelTrimFuelTemp:
+ 2603 0000 F3F04D31 		.ascii	"\363\360M1D\010\001\004\377\021\200\200\200\200\200"
+ 2603      44080104 
+ 2603      FF118080 
+ 2603      808080
+ 2604 000f 80808000 		.ascii	"\200\200\200\000\000\000\000\000\000\000"
+ 2604      00000000 
+ 2604      0000
+ 2605              		.section	.data._ZZN4CoreC4EvE17fuelTempSensorMap,"aw"
+ 2606              		.set	.LANCHOR10,. + 0
+ 2609              	_ZZN4CoreC4EvE17fuelTempSensorMap:
+ 2610 0000 B1F04D31 		.ascii	"\261\360M1D\006\001\005\377\004\036\036\024\012\000"
+ 2610      44060105 
+ 2610      FF041E1E 
+ 2610      140A00
+ 2611 000f 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 2611      00000000 
+ 2612              		.section	.data._ZZN4CoreC4EvE18openLoopAdvanceMap,"aw"
+ 2613              		.set	.LANCHOR4,. + 0
+ 2616              	_ZZN4CoreC4EvE18openLoopAdvanceMap:
+ 2617 0000 E0F04D32 		.ascii	"\340\360M2D\006\006\001\011\006\377\377\377\377\377"
+ 2617      44060601 
+ 2617      0906FFFF 
+ 2617      FFFFFF
+ 2618 000f FFFFFFFF 		.ascii	"\377\377\377\377\377\377\322\377\377\377\377\264\264"
+ 2618      FFFFD2FF 
+ 2618      FFFFFFB4 
+ 2618      B4
+ 2619 001c FFFFFFBE 		.ascii	"\377\377\377\276\214\000\377\377\377dP\000ddd22\000"
+ 2619      8C00FFFF 
+ 2619      FF645000 
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 53
+
+
+ 2619      64646432 
+ 2619      3200
+ 2620 002e 00000000 		.ascii	"\000\000\000\000\000\000\000"
+ 2620      000000
+ 2621              		.section	.data._ZZN4CoreC4EvE19engineTempSensorMap,"aw"
+ 2622              		.set	.LANCHOR9,. + 0
+ 2625              	_ZZN4CoreC4EvE19engineTempSensorMap:
+ 2626 0000 B0F04D31 		.ascii	"\260\360M1D\006\001\005\377\004\036\024\011\000\000"
+ 2626      44060105 
+ 2626      FF041E14 
+ 2626      090000
+ 2627 000f 00000000 		.ascii	"\000\000\000\000\000\000\000\000"
+ 2627      00000000 
+ 2628              		.section	.data._ZZN4CoreC4EvE20closedLoopAdvanceMap,"aw"
+ 2629              		.set	.LANCHOR5,. + 0
+ 2632              	_ZZN4CoreC4EvE20closedLoopAdvanceMap:
+ 2633 0000 E1F04D32 		.ascii	"\341\360M2D\006\006\001\011\010\000\000\000\000\000"
+ 2633      44060601 
+ 2633      09080000 
+ 2633      000000
+ 2634 000f 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 2634      00000000 
+ 2634      00000000 
+ 2634      00
+ 2635 001c 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 2635      00000000 
+ 2635      00000000 
+ 2635      00
+ 2636 0029 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000"
+ 2636      00000000 
+ 2636      00000000 
+ 2637              		.section	.data._ZZN4CoreC4EvE22turboTargetPressureMap,"aw"
+ 2638              		.set	.LANCHOR7,. + 0
+ 2641              	_ZZN4CoreC4EvE22turboTargetPressureMap:
+ 2642 0000 D1F04D32 		.ascii	"\321\360M2D\006\004\001\002\003\000\000\000\000\000"
+ 2642      44060401 
+ 2642      02030000 
+ 2642      000000
+ 2643 000f 00000000 		.ascii	"\000\000\000\000\012\024d\000\000\012\036d\200ddddd"
+ 2643      0A146400 
+ 2643      000A1E64 
+ 2643      80646464 
+ 2643      6464
+ 2644 0021 64000000 		.ascii	"d\000\000\000\000\000\000\000"
+ 2644      00000000 
+ 2645              		.section	.data._ZZN4CoreC4EvE7fuelMap,"aw"
+ 2646              		.set	.LANCHOR1,. + 0
+ 2649              	_ZZN4CoreC4EvE7fuelMap:
+ 2650 0000 F0F04D32 		.ascii	"\360\360M2D\010\006\001\002\011\264P#\000\000\000\000"
+ 2650      44080601 
+ 2650      0209B450 
+ 2650      23000000 
+ 2650      00
+ 2651 0011 00B46262 		.ascii	"\000\264bb%\000\000\000\000\264mmO%\012\000\000\264"
+ 2651      25000000 
+ 2651      00B46D6D 
+ 2651      4F250A00 
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 54
+
+
+ 2651      00B4
+ 2652 0023 6D7B868F 		.ascii	"m{\206\217W\012\000\264m\203\227\234\234M\000\264m\226"
+ 2652      570A00B4 
+ 2652      6D83979C 
+ 2652      9C4D00B4 
+ 2652      6D96
+ 2653 0035 9C9CA4A4 		.ascii	"\234\234\244\244\000\000\000\000\000\000\000\000"
+ 2653      00000000 
+ 2653      00000000 
+ 2654              		.section	.data._ZZN4CoreC4EvE7idleMap,"aw"
+ 2655              		.set	.LANCHOR2,. + 0
+ 2658              	_ZZN4CoreC4EvE7idleMap:
+ 2659 0000 F2F04D32 		.ascii	"\362\360M2D\010\004\007\004\011\377\377\377rP<<2\276"
+ 2659      44080407 
+ 2659      0409FFFF 
+ 2659      FF72503C 
+ 2659      3C32BE
+ 2660 0013 825A5046 		.ascii	"\202ZPF<2(\276xZPF<2(\276nZPF<2(\000\000\000\000\000"
+ 2660      3C3228BE 
+ 2660      785A5046 
+ 2660      3C3228BE 
+ 2660      6E5A5046 
+ 2661 002f 0000     		.ascii	"\000\000"
+ 2662              		.section	.data._ZZN4CoreC4EvE8boostMap,"aw"
+ 2663              		.set	.LANCHOR3,. + 0
+ 2666              	_ZZN4CoreC4EvE8boostMap:
+ 2667 0000 F1F04D32 		.ascii	"\361\360M2D\010\006\001\003\011\000\000\000\000\000"
+ 2667      44080601 
+ 2667      03090000 
+ 2667      000000
+ 2668 000f 0000001F 		.ascii	"\000\000\000\037\037\037\037\037\037\037\0005/AAKKK"
+ 2668      1F1F1F1F 
+ 2668      1F1F0035 
+ 2668      2F41414B 
+ 2668      4B4B
+ 2669 0021 001E1E4E 		.ascii	"\000\036\036NNUUU\000\000\000\000\000\000\000\000\000"
+ 2669      4E555555 
+ 2669      00000000 
+ 2669      00000000 
+ 2669      00
+ 2670 0032 00000000 		.ascii	"\000\000\000\000\000\000\000\000\000\000\000\000\000"
+ 2670      00000000 
+ 2670      00000000 
+ 2670      00
+ 2671 003f 0000     		.ascii	"\000\000"
+ 2672              		.section	.data._ZZN4CoreC4EvE8idlePidP,"aw"
+ 2673              		.set	.LANCHOR16,. + 0
+ 2676              	_ZZN4CoreC4EvE8idlePidP:
+ 2677 0000 70F04D31 		.ascii	"p\360M1D\012\001\007\377\000\014\014\012\006\004\002"
+ 2677      440A0107 
+ 2677      FF000C0C 
+ 2677      0A060402 
+ 2678 0010 0202050A 		.ascii	"\002\002\005\012\000\000\000\000\000\000\000"
+ 2678      00000000 
+ 2678      000000
+ 2679              		.ident	"GCC: (Arm GNU Toolchain 11.3.Rel1) 11.3.1 20220712"
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 55
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 Core.cpp
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:51     .text._ZN4CoreC2Ev:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:57     .text._ZN4CoreC2Ev:0000000000000000 _ZN4CoreC2Ev
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:421    .text._ZN4CoreC2Ev:0000000000000300 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:449    .text._ZN4CoreC2Ev:0000000000000368 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:816    .text._ZN4CoreC2Ev:0000000000000678 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:844    .text._ZN4CoreC2Ev:00000000000006e0 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1151   .text._ZN4CoreC2Ev:00000000000009a4 $d
+     .ARM.exidx.text._ZN4CoreC2Ev:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:57     .text._ZN4CoreC2Ev:0000000000000000 _ZN4CoreC1Ev
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1208   .text._ZN4Core4saveEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1214   .text._ZN4Core4saveEv:0000000000000000 _ZN4Core4saveEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1317   .text._ZN4Core4saveEv:00000000000000f0 $d
+  .ARM.exidx.text._ZN4Core4saveEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1328   .text._ZN4Core4loadEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1334   .text._ZN4Core4loadEv:0000000000000000 _ZN4Core4loadEv
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1452   .text._ZN4Core4loadEv:0000000000000104 $d
+  .ARM.exidx.text._ZN4Core4loadEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1461   .text._ZN4Core14setCurrentNodeEi:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1467   .text._ZN4Core14setCurrentNodeEi:0000000000000000 _ZN4Core14setCurrentNodeEi
+.ARM.exidx.text._ZN4Core14setCurrentNodeEi:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1482   .text._ZN4Core12seekNextNodeEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1488   .text._ZN4Core12seekNextNodeEv:0000000000000000 _ZN4Core12seekNextNodeEv
+.ARM.exidx.text._ZN4Core12seekNextNodeEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1506   .text._ZN4Core11getNextNodeEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1512   .text._ZN4Core11getNextNodeEv:0000000000000000 _ZN4Core11getNextNodeEv
+.ARM.exidx.text._ZN4Core11getNextNodeEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1532   .text._ZN4Core11getNodeDataEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1538   .text._ZN4Core11getNodeDataEv:0000000000000000 _ZN4Core11getNodeDataEv
+.ARM.exidx.text._ZN4Core11getNodeDataEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1556   .text._ZN4Core8setValueEi:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1562   .text._ZN4Core8setValueEi:0000000000000000 _ZN4Core8setValueEi
+.ARM.exidx.text._ZN4Core8setValueEi:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1590   .text._ZN4Core8incValueEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1596   .text._ZN4Core8incValueEv:0000000000000000 _ZN4Core8incValueEv
+.ARM.exidx.text._ZN4Core8incValueEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1613   .text._ZN4Core8decValueEv:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1619   .text._ZN4Core8decValueEv:0000000000000000 _ZN4Core8decValueEv
+.ARM.exidx.text._ZN4Core8decValueEv:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1636   .text.startup._GLOBAL__sub_I_core:0000000000000000 $t
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1641   .text.startup._GLOBAL__sub_I_core:0000000000000000 _GLOBAL__sub_I_core
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1652   .text.startup._GLOBAL__sub_I_core:0000000000000008 $d
+.ARM.exidx.text.startup._GLOBAL__sub_I_core:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:1657   .init_array:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2552   .bss.core:0000000000000000 core
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2548   .bss.core:0000000000000000 $d
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2558   .data._ZZN4CoreC4EvE13glowPeriodMap:0000000000000000 _ZZN4CoreC4EvE13glowPeriodMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2565   .data._ZZN4CoreC4EvE15actuatorTension:0000000000000000 _ZZN4CoreC4EvE15actuatorTension
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2572   .data._ZZN4CoreC4EvE15fuelTrimAirTemp:0000000000000000 _ZZN4CoreC4EvE15fuelTrimAirTemp
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2579   .data._ZZN4CoreC4EvE15turboControlMap:0000000000000000 _ZZN4CoreC4EvE15turboControlMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2588   .data._ZZN4CoreC4EvE16airTempSensorMap:0000000000000000 _ZZN4CoreC4EvE16airTempSensorMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2595   .data._ZZN4CoreC4EvE16ecuTempSensorMap:0000000000000000 _ZZN4CoreC4EvE16ecuTempSensorMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2602   .data._ZZN4CoreC4EvE16fuelTrimFuelTemp:0000000000000000 _ZZN4CoreC4EvE16fuelTrimFuelTemp
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2609   .data._ZZN4CoreC4EvE17fuelTempSensorMap:0000000000000000 _ZZN4CoreC4EvE17fuelTempSensorMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2616   .data._ZZN4CoreC4EvE18openLoopAdvanceMap:0000000000000000 _ZZN4CoreC4EvE18openLoopAdvanceMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2625   .data._ZZN4CoreC4EvE19engineTempSensorMap:0000000000000000 _ZZN4CoreC4EvE19engineTempSensorMap
+ARM GAS  /var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s 			page 56
+
+
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2632   .data._ZZN4CoreC4EvE20closedLoopAdvanceMap:0000000000000000 _ZZN4CoreC4EvE20closedLoopAdvanceMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2641   .data._ZZN4CoreC4EvE22turboTargetPressureMap:0000000000000000 _ZZN4CoreC4EvE22turboTargetPressureMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2649   .data._ZZN4CoreC4EvE7fuelMap:0000000000000000 _ZZN4CoreC4EvE7fuelMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2658   .data._ZZN4CoreC4EvE7idleMap:0000000000000000 _ZZN4CoreC4EvE7idleMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2666   .data._ZZN4CoreC4EvE8boostMap:0000000000000000 _ZZN4CoreC4EvE8boostMap
+/var/folders/b1/22c950295gx2kqj80tvj8wqc0000gn/T//ccbph04W.s:2676   .data._ZZN4CoreC4EvE8idlePidP:0000000000000000 _ZZN4CoreC4EvE8idlePidP
+
+UNDEFINED SYMBOLS
+HAL_FLASH_Unlock
+HAL_FLASHEx_Erase
+HAL_FLASH_Program
+HAL_FLASH_Lock
+_ZN10ConfEditor22setSystemStatusMessageEPKc
+confeditor
+__aeabi_unwind_cpp_pr0
+memcpy
+_ZN6Serial6printfEPKcz
+_ZN3DTC8setErrorEj
+serial
+dtc
