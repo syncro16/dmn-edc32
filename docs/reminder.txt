@@ -47,6 +47,11 @@ QA mittaus tyhjäkäynnillä synkroitu needle lift sensoriin = mitataan aina suu
 
  load koekoe.elf
 
+-- tai ---
+telnet localhost 4444
+> flash write_image erase build/dmn-edc32.elf
+
+
 ADC 1
 in1 - QA pos 
 in3 - QA *reserved*
